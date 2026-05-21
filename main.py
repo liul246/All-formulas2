@@ -1,42 +1,51 @@
 import telebot
 import google.generativeai as genai
+from flask import Flask
+import threading
+import os
 
-# --- ያንተ መረጃዎች ---
+# --- 1. ለ Render የሚሆን ትንንሽ ዌብ ሰርቨር (Flask) ---
+# ይህ ሰርቨር Render ቦቱን በነፃ በ24 ሰዓት እንዲያሰራው ይረዳዋል
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "AA AI Bot is Live and Running!"
+
+def run_flask():
+    # Render የሚሰጠውን የፖርት ቁጥር በራሱ ይወስዳል
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+# --- 2. ያንተ የቦት መረጃዎች ---
 BOT_TOKEN = "8513514659:AAFEWJ647fRyfNhasIvT-IyJDJR5gD5an-8"
 GEMINI_API_KEY = "AIzaSyAbcfnu7CXmfXvjxshiYrxQJJXLIQ4ZxhU"
 
-# --- Gemini AI ማዋቀር ---
+# AI ማዋቀር
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
-
-# --- ቦቱን ማስጀመር ---
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# /start ሲባል የሚላክ
+# --- 3. የቦቱ ሎጂክ ---
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    welcome_text = "ሰላም! እኔ በ AI የታገዝኩ ረዳትህ ነኝ። ማንኛውንም ጥያቄ እዚህ ጠይቀኝ፣ እመልስልሃለሁ! 🤖"
-    bot.reply_to(message, welcome_text)
+    bot.reply_to(message, "ሰላም! እኔ በ AI የታገዝኩ ረዳትህ ነኝ። ማንኛውንም ጥያቄ እዚህ ጠይቀኝ! 🤖")
 
-# ማንኛውም ፅሁፍ ሲላክ ወደ AI የሚልከው ክፍል
 @bot.message_handler(func=lambda message: True)
 def handle_ai_chat(message):
     try:
-        # ቦቱ "እየተየበ ነው..." (typing...) እንዲል ማድረጊያ
         bot.send_chat_action(message.chat.id, 'typing')
-        
-        # ጥያቄውን ወደ Gemini መላክ
         response = model.generate_content(message.text)
-        
-        # መልሱን ለተጠቃሚው መመለስ
         bot.reply_to(message, response.text)
-        
     except Exception as e:
-        # ስህተት ከተፈጠረ በኮምፒውተርህ ስክሪን ላይ ያሳያል
-        print(f"የተፈጠረ ስህተት: {e}")
-        bot.reply_to(message, "ይቅርታ፣ አሁን ላይ መልስ ለመስጠት አልቻልኩም። እባክህ ድጋሚ ሞክር።")
+        print(f"Error: {e}")
+        bot.reply_to(message, "ይቅርታ፣ አሁን ላይ መልስ ለመስጠት አልቻልኩም። ድጋሚ ይሞክሩ።")
 
-# ቦቱን ማሰሪያ
+# --- 4. ቦቱን እና ሰርቨሩን በአንድ ላይ ማስጀመር ---
 if __name__ == "__main__":
-    print("🚀 ቦቱ በተሳካ ሁኔታ ስራ ጀምሯል! አሁን ቴሌግራም ላይ ገብተህ መሞከር ትችላለህ።")
+    # Flask ሰርቨሩን በሌላ ትሬድ (Thread) ማስጀመር ቦቱ እንዳይቆም ያደርጋል
+    t = threading.Thread(target=run_flask)
+    t.start()
+    
+    print("🚀 ቦቱ እና የ Flask ሰርቨር ስራ ጀምረዋል...")
     bot.infinity_polling()
