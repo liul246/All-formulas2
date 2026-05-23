@@ -3,40 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>all formulas v2.0 🚀</title>
+    <title>AA Student System OS v3.0 Pro 🚀</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* =========================================================
-           1. THEME & NEON VARIABLES
+           1. CORE THEMES & VARIABLE CONFIGURATIONS
         ========================================================= */
         :root {
-            --bg-gradient: linear-gradient(135deg, #0a051b 0%, #0c0822 100%);
+            --bg-gradient: linear-gradient(135deg, #070414 0%, #0d0926 100%);
             --main-accent: #a020f0; 
             --neon-blue: #00f0ff;
             --neon-pink: #ff007f;
             --neon-green: #39ff14;
             --neon-yellow: #fff000;
             --neon-orange: #ff5500;
-            --card-bg: rgba(255, 255, 255, 0.06);
+            --card-bg: rgba(255, 255, 255, 0.05);
             --text-color: #ffffff;
-            --text-muted: #a4a4c1;
-            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-muted: #9595b5;
+            --border-glass: rgba(255, 255, 255, 0.07);
+            --base-font-size: 14px;
+            --card-glow: 0 0 15px rgba(160, 32, 240, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg-gradient); color: var(--text-color); min-height: 100vh; padding-bottom: 90px; overflow-x: hidden; }
+        body { background: var(--bg-gradient); color: var(--text-color); min-height: 100vh; padding-bottom: 95px; overflow-x: hidden; font-size: var(--base-font-size); }
 
         /* =========================================================
-           2. UPGRADED COMPLEX SPLASH SCREEN (ይበልጥ ዉስብስብ የተደረገ)
+           2. SPLASH SCREEN (በፍጹም ያልተነካ - 5 ሪንጎች እንዳሉ ናቸዉ)
         ========================================================= */
         #splash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #04020a; display: flex; flex-direction: column;
             justify-content: center; align-items: center; z-index: 9999; overflow: hidden;
         }
-        /* 5 የሚሽከረከሩ የኒዮን ቀለበቶች */
         .ring { position: absolute; width: 240px; height: 240px; border: 0px solid transparent; border-radius: 50%; }
         .ring:nth-child(1) { border-top: 6px solid var(--neon-pink); animation: rotate1 1.8s linear infinite; }
         .ring:nth-child(2) { border-right: 6px solid var(--neon-blue); animation: rotate2 2.2s linear infinite; }
@@ -52,131 +53,111 @@
         .creator-tag { 
             margin-top: 25px; font-size: 19px; font-weight: 700; letter-spacing: 4px; 
             color: var(--neon-yellow); text-shadow: 0 0 12px var(--neon-yellow), 0 0 25px var(--neon-orange); 
-            z-index: 10; animation: textFlicker 2s infinite;
+            z-index: 10;
         }
-
         @keyframes rotate1 { 0% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg); } 100% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg); } }
         @keyframes rotate2 { 0% { transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg); } 100% { transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg); } }
         @keyframes rotate3 { 0% { transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg); } 100% { transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg); } }
         @keyframes pulse { from { transform: scale(0.93); opacity: 0.8; } to { transform: scale(1.05); opacity: 1; } }
 
         /* =========================================================
-           3. CONTAINER & CORE HEADERS
+           3. CONTAINER LAYOUTS
         ========================================================= */
-        .app-container { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; animation: fadeInUp 0.5s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .app-container { display: none; padding: 15px; max-width: 800px; margin: 0 auto; animation: fadeInUp 0.4s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 20px;
-            background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border-glass); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 15px 20px;
+            background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-glass); backdrop-filter: blur(10px);
         }
-        .header-title h1 { font-size: 28px; font-weight: 800; background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .header-title p { color: var(--neon-green); font-size: 13px; font-weight: 600; }
+        .header-title h1 { font-size: 24px; font-weight: 800; background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-title p { color: var(--neon-green); font-size: 12px; font-weight: 600; }
 
         /* =========================================================
-           4. DYNAMIC PAGE SECTIONS
+           4. TWO-COLUMN GRID ARCHITECTURE (ሁለት ሁለት የተደረገ አቀማመጥ)
         ========================================================= */
+        .subject-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); /* ሁልጊዜ 2 አምድ እንዲሆን ያደርጋል */
+            gap: 15px; 
+            margin-top: 10px; 
+        }
+        .subject-card {
+            background: var(--card-bg); border: 1px solid var(--border-glass); border-radius: 20px;
+            padding: 20px 15px; text-align: center; cursor: pointer; transition: all 0.3s ease;
+        }
+        .subject-card:hover { transform: translateY(-5px); box-shadow: var(--card-glow); border-color: var(--main-accent); }
+        
+        /* የተስተካከሉ ትናንሽ አይኮኖች */
+        .subject-card i { font-size: 35px; margin-bottom: 12px; transition: 0.3s; }
+        .subject-card h2 { font-size: 16px; font-weight: 700; }
+        .subject-card p { color: var(--text-muted); margin-top: 4px; font-size: 11px; }
+        
+        .sub-math { border-bottom: 4px solid var(--neon-blue); } .sub-math i { color: var(--neon-blue); }
+        .sub-physics { border-bottom: 4px solid var(--neon-pink); } .sub-physics i { color: var(--neon-pink); }
+        .sub-chem { border-bottom: 4px solid var(--neon-green); } .sub-chem i { color: var(--neon-green); }
+        .sub-bio { border-bottom: 4px solid var(--neon-yellow); } .sub-bio i { color: var(--neon-yellow); }
+
+        /* FORMULAS SHEET DISPLAY */
         .page-section { display: none; }
         .page-section.active { display: block; }
-
-        /* SUBJECT CATEGORY GRID (አዲሱ መግቢያ ገጽ) */
-        .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 10px; }
-        .subject-card {
-            background: var(--card-bg); border: 1px solid var(--border-glass); border-radius: 24px;
-            padding: 35px 25px; text-align: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden;
-        }
-        .subject-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        .subject-card i { font-size: 55px; margin-bottom: 20px; transition: 0.3s; }
-        .subject-card:hover i { transform: scale(1.15); }
+        .view-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .back-btn { background: var(--card-bg); border: 1px solid var(--border-glass); color: white; padding: 8px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 6px; }
         
-        .sub-math { border-bottom: 5px solid var(--neon-blue); }
-        .sub-math i { color: var(--neon-blue); text-shadow: 0 0 20px rgba(0,240,255,0.4); }
-        .sub-physics { border-bottom: 5px solid var(--neon-pink); }
-        .sub-physics i { color: var(--neon-pink); text-shadow: 0 0 20px rgba(255,0,127,0.4); }
-        .sub-chem { border-bottom: 5px solid var(--neon-green); }
-        .sub-chem i { color: var(--neon-green); text-shadow: 0 0 20px rgba(57,255,20,0.4); }
-
-        /* FORMULAS INNER VIEW */
-        .view-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
-        .back-btn { background: var(--card-bg); border: 1px solid var(--border-glass); color: white; padding: 10px 20px; border-radius: 15px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .back-btn:hover { background: white; color: black; }
-
-        .formulas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; }
-        .formula-card {
-            background: var(--card-bg); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px;
-            cursor: pointer; transition: 0.3s ease; position: relative;
-        }
-        .formula-card:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.4); border-color: var(--main-accent); }
-        
-        .formula-display {
-            background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px;
-            font-family: monospace; font-size: 19px; font-weight: bold; text-align: center; margin: 15px 0;
-            border: 1px dashed rgba(255,255,255,0.1);
-        }
-        .fav-icon { position: absolute; top: 20px; right: 20px; font-size: 20px; color: rgba(255,255,255,0.2); transition: 0.3s; }
-        .fav-icon.active, .fav-icon:hover { color: var(--neon-pink); }
+        .formulas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .formula-card { background: var(--card-bg); border: 1px solid var(--border-glass); border-radius: 16px; padding: 18px; cursor: pointer; position: relative; }
+        .formula-display { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 10px; font-family: monospace; font-size: 16px; font-weight: bold; text-align: center; margin: 12px 0; color: var(--neon-blue); }
 
         /* =========================================================
-           5. ADDITIONAL FUNCTIONS UI (TOOLS & NOTES)
+           5. ALGORITHMS ENGINE UI (<i class="fa-solid fa-terminal"></i>)
         ========================================================= */
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; }
-        .tool-box { background: var(--card-bg); border: 1px solid var(--border-glass); padding: 25px; border-radius: 24px; }
-        .tool-box h3 { margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px; color: var(--neon-blue); }
-        
-        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        input, select { flex: 1; padding: 12px 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--border-glass); border-radius: 12px; color: white; font-size: 15px; outline: none; }
-        input:focus { border-color: var(--main-accent); }
-        
-        .action-btn { background: linear-gradient(45deg, var(--main-accent), var(--neon-pink)); border: none; padding: 12px 20px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        /* Notes Area */
-        .note-item { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; border-left: 4px solid var(--neon-yellow); margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .algo-box { background: var(--card-bg); border: 1px solid var(--border-glass); padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+        .algo-box h3 { font-size: 16px; color: var(--neon-yellow); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 12px; }
+        input, select { padding: 10px 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); border-radius: 10px; color: white; font-size: 14px; outline: none; }
+        .btn-run { background: linear-gradient(45deg, var(--main-accent), var(--neon-pink)); border: none; padding: 10px 18px; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; }
+        .algo-output { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; min-height: 40px; font-family: monospace; font-size: 13px; color: var(--neon-green); line-height: 1.5; border-left: 3px solid var(--neon-green); }
 
         /* =========================================================
-           6. BOTTOM NAVIGATION BAR (የበለጠ አይኮኖች ያሉት)
+           6. COMPREHENSIVE SETTINGS PAGE (ያለ ስም የተስተካከለና የሰፋ)
+        ========================================================= */
+        .settings-container { display: flex; flex-direction: column; gap: 15px; }
+        .settings-card { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border-glass); }
+        .settings-card h3 { font-size: 16px; color: var(--neon-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .settings-row:last-child { border: none; }
+        
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; display: inline-block; margin-left: 5px; }
+        
+        /* Toggle Switch UI */
+        .switch { position: relative; display: inline-block; width: 46px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--main-accent); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* =========================================================
+           7. FIXED BOTTOM NAVIGATION BAR (የተስተካከሉ አይኮኖች)
         ========================================================= */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 75px;
-            background: rgba(10, 5, 27, 0.96); backdrop-filter: blur(15px);
+            background: rgba(7, 4, 20, 0.97); backdrop-filter: blur(15px);
             border-top: 1px solid var(--border-glass); display: flex;
             justify-content: space-around; align-items: center; z-index: 1000;
         }
         .nav-item {
             display: flex; flex-direction: column; align-items: center;
-            color: var(--text-muted); cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.3s;
+            color: var(--text-muted); cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s;
         }
-        .nav-item i { font-size: 24px; margin-bottom: 5px; }
-        .nav-item.active, .nav-item:hover { color: var(--main-accent); transform: translateY(-4px); text-shadow: 0 0 10px var(--main-accent); }
+        .nav-item i { font-size: 22px; margin-bottom: 5px; }
+        .nav-item.active, .nav-item:hover { color: var(--main-accent); text-shadow: 0 0 8px var(--main-accent); }
 
-        /* =========================================================
-           7. MODAL & SETTINGS EXPANSION
-        ========================================================= */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000;
-            justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-content {
-            background: #110d26; border: 2px solid var(--main-accent);
-            border-radius: 28px; padding: 30px; max-width: 550px; width: 100%;
-            box-shadow: 0 0 40px rgba(160,32,240,0.5); animation: zoomIn 0.3s ease;
-        }
-        @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .close-btn { float: right; font-size: 26px; cursor: pointer; color: var(--neon-pink); }
-        
-        .settings-card { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border-glass); margin-bottom: 20px; }
-        .settings-row { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
-        .color-dot { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; }
-        
-        /* Toggle Switch */
-        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--main-accent); }
-        input:checked + .slider:before { transform: translateX(24px); }
+        /* POPUP MODAL DETAILED VIEW */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
+        .modal-content { background: #0f0b24; border: 2px solid var(--main-accent); border-radius: 24px; padding: 25px; max-width: 500px; width: 100%; box-shadow: 0 0 30px rgba(160,32,240,0.4); }
+        .close-btn { float: right; font-size: 24px; cursor: pointer; color: var(--neon-pink); }
+        .modal-info-box { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; margin-top: 10px; font-size: 13px; line-height: 1.5; }
 
     </style>
 </head>
@@ -196,31 +177,37 @@
         
         <header>
             <div class="header-title">
-                <h1 id="lang-title"all formulas 🇪🇹</h1>
-                <p id="lang-subtitle">Advanced Science & Math Engine</p>
+                <h1 id="lang-title">የተማሪዎች ሲስተም OS v3.0 🎓</h1>
+                <p id="lang-subtitle">Science & Algorithm Workspace</p>
             </div>
-            <div style="font-size: 24px; color: var(--neon-yellow);"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div style="font-size: 20px; color: var(--neon-blue);"><i class="fa-solid fa-microchip"></i></div>
         </header>
 
         <div id="page-home" class="page-section active">
             
             <div id="categories-menu-view">
-                <h3 style="margin-bottom: 20px; font-weight: 600;" id="lang-choose-sub"><i class="fa-solid fa-shapes"></i> የትምህርት ዘርፍ ይምረጡ፡</h3>
+                <h4 style="margin-bottom: 15px; font-weight: 600;" id="lang-choose-sub"><i class="fa-solid fa-circle-nodes"></i> የትምህርት ዘርፍ ይምረጡ (2x2)፡</h4>
+                
                 <div class="subject-grid">
                     <div class="subject-card sub-math" onclick="openSubject('math')">
                         <i class="fa-solid fa-calculator"></i>
                         <h2>Mathematics</h2>
-                        <p style="color: var(--text-muted); margin-top:5px; font-size:13px;">የሂሳብ ስሌቶች እና ቀመሮች</p>
+                        <p>የሂሳብ ፎርሙላዎች</p>
                     </div>
                     <div class="subject-card sub-physics" onclick="openSubject('physics')">
                         <i class="fa-solid fa-atom"></i>
                         <h2>Physics</h2>
-                        <p style="color: var(--text-muted); margin-top:5px; font-size:13px;">የፊዚክስ ህግጋት እና ቲዎሪዎች</p>
+                        <p>የፊዚክስ ህግጋት</p>
                     </div>
                     <div class="subject-card sub-chem" onclick="openSubject('chem')">
                         <i class="fa-solid fa-flask-vial"></i>
                         <h2>Chemistry</h2>
-                        <p style="color: var(--text-muted); margin-top:5px; font-size:13px;">የኬሚስትሪ ውህዶች እና ህጎች</p>
+                        <p>የኬሚስትሪ ውህዶች</p>
+                    </div>
+                    <div class="subject-card sub-bio" onclick="openSubject('bio')">
+                        <i class="fa-solid fa-dna"></i>
+                        <h2>Biology</h2>
+                        <p>የባዮሎጂ መዋቅሮች</p>
                     </div>
                 </div>
             </div>
@@ -228,158 +215,185 @@
             <div id="formulas-list-view" style="display: none;">
                 <div class="view-header">
                     <button class="back-btn" onclick="backToCategories()"><i class="fa-solid fa-arrow-left"></i> <span id="lang-back">ተመለስ</span></button>
-                    <h2 id="selected-subject-title" style="color: var(--neon-blue);">Subject</h2>
+                    <h2 id="selected-subject-title" style="color: var(--neon-blue); font-size: 20px;">Subject</h2>
                 </div>
                 <div class="formulas-grid" id="formulas-container">
                     </div>
             </div>
-
         </div>
 
-        <div id="page-tools" class="page-section">
-            <div class="tools-grid">
-                <div class="tool-box">
-                    <h3><i class="fa-solid fa-arrow-rotate-left"></i> <span id="lang-tool-conv">የመለኪያ አሃድ መቀየሪያ</span></h3>
-                    <div class="input-group">
-                        <input type="number" id="convert-input" placeholder="አሃድ ያስገቡ..." onkeyup="runConversion()">
-                        <select id="convert-type" onchange="runConversion()">
-                            <option value="km-m">Kilometers ➔ Meters</option>
-                            <option value="m-cm">Meters ➔ Centimeters</option>
-                            <option value="kg-g">Kilograms ➔ Grams</option>
-                            <option value="c-f">Celsius ➔ Fahrenheit</option>
-                        </select>
-                    </div>
-                    <div id="conversion-result" style="font-weight: bold; color: var(--neon-green); font-size: 16px; padding: 5px;">ውጤት: 0</div>
+        <div id="page-algorithms" class="page-section">
+            <h2 style="margin-bottom: 15px; font-size: 20px;"><i class="fa-solid fa-terminal" style="color: var(--neon-green)"></i> <span id="lang-algo-title">የአልጎሪዝም ማስመሪያ ሞጁል</span></h2>
+            
+            <div class="algo-box">
+                <h3><i class="fa-solid fa-code-branch"></i> 1. Euclidean Algorithm (ታላቅ የጋራ አካፋይ - GCD)</h3>
+                <div class="input-group">
+                    <input type="number" id="gcd-a" placeholder="ቁጥር 1 (A)">
+                    <input type="number" id="gcd-b" placeholder="ቁጥር 2 (B)">
+                    <button class="btn-run" onclick="runGCD()">አስሩጥ (Run)</button>
                 </div>
+                <div class="algo-output" id="gcd-output">የስሌቱ ሂደት እዚህ በደረጃ ይታያል...</div>
+            </div>
 
-                <div class="tool-box">
-                    <h3><i class="fa-solid fa-note-sticky"></i> <span id="lang-tool-notes">የግል ቀመር / ማስታወሻ ደብተር</span></h3>
-                    <div class="input-group">
-                        <input type="text" id="note-text" placeholder="የማስታወሻ ርዕስ ወይም ቀመር ፃፍ...">
-                        <button class="action-btn" onclick="addNote()"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                    <div id="notes-list">
-                        </div>
+            <div class="algo-box">
+                <h3><i class="fa-solid fa-arrow-trend-up"></i> 2. Fibonacci Series Generator (ፊቦናቺ ተከታታይነት)</h3>
+                <div class="input-group">
+                    <input type="number" id="fibo-limit" placeholder="ስንት ተከታታይ ቁጥሮች ይውጡ? (Limit)">
+                    <button class="btn-run" onclick="runFibonacci()">አመንጭ (Generate)</button>
                 </div>
+                <div class="algo-output" id="fibo-output">የተከታታይ ቁጥሮቹ ዝርዝር እዚህ ይወጣል...</div>
             </div>
         </div>
 
-        <div id="page-favorites" class="page-section">
-            <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-heart" style="color:var(--neon-pink)"></i> <span id="lang-fav-title">የተመረጡ ቀመሮች ማህደር</span></h2>
-            <div class="formulas-grid" id="favorites-container">
-                </div>
+        <div id="page-notes" class="page-section">
+            <h2 style="margin-bottom: 15px; font-size: 20px;"><i class="fa-solid fa-pen-to-square"></i> <span id="lang-notes-title">የግል ማስታወሻ ደብተር</span></h2>
+            <div class="input-group">
+                <input type="text" id="note-input" placeholder="የማስታወሻ ርዕስ ወይም ቀመር እዚህ ይፃፉ...">
+                <button class="btn-run" onclick="addCustomNote()"><i class="fa-solid fa-plus"></i> ጨምር</button>
+            </div>
+            <div id="notes-wrapper" style="margin-top: 15px;"></div>
         </div>
 
         <div id="page-settings" class="page-section">
-            <div class="settings-card" style="display: flex; align-items: center; gap: 15px;">
-                <div style="width: 50px; height: 50px; background: var(--main-accent); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px;">AA</div>
-                <div>
-                    <h4>Akalewold Student Profile</h4>
-                    <p style="font-size: 12px; color: var(--text-muted);">Premium Member • Active</p>
-                </div>
-            </div>
-
-            <div class="settings-card">
-                <h3><i class="fa-solid fa-sliders"></i> <span id="lang-set-core">አጠቃላይ የስርዓት ቅንብሮች</span></h3>
-                <div class="settings-row">
-                    <span id="lang-set-color">የመተግበሪያው ዋና ማድመቂያ ቀለም፡</span>
-                    <div style="display:flex; gap:8px;">
-                        <div class="color-dot" style="background:#a020f0;" onclick="changeTheme('#a020f0')"></div>
-                        <div class="color-dot" style="background:#ff007f;" onclick="changeTheme('#ff007f')"></div>
-                        <div class="color-dot" style="background:#00f0ff;" onclick="changeTheme('#00f0ff')"></div>
-                        <div class="color-dot" style="background:#39ff14;" onclick="changeTheme('#39ff14')"></div>
+            <div class="settings-container">
+                
+                <div class="settings-card">
+                    <h3><i class="fa-solid fa-palette"></i> <span id="lang-set-visual">የዕይታ እና ማድመቂያ ቀለሞች</span></h3>
+                    <div class="settings-row">
+                        <span>የመተግበሪያው ዋና ጭብጥ ቀለም፡</span>
+                        <div>
+                            <div class="color-dot" style="background:#a020f0;" onclick="changeThemeAccent('#a020f0')"></div>
+                            <div class="color-dot" style="background:#ff007f;" onclick="changeThemeAccent('#ff007f')"></div>
+                            <div class="color-dot" style="background:#00f0ff;" onclick="changeThemeAccent('#00f0ff')"></div>
+                            <div class="color-dot" style="background:#39ff14;" onclick="changeThemeAccent('#39ff14')"></div>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <span>የካርዶች የኒዮን ብርሃን (Card Glow Effects)</span>
+                        <label class="switch">
+                            <input type="checkbox" id="glowToggle" checked onchange="toggleGlowEffect()">
+                            <span class="slider"></span>
+                        </label>
                     </div>
                 </div>
-                <div class="settings-row" style="margin-top: 25px;">
-                    <span id="lang-set-lang">ቋንቋ መቀየሪያ (Language):</span>
-                    <select id="langSelect" onchange="changeLanguage()" style="max-width: 150px;">
-                        <option value="am">አማርኛ</option>
-                        <option value="en">English</option>
-                    </select>
+
+                <div class="settings-card">
+                    <h3><i class="fa-solid fa-font"></i> <span id="lang-set-font">የጽሑፍ መጠን እና ቋንቋ</span></h3>
+                    <div class="settings-row">
+                        <span>የመተግበሪያው የጽሑፍ መጠን (Font Size)፡</span>
+                        <select id="fontSizeSelect" onchange="adjustFontSize()" style="max-width: 130px;">
+                            <option value="13px">ትንሽ (Small)</option>
+                            <option value="15px" selected>መካከለኛ (Medium)</option>
+                            <option value="17px">ትልቅ (Large)</option>
+                        </select>
+                    </div>
+                    <div class="settings-row">
+                        <span>የስርዓቱ መገናኛ ቋንቋ (Language)፡</span>
+                        <select id="langSelect" onchange="switchSystemLanguage()" style="max-width: 130px;">
+                            <option value="am">አማርኛ</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="settings-row" style="margin-top: 25px;">
-                    <span id="lang-set-haptic">የንዝረት/ድምፅ ማስመስያ (Haptic Feedback)</span>
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
+
+                <div class="settings-card">
+                    <h3><i class="fa-solid fa-circle-info"></i> <span id="lang-set-about">ስለ መተግበሪያው መረጃ</span></h3>
+                    <div class="settings-row">
+                        <span>የመተግበሪያው ስም (App Name)</span>
+                        <span style="color:var(--neon-blue); font-weight:600;">Formula & Algorithm OS</span>
+                    </div>
+                    <div class="settings-row">
+                        <span>የስሪት መለያ (Version)</span>
+                        <span style="color:var(--text-muted);">v3.0.0 (Stable Build)</span>
+                    </div>
+                    <div class="settings-row">
+                        <span>አውቶማቲክ ሴቭ (Auto-Save Data)</span>
+                        <span style="color:var(--neon-green);"><i class="fa-solid fa-cloud-arrow-up"></i> Active (Local)</span>
+                    </div>
+                    <button class="btn-run" style="background:var(--neon-pink); width:100%; margin-top:15px;" onclick="wipeDataStore()"><i class="fa-solid fa-database"></i> ሁሉንም መረጃዎች አጽዳ (Reset App)</button>
                 </div>
-                <button class="action-btn" style="background:var(--neon-pink); width:100%; margin-top:25px;" onclick="resetAppData()"><i class="fa-solid fa-trash-can"></i> ሁሉንም ዳታ አጽዳ (Reset App)</button>
+
             </div>
         </div>
 
     </div>
 
     <div class="bottom-nav" id="bottomNav" style="display:none;">
-        <div class="nav-item active" onclick="switchPage('home', this)">
-            <i class="fa-solid fa-layer-group"></i>
+        <div class="nav-item active" onclick="navigateRoute('home', this)">
+            <i class="fa-solid fa-table-cells-large"></i>
             <span id="nav-home">ማውጫ</span>
         </div>
-        <div class="nav-item" onclick="switchPage('tools', this)">
-            <i class="fa-solid fa-toolbox"></i>
-            <span id="nav-tools">መሳሪያዎች</span>
+        <div class="nav-item" onclick="navigateRoute('algorithms', this)">
+            <i class="fa-solid fa-terminal"></i>
+            <span id="nav-algo">አልጎሪዝም</span>
         </div>
-        <div class="nav-item" onclick="switchPage('favorites', this)">
-            <i class="fa-solid fa-heart"></i>
-            <span id="nav-favs">ምርጦች</span>
+        <div class="nav-item" onclick="navigateRoute('notes', this)">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span id="nav-notes">ማስታወሻ</span>
         </div>
-        <div class="nav-item" onclick="switchPage('settings', this)">
-            <i class="fa-solid fa-gears"></i>
+        <div class="nav-item" onclick="navigateRoute('settings', this)">
+            <i class="fa-solid fa-gear"></i>
             <span id="nav-sets">ቅንብር</span>
         </div>
     </div>
 
-    <div class="modal" id="formulaModal">
+    <div class="modal" id="detailsModal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Title</h2>
-            <div class="formula-display" id="modalDisplay" style="color: var(--neon-blue);">Formula</div>
-            <div class="modal-info-box" id="modalDesc">Description goes here...</div>
-            <div class="modal-info-box" id="modalExample" style="border-left: 3px solid var(--neon-green);">Example...</div>
+            <span class="close-btn" onclick="closeDetailsModal()">&times;</span>
+            <h3 id="mTitle" style="color: var(--neon-blue); font-size:18px;">Title</h3>
+            <div class="formula-display" id="mDisplay">Formula</div>
+            <div class="modal-info-box" id="mDesc">Description...</div>
+            <div class="modal-info-box" id="mExample" style="border-left: 3px solid var(--neon-green); background:rgba(0,0,0,0.5);">Example...</div>
         </div>
     </div>
 
     <script>
-        // የፎርሙላዎች ዳታቤዝ
+        // ሳይንስ እና ሂሳብ ቀመሮች ማህደር
         const formulasDatabase = [
-            // Math
-            { id: 1, subject: "math", title: "Quadratic Formula", formula: "x = (-b ± √(b² - 4ac)) / 2a", desc: "የሁለተኛ ዲግሪ የፖሊኖሚያል እኩልታዎችን መፍቻ ቀመር።", ex: "x² - 5x + 6 = 0 ከሆነ, x=2 ወይም x=3 ይመጣል።", title_en: "Quadratic Formula", desc_en: "Finds roots of second-degree equations." },
-            { id: 2, subject: "math", title: "Pythagorean Theorem", formula: "a² + b² = c²", desc: "በቀኝ ማዕዘን ሶስት ማዕዘን ላይ የረጅሙን ጎን ርዝመት መፈለጊያ።", ex: "ጎኖቹ 3 እና 4 ከሆኑ, ረጅሙ ጎን √9+16 = 5 ይሆናል።", title_en: "Pythagorean Theorem", desc_en: "Finds the hypotenuse of a right-angled triangle." },
-            { id: 3, subject: "math", title: "Area of a Circle", formula: "A = πr²", desc: "የክብ አጠቃላይ የቦታ ስፋት (Area) መለኪያ ቀመር።", ex: "ራዲየስ(r) 7cm ቢሆን, Area = 22/7 × 7 × 7 = 154 cm²", title_en: "Area of a Circle", desc_en: "Calculates the total space inside a circle." },
-            // Physics
-            { id: 4, subject: "physics", title: "Newton's Second Law", formula: "F = m × a", desc: "በአንድ ቁስ ላይ የሚያርፍ ጉልበት ከግዝፈቱና ፍጥነቱ ጋር ያለውን ዝምድና ያሳያል።", ex: "m = 10kg, a = 2m/s² ከሆነ, F = 20 Newtons ጉልበት ይፈጠራል።", title_en: "Newton's Second Law", desc_en: "Relates mass, acceleration and net force." },
-            { id: 5, subject: "physics", title: "Kinetic Energy", formula: "KE = ½mv²", desc: "ማንኛውም የሚንቀሳቀስ ቁስ አካል ያለውን የእንቅስቃሴ ሀይል (Energy) መለኪያ።", ex: "ግዝፈቱ 4kg የሆነ እቃ በ 3m/s ቢጓዝ: KE = 0.5 × 4 × 3² = 18 Joules", title_en: "Kinetic Energy", desc_en: "Energy possessed by an object due to its motion." },
-            { id: 6, subject: "physics", title: "Ohm's Law", formula: "V = I × R", desc: "በኤሌክትሪክ የወረዳ ፍሰት ውስጥ የቮልቴጅ፣ ከረንት እና ሬዚስታንስ ግንኙነት።", ex: "ከረንት(I) 2A እና ሬዚስታንስ(R) 5Ω ቢሆን, V = 10 Volts", title_en: "Ohm's Law", desc_en: "Current through a conductor is proportional to voltage." },
-            // Chemistry
-            { id: 7, subject: "chem", title: "Ideal Gas Law", formula: "PV = nRT", desc: "የጋዞች ግፊት፣ መጠን፣ ሞል እና ሙቀት ያላቸውን ሙሉ ዝምድና ያሳያል።", ex: "R የጋዞች ቋሚ ቁጥር ሲሆን ዋጋው 0.0821 L·atm/(mol·K) ነው።", title_en: "Ideal Gas Law", desc_en: "Equation of state of a hypothetical ideal gas." },
-            { id: 8, subject: "chem", title: "Molarity Formula", formula: "M = n / V", desc: "በአንድ ውህድ ፈሳሽ ውስጥ ያለን የቁስ ትኩረት (Concentration) መለኪያ።", ex: "2 ሞል ቁስ በ 1 ሊትር ውሃ ውስጥ ቢሟሟ ውህዱ 2 M (Molar) ይባላል።", title_en: "Molarity Formula", desc_en: "Calculates substance concentration in a solution." },
-            { id: 9, subject: "chem", title: "Density Formula", formula: "ρ = m / V", desc: "የአንድ ቁስ አካል የጥፍግና (Density) መጠን መለኪያ ቀመር።", ex: "ክብደት 20g፣ መጠን 5cm³ ቢሆን, ጥፍግና = 20/5 = 4 g/cm³", title_en: "Density Formula", desc_en: "Mass per unit volume of a substance." }
+            { id: 1, subject: "math", title: "Quadratic Formula", formula: "x = (-b ± √(b² - 4ac)) / 2a", desc: "የሁለተኛ ዲግሪ የፖሊኖሚያል እኩልታዎችን መፍቻ ቀመር ነው።", ex: "x² - 5x + 6 = 0 ከሆነ, x=2 ወይም x=3 ይመጣል።", title_en: "Quadratic Formula", desc_en: "Finds roots of second-degree equations." },
+            { id: 2, subject: "math", title: "Pythagorean Theorem", formula: "a² + b² = c²", desc: "በቀኝ ማዕዘን ሶስት ማዕዘን ላይ የረጅሙን ጎን (Hypotenuse) መፈለጊያ ቀመር።", ex: "ጎኖቹ 3 እና 4 ከሆኑ, c = √9+16 = 5 ይሆናል።", title_en: "Pythagorean Theorem", desc_en: "Calculates the hypotenuse of a right triangle." },
+            { id: 3, subject: "physics", title: "Newton's Second Law", formula: "F = m × a", desc: "በአንድ አካል ላይ የሚያርፍ ጠቅላላ ጉልበት ከግዝፈቱ እና ከፍጥነቱ ማደግ ጋር እኩል ነው።", ex: "m = 5kg, a = 4m/s² ቢሆን, F = 20 N (Newtons) ይሆናል።", title_en: "Newton's Second Law", desc_en: "Relates mass, acceleration and net force." },
+            { id: 4, subject: "physics", title: "Ohm's Law", formula: "V = I × R", desc: "በኤሌክትሪክ ሰርኪዩት ውስጥ የቮልቴጅ፣ የከረንት እና የሬዚስታንስ ዝምድና ማሳያ።", ex: "Current(I) = 2A, Resistance(R) = 6Ω ቢሆን, ቮልቴጅ 12V ይሆናል።", title_en: "Ohm's Law", desc_en: "Voltage equals current multiplied by resistance." },
+            { id: 5, subject: "chem", title: "Ideal Gas Law", formula: "PV = nRT", desc: "የጋዞች ግፊት(P)፣ መጠን(V)፣ የሞል ብዛት(n) እና የሙቀት መጠን(T) ግንኙነት።", ex: "R የጋዞች ቋሚ ቁጥር ሲሆን ዋጋው 0.0821 L·atm/mol·K ነው።", title_en: "Ideal Gas Law", desc_en: "Equation of state for an ideal gas." },
+            { id: 6, subject: "chem", title: "Density Formula", formula: "ρ = m / V", desc: "የአንድ ቁስ አካል የጥፍግና (Density) መጠን መለኪያ ቀመር ነው።", ex: "ክብደት 50g እና መጠን 10cm³ ቢሆን, ጥፍግናው 5 g/cm³ ይሆናል።", title_en: "Density Formula", desc_en: "Mass per unit volume of a substance." },
+            { id: 7, subject: "bio", title: "Photosynthesis Process", formula: "6CO₂ + 6H₂O + Light ➔ C₆H₁O₆ + 6O₂", desc: "ዕፅዋት የፀሐይን ብርሃን ተጠቅመው የራሳቸውን ምግብ (Glucose) የሚያዘጋጁበት ቀመር።", ex: "ካርቦንዳይኦክሳይድ እና ውሃ ተዋህደው ግሉኮስና ኦክስጅን ይፈጥራሉ።", title_en: "Photosynthesis Formula", desc_en: "The biochemical process equation of plants making food." }
         ];
 
-        let favorites = JSON.parse(localStorage.getItem('aa_favs')) || [];
-        let notes = JSON.parse(localStorage.getItem('aa_notes')) || [];
-        let currentLang = "am";
+        let savedNotes = JSON.parse(localStorage.getItem('aa_os_notes')) || [];
+        let sysLang = "am";
 
-        // 1. Splash Screen Control (3 ሰከንድ)
+        // Splash screen መቆጣጠሪያ
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('splash').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 document.getElementById('bottomNav').style.display = 'flex';
-                loadNotes();
+                renderNotes();
             }, 3000);
         });
 
-        // 2. Subject View Handler (ካቴጎሪ መምረጫ)
+        // የትምህርት ዘርፎች ክፈት
         function openSubject(subject) {
             document.getElementById('categories-menu-view').style.display = 'none';
             document.getElementById('formulas-list-view').style.display = 'block';
             
-            const titleElement = document.getElementById('selected-subject-title');
-            titleElement.innerText = subject.toUpperCase() + " FORMULAS";
+            document.getElementById('selected-subject-title').innerText = subject.toUpperCase() + " SECTIONS";
+            const filtered = formulasDatabase.filter(f => f.subject === subject);
             
-            const filteredData = formulasDatabase.filter(item => item.subject === subject);
-            renderFormulas(filteredData, 'formulas-container');
+            const container = document.getElementById('formulas-container');
+            container.innerHTML = "";
+            
+            filtered.forEach(item => {
+                const title = sysLang === "am" ? item.title : item.title_en;
+                const desc = sysLang === "am" ? item.desc : item.desc_en;
+                container.innerHTML += `
+                    <div class="formula-card" onclick="openDetailsModal(${item.id})">
+                        <strong style="color:var(--main-accent); font-size:14px;">${title}</strong>
+                        <div class="formula-display">${item.formula}</div>
+                        <p style="font-size:11px; color:var(--text-muted); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${desc}</p>
+                    </div>
+                `;
+            });
         }
 
         function backToCategories() {
@@ -387,148 +401,139 @@
             document.getElementById('categories-menu-view').style.display = 'block';
         }
 
-        // 3. Formula Card Renderer
-        function renderFormulas(data, targetId) {
-            const container = document.getElementById(targetId);
-            container.innerHTML = "";
-            if(data.length === 0) {
-                container.innerHTML = "<p style='color:var(--text-muted); padding:20px;'>ምንም አልተገኘም...</p>";
-                return;
-            }
-            data.forEach(item => {
-                const isFav = favorites.includes(item.id);
-                const card = document.createElement('div');
-                card.className = `formula-card ${item.subject}`;
-                
-                const title = currentLang === "am" ? item.title : item.title_en;
-                const desc = currentLang === "am" ? item.desc : item.desc_en;
-
-                card.innerHTML = `
-                    <i class="fa-solid fa-heart fav-icon ${isFav?'active':''}" onclick="toggleFav(event, ${item.id})"></i>
-                    <div onclick="openModal(${item.id})">
-                        <div class="card-top"><span>${item.subject.toUpperCase()}</span></div>
-                        <h3 style="margin-top:5px;">${title}</h3>
-                        <div class="formula-display">${item.formula}</div>
-                        <p style="font-size:12px; color:var(--text-muted); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${desc}</p>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // 4. Page Routing (የታችኛው ማውጫ መቀያየሪያ)
-        function switchPage(pageId, element) {
+        // ገጾች መቀያየሪያ (Navigation Routing)
+        function navigateRoute(pageId, navElement) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
             
-            element.classList.add('active');
+            navElement.classList.add('active');
             document.getElementById(`page-${pageId}`).classList.add('active');
-
-            if(pageId === 'favorites') {
-                const favData = formulasDatabase.filter(item => favorites.includes(item.id));
-                renderFormulas(favData, 'favorites-container');
-            }
         }
 
-        // 5. Favorites Toggle Logic
-        function toggleFav(event, id) {
-            event.stopPropagation();
-            if(favorites.includes(id)) {
-                favorites = favorites.filter(favId => favId !== id);
-            } else {
-                favorites.push(id);
-            }
-            localStorage.setItem('aa_favs', JSON.stringify(favorites));
-            event.target.classList.toggle('active');
-        }
-
-        // 6. Detailed Popup Modal
-        function openModal(id) {
+        // ዝርዝር መረጃ ማሳያ ፖፕ-አፕ
+        function openDetailsModal(id) {
             const item = formulasDatabase.find(f => f.id === id);
-            const modal = document.getElementById('formulaModal');
-            
-            document.getElementById('modalTitle').innerText = currentLang === "am" ? item.title : item.title_en;
-            document.getElementById('modalDisplay').innerText = item.formula;
-            document.getElementById('modalDesc').innerText = currentLang === "am" ? item.desc : item.desc_en;
-            document.getElementById('modalExample').innerHTML = currentLang === "am" ? `<strong>ምሳሌ:</strong> ${item.ex}` : `<strong>Example:</strong> ${item.ex}`;
-            
-            modal.style.display = "flex";
+            document.getElementById('mTitle').innerText = sysLang === "am" ? item.title : item.title_en;
+            document.getElementById('mDisplay').innerText = item.formula;
+            document.getElementById('mDesc').innerText = sysLang === "am" ? item.desc : item.desc_en;
+            document.getElementById('mExample').innerHTML = sysLang === "am" ? `<strong>ምሳሌ:</strong> ${item.ex}` : `<strong>Example:</strong> ${item.ex}`;
+            document.getElementById('detailsModal').style.display = 'flex';
         }
-        function closeModal() { document.getElementById('formulaModal').style.display = "none"; }
+        function closeDetailsModal() { document.getElementById('detailsModal').style.display = 'none'; }
 
-        // 7. Unit Converter Function (መለኪያ መቀየሪያ)
-        function runConversion() {
-            const val = parseFloat(document.getElementById('convert-input').value);
-            const type = document.getElementById('convert-type').value;
-            const resBox = document.getElementById('conversion-result');
+        // =========================================================
+        // ALGORITHMS COMPUTATION CORE
+        // =========================================================
+        function runGCD() {
+            let a = parseInt(document.getElementById('gcd-a').value);
+            let b = parseInt(document.getElementById('gcd-b').value);
+            const output = document.getElementById('gcd-output');
             
-            if(isNaN(val)) { resBox.innerText = "ውጤት: 0"; return; }
+            if(isNaN(a) || isNaN(b)) { output.innerText = "እባክዎ ሁለት ትክክለኛ ቁጥሮችን ያስገቡ!"; return; }
             
-            let res = 0;
-            if(type === 'km-m') res = val * 1000 + " Meters";
-            else if(type === 'm-cm') res = val * 100 + " Centimeters";
-            else if(type === 'kg-g') res = val * 1000 + " Grams";
-            else if(type === 'c-f') res = (val * 9/5) + 32 + " Fahrenheit";
-            
-            resBox.innerText = "ውጤት: " + res;
+            let steps = [];
+            let originalA = a, originalB = b;
+            while (b !== 0) {
+                let remainder = a % b;
+                steps.push(`➔ ${a} ÷ ${b} = ${Math.floor(a/b)} (ቀሪ = ${remainder})`);
+                a = b;
+                b = remainder;
+            }
+            steps.push(`\n✨ ታላቅ የጋራ አካፋይ GCD(${originalA}, ${originalB}) = ${a}`);
+            output.innerHTML = steps.join("<br>");
         }
 
-        // 8. Personal Notes Logic (የግል ማስታወሻ ደብተር)
-        function addNote() {
-            const txt = document.getElementById('note-text').value;
+        function runFibonacci() {
+            let limit = parseInt(document.getElementById('fibo-limit').value);
+            const output = document.getElementById('fibo-output');
+            
+            if(isNaN(limit) || limit <= 0) { output.innerText = "እባክዎ ከ 0 የሚበልጥ ቁጥር ያስገቡ!"; return; }
+            if(limit > 50) { limit = 50; } // Crash መከላከያ
+            
+            let series = [0, 1];
+            for(let i = 2; i < limit; i++) {
+                series.push(series[i-1] + series[i-2]);
+            }
+            output.innerText = `ተከታታይ ቁጥሮች (${limit}):\n` + series.slice(0, limit).join(" ➔ ");
+        }
+
+        // =========================================================
+        // NOTES MANAGEMENT
+        // =========================================================
+        function addCustomNote() {
+            const txt = document.getElementById('note-input').value;
             if(!txt) return;
-            notes.push(txt);
-            localStorage.setItem('aa_notes', JSON.stringify(notes));
-            document.getElementById('note-text').value = "";
-            loadNotes();
+            savedNotes.push(txt);
+            localStorage.setItem('aa_os_notes', JSON.stringify(savedNotes));
+            document.getElementById('note-input').value = "";
+            renderNotes();
         }
-        function loadNotes() {
-            const box = document.getElementById('notes-list');
-            box.innerHTML = "";
-            notes.forEach((nt, index) => {
-                box.innerHTML += `
-                    <div class="note-item">
-                        <span>${nt}</span>
-                        <i class="fa-solid fa-trash" style="color:var(--neon-pink); cursor:pointer;" onclick="deleteNote(${index})"></i>
+        function renderNotes() {
+            const wrapper = document.getElementById('notes-wrapper');
+            wrapper.innerHTML = "";
+            savedNotes.forEach((note, index) => {
+                wrapper.innerHTML += `
+                    <div style="background:rgba(0,0,0,0.2); padding:12px; border-radius:10px; border-left:3px solid var(--neon-pink); margin-bottom:8px; display:flex; justify-content:between; align-items:center;">
+                        <span style="flex:1; font-size:13px;">${note}</span>
+                        <i class="fa-solid fa-trash-can" style="color:var(--neon-pink); cursor:pointer; margin-left:10px;" onclick="wipeSingleNote(${index})"></i>
                     </div>
                 `;
             });
         }
-        function deleteNote(index) {
-            notes.splice(index, 1);
-            localStorage.setItem('aa_notes', JSON.stringify(notes));
-            loadNotes();
+        function wipeSingleNote(idx) {
+            savedNotes.splice(idx, 1);
+            localStorage.setItem('aa_os_notes', JSON.stringify(savedNotes));
+            renderNotes();
         }
 
-        // 9. Theme Accent Customizer
-        function changeTheme(color) {
+        // =========================================================
+        // SETTINGS CONTROL CONTROLLERS
+        // =========================================================
+        function changeThemeAccent(color) {
             document.documentElement.style.setProperty('--main-accent', color);
+            document.documentElement.style.setProperty('--card-glow', `0 0 15px ${color}4d`);
         }
 
-        // 10. Multi-Language Switcher
-        function changeLanguage() {
-            currentLang = document.getElementById('langSelect').value;
-            if(currentLang === 'en') {
-                document.getElementById('lang-title').innerText = "Student OS Hub 🎓";
-                document.getElementById('lang-choose-sub').innerHTML = "<i class='fa-solid fa-shapes'></i> Select Subject Domain:";
+        function toggleGlowEffect() {
+            const checked = document.getElementById('glowToggle').checked;
+            document.documentElement.style.setProperty('--card-glow', checked ? `0 0 15px var(--main-accent)` : 'none');
+        }
+
+        function adjustFontSize() {
+            const size = document.getElementById('fontSizeSelect').value;
+            document.documentElement.style.setProperty('--base-font-size', size);
+        }
+
+        function switchSystemLanguage() {
+            sysLang = document.getElementById('langSelect').value;
+            if(sysLang === "en") {
+                document.getElementById('lang-title').innerText = "Student System OS v3.0 🎓";
+                document.getElementById('lang-choose-sub').innerHTML = "<i class='fa-solid fa-circle-nodes'></i> Select Domain Grid (2x2):";
                 document.getElementById('lang-back').innerText = "Back";
-                document.getElementById('lang-tool-conv').innerText = "Unit Measurement Converter";
-                document.getElementById('lang-tool-notes').innerText = "Personal Formula Notebook";
-                document.getElementById('lang-fav-title').innerText = "Bookmarked Formulas Archive";
-                document.getElementById('lang-set-core').innerText = "Core System Preferences";
-                document.getElementById('lang-set-color').innerText = "Application Accent Highlight Theme:";
-                document.getElementById('lang-set-haptic').innerText = "Simulated Haptic & Sounds Alert";
+                document.getElementById('lang-algo-title').innerText = "Algorithm Processing Core";
+                document.getElementById('lang-notes-title').innerText = "Personal Interactive Workspace";
+                document.getElementById('lang-set-visual').innerText = "Visuals & Ambient Lighting";
+                document.getElementById('lang-set-font').innerText = "Typography & Localization";
+                document.getElementById('lang-set-about').innerText = "System Architecture Information";
                 document.getElementById('nav-home').innerText = "Menu";
-                document.getElementById('nav-tools').innerText = "Tools";
-                document.getElementById('nav-favs').innerText = "Favorites";
+                document.getElementById('nav-algo').innerText = "Terminal";
+                document.getElementById('nav-notes').innerText = "Workspace";
                 document.getElementById('nav-sets').innerText = "Settings";
             } else {
-                // Return to Amharic
-                location.reload();
+                // አማርኛ መልስ
+                document.getElementById('lang-title').innerText = "የተማሪዎች ሲስተም OS v3.0 🎓";
+                document.getElementById('lang-choose-sub').innerHTML = "<i class='fa-solid fa-circle-nodes'></i> የትምህርት ዘርፍ ይምረጡ (2x2)፡";
+                document.getElementById('lang-back').innerText = "ተመለስ";
+                document.getElementById('lang-algo-title').innerText = "የአልጎሪዝም ማስመሪያ ሞጁል";
+                document.getElementById('lang-notes-title').innerText = "የግል ማስታወሻ ደብተር";
+                document.getElementById('nav-home').innerText = "ማውጫ";
+                document.getElementById('nav-algo').innerText = "አልጎሪዝም";
+                document.getElementById('nav-notes').innerText = "ማስታወሻ";
+                document.getElementById('nav-sets').innerText = "ቅንብር";
             }
         }
 
-        function resetAppData() {
+        function wipeDataStore() {
             localStorage.clear();
             location.reload();
         }
