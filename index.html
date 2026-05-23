@@ -3,520 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AA - All Formulas Mega App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>AA Mega Super App 🚀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* === የከለር እና የዲዛይን ቅንብሮች === */
+        /* =========================================================
+           1. ROOT VARIABLES & THEMES
+        ========================================================= */
         :root {
-            --primary-grad: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --math-color: #ff4757;
-            --phys-color: #1e90ff;
-            --chem-color: #2ed573;
-            --bio-color: #ffa502;
-            --econ-color: #9b59b6;
-            --bg-light: #f4f7f6;
-            --text-dark: #2c3e50;
-            --card-bg: #ffffff;
+            /* Light Theme Colors */
+            --bg-color: #f4f7fb;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --sidebar-bg: #ffffff;
+            --primary: #6c5ce7;
+            --secondary: #00cec9;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --success: #00b894;
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
         }
 
+        [data-theme="dark"] {
+            /* Dark Theme Colors */
+            --bg-color: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --sidebar-bg: #1e293b;
+            --primary: #818cf8;
+            --secondary: #2dd4bf;
+            --danger: #f87171;
+            --warning: #fbbf24;
+            --success: #34d399;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* =========================================================
+           2. GLOBAL STYLES
+        ========================================================= */
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-attachment: fixed;
+            background-size: cover;
         }
 
-        /* === 1. Splash Screen (AA ዘመናዊ መግቢያ) === */
-        #splash-screen {
+        /* =========================================================
+           3. SPLASH SCREEN (ANIMATED)
+        ========================================================= */
+        #splash {
             position: fixed;
-            width: 100%;
-            height: 100vh;
-            background: var(--primary-grad);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease-out, visibility 0.8s;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        .logo-circle {
-            width: 130px;
-            height: 130px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 30px rgba(255,255,255,0.6);
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        .logo-text {
-            font-size: 60px;
+        .splash-logo {
+            font-size: 100px;
+            color: white;
             font-weight: 800;
-            background: var(--primary-grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite;
         }
 
-        .splash-subtitle {
-            color: white;
+        .loader {
+            width: 50px; height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
             margin-top: 20px;
-            font-weight: 400;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            animation: fadeIn 2s;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-            100% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255,255,255,0.8); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* === 2. ዋናው ገጽ (Header) === */
-        .header {
-            background: var(--primary-grad);
-            color: white;
-            padding: 50px 20px 30px;
-            text-align: center;
-            border-radius: 0 0 40px 40px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 2.2rem;
-        }
-
-        .header p {
-            margin: 10px 0 0 0;
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        /* === 3. ፍለጋ (Search Bar) === */
-        .search-container {
-            margin: -25px 20px 20px;
-            position: relative;
-        }
-
-        .search-container input {
-            width: 100%;
-            padding: 16px 25px;
-            border-radius: 50px;
-            border: none;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .search-container input:focus {
-            box-shadow: 0 8px 30px rgba(79, 172, 254, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* === 4. መምረጫዎች (Category Tabs) === */
-        .tabs-container {
-            display: flex;
-            gap: 12px;
-            padding: 10px 20px;
-            overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-        }
-        
-        .tabs-container::-webkit-scrollbar {
-            display: none; /* Chrome */
-        }
-
-        .tab {
-            padding: 10px 22px;
-            border-radius: 20px;
-            background: var(--card-bg);
-            color: #555;
-            white-space: nowrap;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            background: #4facfe;
-            color: white;
-            box-shadow: 0 6px 15px rgba(79, 172, 254, 0.4);
-        }
-
-        /* === 5. የቀመር ካርዶች (Formula Cards) === */
-        .formulas-list {
+        /* =========================================================
+           4. SIDEBAR NAVIGATION
+        ========================================================= */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
             padding: 20px;
-            padding-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-items { list-style: none; flex: 1; }
+        
+        .nav-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .nav-item i { font-size: 20px; }
+
+        /* =========================================================
+           5. MAIN CONTENT AREA
+        ========================================================= */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            width: calc(100% - 250px);
+        }
+
+        /* Top Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            background: var(--card-bg);
+            padding: 15px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+        }
+
+        .search-bar {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 300px;
+        }
+
+        .search-bar input {
+            border: none; background: transparent; outline: none;
+            color: var(--text-main); width: 100%;
+        }
+
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        
+        .theme-btn {
+            background: transparent; border: none; font-size: 24px;
+            color: var(--warning); cursor: pointer; transition: 0.3s;
+        }
+
+        .theme-btn:hover { transform: rotate(30deg); }
+
+        .profile-pic {
+            width: 45px; height: 45px; border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-weight: bold; font-size: 18px;
+        }
+
+        /* =========================================================
+           6. DASHBOARD WIDGETS (GLASSMORPHISM)
+        ========================================================= */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
         .card {
             background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 25px;
             border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .card:active {
-            transform: scale(0.98);
-        }
+        .card:hover { transform: translateY(-5px); }
 
         .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 8px; height: 100%;
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 5px; height: 100%; background: var(--primary);
         }
 
-        /* የየትምህርቶቹ ቀለማት */
-        .card.math::before { background: var(--math-color); }
-        .card.phys::before { background: var(--phys-color); }
-        .card.chem::before { background: var(--chem-color); }
-        .card.bio::before { background: var(--bio-color); }
-        .card.econ::before { background: var(--econ-color); }
+        .card.card-pink::before { background: var(--danger); }
+        .card.card-green::before { background: var(--success); }
+        .card.card-yellow::before { background: var(--warning); }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .card-icon { 
+            width: 50px; height: 50px; border-radius: 15px; 
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 24px; color: white;
         }
 
-        .card h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: var(--text-dark);
+        .bg-primary { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        .bg-danger { background: linear-gradient(135deg, #ff7675, #fab1a0); }
+        .bg-success { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .bg-warning { background: linear-gradient(135deg, #fdcb6e, #ffeaa7); }
+
+        .card-value { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
+        .card-title { color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* =========================================================
+           7. APP SECTIONS (Tabs Logic)
+        ========================================================= */
+        .app-section { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .app-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Tools Section - Calculator & Tasks */
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+
+        /* Calculator UI */
+        .calculator {
+            background: var(--card-bg); padding: 20px; border-radius: 20px;
+            box-shadow: var(--shadow); border: 1px solid var(--glass-border);
         }
-
-        .subject-tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: white;
+        .calc-display {
+            background: rgba(0,0,0,0.1); width: 100%; height: 60px;
+            border-radius: 10px; margin-bottom: 15px; text-align: right;
+            padding: 15px; font-size: 24px; color: var(--text-main); font-family: monospace;
         }
-
-        .math-tag { background: var(--math-color); }
-        .phys-tag { background: var(--phys-color); }
-        .chem-tag { background: var(--chem-color); }
-        .bio-tag { background: var(--bio-color); }
-        .econ-tag { background: var(--econ-color); }
-
-        .formula-box {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-            font-family: 'Courier New', monospace;
-            font-weight: 700;
-            font-size: 1.3rem;
-            text-align: center;
-            color: #333;
-            border: 1px dashed #ccc;
-            margin-bottom: 10px;
-            overflow-x: auto;
+        .calc-keys {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
         }
-
-        .desc {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 0;
-            line-height: 1.5;
+        .calc-keys button {
+            padding: 15px; border: none; border-radius: 10px; font-size: 18px;
+            font-weight: bold; cursor: pointer; background: rgba(255,255,255,0.2);
+            color: var(--text-main); transition: 0.2s; backdrop-filter: blur(5px);
         }
+        .calc-keys button:hover { background: var(--primary); color: white; }
+        .calc-keys button.operator { background: var(--secondary); color: white; }
+        .calc-keys button.equal { background: var(--success); color: white; grid-column: span 2; }
 
-        .no-result {
-            text-align: center;
-            color: #888;
-            padding: 40px 20px;
-            font-size: 1.1rem;
-            display: none;
+        /* Tasks UI */
+        .todo-list {
+            background: var(--card-bg); padding: 25px; border-radius: 20px;
+            box-shadow: var(--shadow); border: 1px solid var(--glass-border);
+        }
+        .todo-item {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; margin-bottom: 10px;
+            border-left: 4px solid var(--warning);
+        }
+        .todo-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); transition: 0.3s; }
+            .main-content { margin-left: 0; width: 100%; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; gap: 15px; }
+            .search-bar { width: 100%; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- ================= SPLASH SCREEN ================= -->
-    <div id="splash-screen">
-        <div class="logo-circle">
-            <span class="logo-text">AA</span>
+    <div id="splash">
+        <div class="splash-logo">AA</div>
+        <h2 style="color: white; font-weight: 300; letter-spacing: 5px;">MEGA OS</h2>
+        <div class="loader"></div>
+    </div>
+
+    <nav class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-layer-group"></i> AA Studio
         </div>
-        <div class="splash-subtitle">Mega Formula App</div>
-    </div>
+        <ul class="nav-items">
+            <li class="nav-item active" onclick="switchTab('dashboard', this)">
+                <i class="fa-solid fa-house-chimney"></i> ዳሽቦርድ
+            </li>
+            <li class="nav-item" onclick="switchTab('tools', this)">
+                <i class="fa-solid fa-toolbox"></i> መሳሪያዎች
+            </li>
+            <li class="nav-item" onclick="switchTab('ai', this)">
+                <i class="fa-solid fa-robot"></i> AI ረዳት
+            </li>
+            <li class="nav-item" onclick="switchTab('media', this)">
+                <i class="fa-solid fa-music"></i> ሚዲያ
+            </li>
+            <li class="nav-item" onclick="switchTab('settings', this)">
+                <i class="fa-solid fa-gear"></i> ቅንብሮች
+            </li>
+        </ul>
+        <div style="margin-top: auto; padding: 15px; text-align: center; color: var(--text-muted); font-size: 12px;">
+            <i class="fa-solid fa-shield-halved"></i> Secured by AA
+        </div>
+    </nav>
 
-    <!-- ================= HEADER ================= -->
-    <div class="header">
-        <h1>All Formulas</h1>
-        <p>ለተማሪዎች የተዘጋጀ አጠቃላይ የቀመር ማውጫ</p>
-    </div>
-
-    <!-- ================= SEARCH ================= -->
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="ቀመር ይፈልጉ... (ለምሳሌ: Area, Force)" onkeyup="searchFormulas()">
-    </div>
-
-    <!-- ================= TABS ================= -->
-    <div class="tabs-container">
-        <div class="tab active" onclick="filterCategory('all', this)">ሁሉንም</div>
-        <div class="tab" onclick="filterCategory('math', this)">ሒሳብ</div>
-        <div class="tab" onclick="filterCategory('phys', this)">ፊዚክስ</div>
-        <div class="tab" onclick="filterCategory('chem', this)">ኬሚስትሪ</div>
-        <div class="tab" onclick="filterCategory('bio', this)">ባዮሎጂ</div>
-        <div class="tab" onclick="filterCategory('econ', this)">ኢኮኖሚክስ</div>
-    </div>
-
-    <!-- ================= FORMULA LIST ================= -->
-    <div class="formulas-list" id="formulasList">
+    <main class="main-content">
         
-        <!-- === ሒሳብ (Mathematics) === -->
-        <div class="card math" data-cat="math">
-            <div class="card-header">
-                <h3>Quadratic Formula</h3>
-                <span class="subject-tag math-tag">Math</span>
+        <header class="header">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted)"></i>
+                <input type="text" placeholder="ፈልግ... (Search)">
             </div>
-            <div class="formula-box">x = (-b ± √(b² - 4ac)) / 2a</div>
-            <p class="desc">የሁለተኛ ዲግሪ (Quadratic) እኩልዮሽ መፍትሄ መፈለጊያ።</p>
-        </div>
-
-        <div class="card math" data-cat="math">
-            <div class="card-header">
-                <h3>Pythagorean Theorem</h3>
-                <span class="subject-tag math-tag">Math</span>
+            
+            <div class="header-actions">
+                <div id="clock" style="font-weight: 600; font-family: monospace; font-size: 18px;">12:00:00 AM</div>
+                <button class="theme-btn" onclick="toggleTheme()" title="ቀን/ማታ ቀይር">
+                    <i class="fa-solid fa-moon" id="theme-icon"></i>
+                </button>
+                <div style="position: relative;">
+                    <i class="fa-solid fa-bell" style="font-size: 22px; cursor: pointer;"></i>
+                    <span style="position: absolute; top: -5px; right: -5px; background: var(--danger); color: white; border-radius: 50%; padding: 2px 5px; font-size: 10px; font-weight: bold;">3</span>
+                </div>
+                <div class="profile-pic">AA</div>
             </div>
-            <div class="formula-box">a² + b² = c²</div>
-            <p class="desc">የRight-angled ትሪያንግል ጎኖችን ርዝመት ለማስላት። c ማለት ሃይፖተነስ (Hypotenuse) ነው።</p>
-        </div>
+        </header>
 
-        <div class="card math" data-cat="math">
-            <div class="card-header">
-                <h3>Area of a Circle</h3>
-                <span class="subject-tag math-tag">Math</span>
+        <section id="dashboard" class="app-section active">
+            <h2 style="margin-bottom: 20px; font-weight: 700;">እንኳን ደህና መጡ! <span style="font-size:24px;">👋</span></h2>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon bg-primary"><i class="fa-solid fa-chart-line"></i></div>
+                        <i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-muted)"></i>
+                    </div>
+                    <div class="card-value">12,450</div>
+                    <div class="card-title">አጠቃላይ እይታዎች (Views)</div>
+                </div>
+
+                <div class="card card-pink">
+                    <div class="card-header">
+                        <div class="card-icon bg-danger"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-muted)"></i>
+                    </div>
+                    <div class="card-value">100%</div>
+                    <div class="card-title">የሲስተም ጤንነት (Health)</div>
+                </div>
+
+                <div class="card card-green">
+                    <div class="card-header">
+                        <div class="card-icon bg-success"><i class="fa-solid fa-wallet"></i></div>
+                        <i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-muted)"></i>
+                    </div>
+                    <div class="card-value">$4,520</div>
+                    <div class="card-title">ገቢ (Revenue)</div>
+                </div>
+
+                <div class="card card-yellow">
+                    <div class="card-header">
+                        <div class="card-icon bg-warning"><i class="fa-solid fa-bolt"></i></div>
+                        <i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-muted)"></i>
+                    </div>
+                    <div class="card-value">4.2 ms</div>
+                    <div class="card-title">ፍጥነት (Speed)</div>
+                </div>
             </div>
-            <div class="formula-box">A = πr²</div>
-            <p class="desc">የክብ ስፋት መፈለጊያ። r ራዲየስ ሲሆን π ደግሞ 3.14 ነው።</p>
-        </div>
 
-        <div class="card math" data-cat="math">
-            <div class="card-header">
-                <h3>Trigonometry (SOH CAH TOA)</h3>
-                <span class="subject-tag math-tag">Math</span>
+            <div class="card" style="height: 300px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <i class="fa-solid fa-chart-pie" style="font-size: 60px; color: var(--primary); margin-bottom: 20px; opacity: 0.5;"></i>
+                <h3 style="color: var(--text-muted)">የዳታ ግራፍ እዚህ ላይ ይገባል...</h3>
             </div>
-            <div class="formula-box">sin(θ) = Opp/Hyp</div>
-            <p class="desc">የሳይን (Sine) ቀመር። ፊትለፊት ያለ ጎን ሲካፈል ለሃይፖተነስ።</p>
-        </div>
+        </section>
 
-        <!-- === ፊዚክስ (Physics) === -->
-        <div class="card phys" data-cat="phys">
-            <div class="card-header">
-                <h3>Newton's 2nd Law</h3>
-                <span class="subject-tag phys-tag">Physics</span>
+        <section id="tools" class="app-section">
+            <h2 style="margin-bottom: 20px; font-weight: 700;">ጠቃሚ መሳሪያዎች 🛠️</h2>
+            
+            <div class="tools-grid">
+                <div class="calculator">
+                    <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-calculator"></i> ማስያ (Calculator)</h3>
+                    <div class="calc-display" id="calc-display">0</div>
+                    <div class="calc-keys">
+                        <button style="color: var(--danger)" onclick="calcClear()">C</button>
+                        <button onclick="calcAppend('(')">(</button>
+                        <button onclick="calcAppend(')')">)</button>
+                        <button class="operator" onclick="calcAppend('/')">÷</button>
+                        
+                        <button onclick="calcAppend('7')">7</button>
+                        <button onclick="calcAppend('8')">8</button>
+                        <button onclick="calcAppend('9')">9</button>
+                        <button class="operator" onclick="calcAppend('*')">×</button>
+                        
+                        <button onclick="calcAppend('4')">4</button>
+                        <button onclick="calcAppend('5')">5</button>
+                        <button onclick="calcAppend('6')">6</button>
+                        <button class="operator" onclick="calcAppend('-')">-</button>
+                        
+                        <button onclick="calcAppend('1')">1</button>
+                        <button onclick="calcAppend('2')">2</button>
+                        <button onclick="calcAppend('3')">3</button>
+                        <button class="operator" onclick="calcAppend('+')">+</button>
+                        
+                        <button onclick="calcAppend('0')">0</button>
+                        <button onclick="calcAppend('.')">.</button>
+                        <button class="equal" onclick="calcResult()">=</button>
+                    </div>
+                </div>
+
+                <div class="todo-list">
+                    <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-list-check"></i> የዛሬ ተግባራት (Tasks)</h3>
+                    
+                    <div class="todo-item" style="border-left-color: var(--success)">
+                        <input type="checkbox" checked>
+                        <span style="text-decoration: line-through; opacity: 0.7;">ቦቱን በ Render ላይ መጫን</span>
+                        <i class="fa-solid fa-check" style="margin-left: auto; color: var(--success)"></i>
+                    </div>
+                    
+                    <div class="todo-item" style="border-left-color: var(--warning)">
+                        <input type="checkbox">
+                        <span>Python ኮዱን ማስተካከል</span>
+                        <span style="margin-left: auto; font-size: 12px; background: var(--warning); color: #000; padding: 2px 8px; border-radius: 10px;">በሂደት ላይ</span>
+                    </div>
+
+                    <div class="todo-item" style="border-left-color: var(--danger)">
+                        <input type="checkbox">
+                        <span>አዲስ HTML ዲዛይን ለ AA መስራት</span>
+                        <i class="fa-solid fa-fire" style="margin-left: auto; color: var(--danger)"></i>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <input type="text" placeholder="አዲስ ስራ አስገባ..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.1); color: var(--text-main); outline: none;">
+                        <button style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
             </div>
-            <div class="formula-box">F = m × a</div>
-            <p class="desc">ጉልበት (Force) = ክብደት (Mass) × ፍጥንጥነት (Acceleration)</p>
-        </div>
+        </section>
 
-        <div class="card phys" data-cat="phys">
-            <div class="card-header">
-                <h3>Work Done</h3>
-                <span class="subject-tag phys-tag">Physics</span>
+        <section id="ai" class="app-section">
+            <div class="card" style="text-align: center; padding: 50px;">
+                <i class="fa-solid fa-microchip" style="font-size: 80px; color: var(--primary); margin-bottom: 20px;"></i>
+                <h2>የ AI ረዳት ገጽ</h2>
+                <p style="color: var(--text-muted); margin-top: 10px;">ይህ ገፅ ከ Python (Gemini) API ጋር በቀጥታ የሚገናኝበት ቦታ ነው።</p>
             </div>
-            <div class="formula-box">W = F × d × cos(θ)</div>
-            <p class="desc">ስራ (Work) = ጉልበት × ርቀት።</p>
-        </div>
+        </section>
 
-        <div class="card phys" data-cat="phys">
-            <div class="card-header">
-                <h3>Kinetic Energy</h3>
-                <span class="subject-tag phys-tag">Physics</span>
-            </div>
-            <div class="formula-box">KE = ½ m v²</div>
-            <p class="desc">የእንቅስቃሴ ሀይል (Kinetic Energy) ቀመር። m = mass, v = velocity.</p>
-        </div>
+    </main>
 
-        <div class="card phys" data-cat="phys">
-            <div class="card-header">
-                <h3>Ohm's Law</h3>
-                <span class="subject-tag phys-tag">Physics</span>
-            </div>
-            <div class="formula-box">V = I × R</div>
-            <p class="desc">ቮልቴጅ (Voltage) = ከረንት (Current) × ሬዚስታንስ (Resistance)</p>
-        </div>
-
-        <!-- === ኬሚስትሪ (Chemistry) === -->
-        <div class="card chem" data-cat="chem">
-            <div class="card-header">
-                <h3>Density</h3>
-                <span class="subject-tag chem-tag">Chemistry</span>
-            </div>
-            <div class="formula-box">ρ = m / V</div>
-            <p class="desc">ዴንሲቲ (Density) = ክብደት (Mass) ሲካፈል ለይዘት (Volume)።</p>
-        </div>
-
-        <div class="card chem" data-cat="chem">
-            <div class="card-header">
-                <h3>Ideal Gas Law</h3>
-                <span class="subject-tag chem-tag">Chemistry</span>
-            </div>
-            <div class="formula-box">PV = nRT</div>
-            <p class="desc">P=Pressure, V=Volume, n=moles, R=Gas constant, T=Temperature.</p>
-        </div>
-
-        <div class="card chem" data-cat="chem">
-            <div class="card-header">
-                <h3>Number of Moles</h3>
-                <span class="subject-tag chem-tag">Chemistry</span>
-            </div>
-            <div class="formula-box">n = m / M</div>
-            <p class="desc">moles = የተሰጠ ክብደት (m) / ሞላር ማስ (M)</p>
-        </div>
-
-        <!-- === ባዮሎጂ (Biology) === -->
-        <div class="card bio" data-cat="bio">
-            <div class="card-header">
-                <h3>Photosynthesis</h3>
-                <span class="subject-tag bio-tag">Biology</span>
-            </div>
-            <div class="formula-box">6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</div>
-            <p class="desc">ተክሎች የፀሀይ ብርሀንን ተጠቅመው ምግብ የሚያዘጋጁበት ኬሚካላዊ ሂደት።</p>
-        </div>
-
-        <div class="card bio" data-cat="bio">
-            <div class="card-header">
-                <h3>Cellular Respiration</h3>
-                <span class="subject-tag bio-tag">Biology</span>
-            </div>
-            <div class="formula-box">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy</div>
-            <p class="desc">ህይወት ያላቸው ነገሮች ከምግብ ሀይል የሚያገኙበት ሂደት።</p>
-        </div>
-
-        <!-- === ኢኮኖሚክስ (Economics) === -->
-        <div class="card econ" data-cat="econ">
-            <div class="card-header">
-                <h3>Profit Equation</h3>
-                <span class="subject-tag econ-tag">Economics</span>
-            </div>
-            <div class="formula-box">π = TR - TC</div>
-            <p class="desc">ትርፍ (Profit) = አጠቃላይ ገቢ (Total Revenue) - አጠቃላይ ወጪ (Total Cost)።</p>
-        </div>
-
-        <div class="card econ" data-cat="econ">
-            <div class="card-header">
-                <h3>GDP (Expenditure Approach)</h3>
-                <span class="subject-tag econ-tag">Economics</span>
-            </div>
-            <div class="formula-box">Y = C + I + G + (X - M)</div>
-            <p class="desc">የአንድ ሀገር አጠቃላይ ምርት (GDP) ማስያ። (C=Consumption, I=Investment, G=Govt, X=Exports, M=Imports)</p>
-        </div>
-
-        <!-- ምንም ውጤት ከሌለ የሚታይ ጽሁፍ -->
-        <div id="noResult" class="no-result">
-            <div style="font-size: 40px; margin-bottom: 10px;">🔍</div>
-            ያስገቡት ቀመር አልተገኘም!
-        </div>
-
-    </div>
-
-    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // 1. Splash Screen Logic (የ AA መግቢያ)
+        // 1. Splash Screen Logic
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
+                const splash = document.getElementById('splash');
                 splash.style.opacity = '0';
                 splash.style.visibility = 'hidden';
-                
-                // ለቴሌግራም አጭር ንዝረት (Haptic Feedback) መስጠት
-                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
-                    Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-                }
-            }, 2500); // ከ 2.5 ሰከንድ በኋላ ይጠፋል
+            }, 2500); // 2.5 seconds surprise
         });
 
-        // 2. Telegram WebApp Setup
-        if (window.Telegram && window.Telegram.WebApp) {
-            Telegram.WebApp.ready();
-            Telegram.WebApp.expand();
-            // ከላይ ያለውን የቴሌግራም ሄደር ቀለም መቀየር
-            Telegram.WebApp.setHeaderColor('#4facfe'); 
-        }
-
-        // 3. Search Logic (መፈለጊያ)
-        function searchFormulas() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.card');
-            let hasResult = false;
-
-            // አሁን የተመረጠውን Tab ለማወቅ
-            let activeTab = document.querySelector('.tab.active').innerText.toLowerCase();
-            let activeCategory = 'all';
+        // 2. Real-time Clock Logic
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
             
-            if(activeTab === 'ሒሳብ') activeCategory = 'math';
-            else if(activeTab === 'ፊዚክስ') activeCategory = 'phys';
-            else if(activeTab === 'ኬሚስትሪ') activeCategory = 'chem';
-            else if(activeTab === 'ባዮሎጂ') activeCategory = 'bio';
-            else if(activeTab === 'ኢኮኖሚክስ') activeCategory = 'econ';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-            cards.forEach(card => {
-                let text = card.innerText.toLowerCase();
-                let category = card.getAttribute('data-cat');
-                
-                // ጽሁፉ ከተገኘ እና በ ትክክለኛው ካታጎሪ ውስጥ ካለ
-                if (text.includes(input) && (activeCategory === 'all' || category === activeCategory)) {
-                    card.style.display = "block";
-                    hasResult = true;
-                } else {
-                    card.style.display = "none";
-                }
-            });
-
-            // ምንም ውጤት ከሌለ
-            document.getElementById('noResult').style.display = hasResult ? "none" : "block";
+        // 3. Theme Toggle Logic (Dark/Light Mode)
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeIcon.style.color = 'var(--warning)';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeIcon.style.color = '#fff';
+            }
         }
 
-        // 4. Tab Filtering Logic (መምረጫዎች)
-        function filterCategory(category, element) {
-            // Tab ስታይል መቀየር
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+        // 4. Tab Switching Logic
+        function switchTab(tabId, element) {
+            // Remove active class from all items
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.app-section').forEach(el => el.classList.remove('active'));
+            
+            // Add active class to clicked item & corresponding section
             element.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
 
-            // ፍለጋ ሳጥኑን ባዶ ማድረግ
-            document.getElementById('searchInput').value = '';
-            document.getElementById('noResult').style.display = "none";
-
-            // ካርዶቹን ማሳየት ወይም መደበቅ
-            let cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-cat') === category) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-
-            // Haptic Feedback
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
-                Telegram.WebApp.HapticFeedback.selectionChanged();
+        // 5. Basic Calculator Logic
+        let display = document.getElementById('calc-display');
+        
+        function calcAppend(val) {
+            if (display.innerText === '0' || display.innerText === 'Error') display.innerText = val;
+            else display.innerText += val;
+        }
+        
+        function calcClear() {
+            display.innerText = '0';
+        }
+        
+        function calcResult() {
+            try {
+                // Warning: eval is used here for simple demo purposes.
+                display.innerText = eval(display.innerText);
+            } catch (e) {
+                display.innerText = 'Error';
             }
         }
     </script>
