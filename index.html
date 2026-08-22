@@ -2,542 +2,184 @@
 <html lang="am">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AA Student OS v5.0 Neon Ultra 🚀</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Skyline Sprint</title>
     <style>
-        /* =========================================================
-           1. VIBRANT PURE NEON THEMES & COMPLEX CONFIGURATIONS
-        ========================================================= */
-        :root {
-            /* እጅግ ፉክና ደማቅ የጀርባ ቀለማት */
-            --bg-gradient: linear-gradient(135deg, #0d011a 0%, #020005 50%, #1a0033 100%);
-            --main-accent: #bd00ff; 
-            --neon-blue: #00f0ff;
-            --neon-pink: #ff007f;
-            --neon-green: #39ff14;
-            --neon-yellow: #fff000;
-            --neon-orange: #ff5500;
-            --card-bg: rgba(255, 255, 255, 0.06);
-            --text-color: #ffffff;
-            --text-muted: #b0b0d0;
-            --base-font-size: 14px;
-            
-            /* እጅግ የጎሉ ባለ ሁለት እጥፍ የብርሃን ማዕዘናት (Double Glow Intense Borders) */
-            --glow-blue: 0 0 15px #00f0ff, inset 0 0 8px rgba(0, 240, 255, 0.3);
-            --glow-pink: 0 0 15px #ff007f, inset 0 0 8px rgba(255, 0, 127, 0.3);
-            --glow-green: 0 0 15px #39ff14, inset 0 0 8px rgba(57, 255, 20, 0.3);
-            --glow-yellow: 0 0 15px #fff000, inset 0 0 8px rgba(255, 240, 0, 0.3);
-            --glow-accent: 0 0 20px #bd00ff, 0 0 40px rgba(189, 0, 255, 0.4);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg-gradient); color: var(--text-color); min-height: 100vh; padding-bottom: 95px; overflow-x: hidden; font-size: var(--base-font-size); }
-
-        /* =========================================================
-           2. ULTRA-VIBRANT FLASHING SPLASH SCREEN
-        ========================================================= */
-        #splash {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #020005; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999; overflow: hidden;
-        }
-        /* ፉክ ቀለበት አኒሜሽኖች */
-        .ring { position: absolute; width: 260px; height: 260px; border: 0px solid transparent; border-radius: 50%; }
-        .ring:nth-child(1) { border-top: 7px solid var(--neon-pink); filter: drop-shadow(0 0 10px var(--neon-pink)); animation: rotate1 1.5s linear infinite; }
-        .ring:nth-child(2) { border-right: 7px solid var(--neon-blue); filter: drop-shadow(0 0 10px var(--neon-blue)); animation: rotate2 1.9s linear infinite; }
-        .ring:nth-child(3) { border-bottom: 7px solid var(--neon-green); filter: drop-shadow(0 0 10px var(--neon-green)); animation: rotate3 1.3s linear infinite; }
-        .ring:nth-child(4) { border-left: 7px solid var(--neon-yellow); filter: drop-shadow(0 0 10px var(--neon-yellow)); animation: rotate1 2.2s linear infinite; }
-        .ring:nth-child(5) { border-top: 7px solid var(--neon-orange); filter: drop-shadow(0 0 10px var(--neon-orange)); animation: rotate2 1.0s linear infinite; }
-
-        .splash-text { 
-            font-size: 70px; font-weight: 900; color: white; letter-spacing: 6px;
-            text-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--main-accent), 0 0 60px var(--neon-pink); 
-            animation: pulse 1s ease-in-out infinite alternate; z-index: 10; 
-        }
-        .creator-tag { margin-top: 30px; font-size: 20px; font-weight: 800; letter-spacing: 4px; color: var(--neon-yellow); text-shadow: 0 0 15px var(--neon-yellow), 0 0 30px var(--neon-orange); z-index: 10; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #gameContainer { position: relative; width: 100%; max-width: 800px; height: 400px; background: linear-gradient(to bottom, #2b1055, #7597de); overflow: hidden; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        @keyframes rotate1 { 0% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg); } 100% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg); } }
-        @keyframes rotate2 { 0% { transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg); } 100% { transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg); } }
-        @keyframes rotate3 { 0% { transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg); } 100% { transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg); } }
-        @keyframes pulse { from { transform: scale(0.9); opacity: 0.7; } to { transform: scale(1.08); opacity: 1; } }
+        /* Background City Skyline */
+        .city { position: absolute; bottom: 80px; width: 200%; height: 200px; background: repeating-linear-gradient(90deg, #180b30 0px, #180b30 40px, transparent 40px, transparent 60px, #231145 60px, #231145 110px); animation: moveCity 12s linear infinite; }
+        @keyframes moveCity { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* =========================================================
-           3. STRUCTURE & CONTAINERS
-        ========================================================= */
-        .app-container { display: none; padding: 15px; max-width: 600px; margin: 0 auto; animation: fadeInUp 0.4s cubic-bezier(0.075, 0.82, 0.165, 1); }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Platform / Track */
+        .track { position: absolute; bottom: 0; width: 200%; height: 80px; background: #34495e; border-top: 6px solid #f1c40f; animation: moveTrack 2s linear infinite; }
+        @keyframes moveTrack { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 16px;
-            background: rgba(0,0,0,0.4); border-radius: 18px; 
-            border: 2px solid var(--neon-green); box-shadow: var(--glow-green);
-        }
-        .header-title h1 { font-size: 21px; font-weight: 800; background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .header-title p { color: var(--neon-yellow); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; }
+        /* HUD - Score and Stats */
+        .hud { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; color: white; font-weight: bold; font-size: 18px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); z-index: 10; }
+        .stat-box { background: rgba(0,0,0,0.4); padding: 8px 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); }
 
-        /* =========================================================
-           4. PURE 2x2 GRID SYSTEM (የበሩ ማዕዘናት ማሸብረቂያ)
-        ========================================================= */
-        .subject-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 5px; }
-        .subject-card {
-            background: var(--card-bg); border-radius: 20px; padding: 25px 10px; text-align: center; 
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-        }
-        .subject-card:hover { transform: scale(1.04); }
-        .subject-card i { font-size: 36px; margin-bottom: 12px; filter: drop-shadow(0 0 8px currentColor); }
-        .subject-card h2 { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
-        .subject-card p { color: var(--text-muted); margin-top: 4px; font-size: 11px; font-weight: 500; }
+        /* Character (Abebe) */
+        #player { position: absolute; bottom: 80px; left: 80px; width: 50px; height: 70px; background: #e74c3c; border-radius: 8px; border: 3px solid #f1c40f; transition: height 0.1s; z-index: 5; }
+        #player::after { content: '🏃'; font-size: 40px; position: absolute; top: -5px; left: 2px; }
+
+        /* Obstacles */
+        .obstacle { position: absolute; bottom: 80px; width: 35px; height: 45px; background: #e67e22; border-radius: 5px; border: 2px solid #d35400; z-index: 4; }
+
+        /* Controls */
+        .controls { position: absolute; bottom: 15px; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; z-index: 10; }
+        .btn { width: 75px; height: 75px; border-radius: 50%; background: #3498db; color: white; font-weight: bold; border: 3px solid #fff; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); active: transform(scale(0.95)); }
+        #jumpBtn { background: #2ecc71; }
         
-        /* የካርዶቹ የኒዮን ማሸብረቂያ ጠርዞች */
-        .sub-math { border: 2.5px solid var(--neon-blue); box-shadow: var(--glow-blue); } .sub-math i { color: var(--neon-blue); }
-        .sub-physics { border: 2.5px solid var(--neon-pink); box-shadow: var(--glow-pink); } .sub-physics i { color: var(--neon-pink); }
-        .sub-chem { border: 2.5px solid var(--neon-green); box-shadow: var(--glow-green); } .sub-chem i { color: var(--neon-green); }
-        .sub-bio { border: 2.5px solid var(--neon-yellow); box-shadow: var(--glow-yellow); } .sub-bio i { color: var(--neon-yellow); }
-
-        /* SUB-PAGES SHEET INTERFACES */
-        .page-section { display: none; }
-        .page-section.active { display: block; }
-        .view-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .back-btn { background: rgba(0,0,0,0.5); border: 2px solid var(--neon-orange); box-shadow: 0 0 10px var(--neon-orange); color: white; padding: 8px 15px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 12px; }
-        
-        .formulas-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .formula-card { background: rgba(255,255,255,0.03); border: 2px solid var(--border-glass); border-radius: 16px; padding: 16px; border-left: 5px solid var(--main-accent); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .formula-display { background: #000; padding: 12px; border-radius: 10px; font-family: monospace; font-size: 17px; font-weight: bold; text-align: center; margin: 10px 0; color: var(--neon-green); border: 1px solid var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
-
-        /* =========================================================
-           5. ADVANCED 5-COLUMN SCIENTIFIC CALCULATOR ENGINE
-        ========================================================= */
-        .calculator-wrapper {
-            background: rgba(5, 1, 15, 0.9); border: 2.5px solid var(--main-accent); 
-            box-shadow: var(--glow-accent); border-radius: 24px; padding: 18px; max-width: 380px; margin: 0 auto;
-        }
-        .calc-screen {
-            width: 100%; height: 65px; background: #000; border: 2px solid var(--neon-blue);
-            border-radius: 14px; color: var(--neon-blue); text-align: right; padding: 10px 15px;
-            font-size: 26px; font-family: monospace; font-weight: bold; outline: none; margin-bottom: 15px;
-            text-shadow: 0 0 10px var(--neon-blue); box-shadow: inset 0 0 10px rgba(0,240,255,0.2);
-        }
-        /* ውስብስብ 5 አምድ መዋቅር (5-Column Grid Layout) */
-        .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-        .calc-btn {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 14px 5px;
-            border-radius: 12px; color: white; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.15s;
-        }
-        .calc-btn:hover { background: var(--main-accent); color: white; box-shadow: var(--glow-accent); transform: scale(1.03); }
-        
-        /* ሳይንሳዊ እና ኦፕሬተር መለያዎች */
-        .btn-sci { color: var(--neon-yellow); background: rgba(255, 240, 0, 0.05); border-color: rgba(255, 240, 0, 0.2); }
-        .btn-op { color: var(--neon-pink); background: rgba(255, 0, 127, 0.05); border-color: rgba(255, 0, 127, 0.2); }
-        .btn-eq { grid-column: span 1; background: var(--neon-green); color: black; font-weight: 800; font-size: 18px; box-shadow: var(--glow-green); }
-        .btn-eq:hover { background: #2cd410; }
-
-        /* =========================================================
-           6. PERSONAL NOTEBOOK WORKSPACE
-        ========================================================= */
-        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        input, select { flex: 1; padding: 12px 15px; background: #000; border: 2px solid var(--neon-blue); border-radius: 12px; color: white; font-size: 14px; outline: none; box-shadow: var(--glow-blue); }
-        .btn-run { background: linear-gradient(45deg, var(--main-accent), var(--neon-pink)); border: none; padding: 12px 18px; border-radius: 12px; color: white; font-weight: 900; cursor: pointer; box-shadow: 0 0 10px var(--main-accent); }
-        
-        /* =========================================================
-           7. SYSTEM PREFERENCE CARD
-        ========================================================= */
-        .settings-card { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 20px; border: 2.5px solid var(--neon-yellow); box-shadow: var(--glow-yellow); margin-bottom: 15px; }
-        .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; display: inline-block; margin-left: 6px; }
-
-        /* =========================================================
-           8. PERFECTLY BALANCED NON-SCROLLABLE BOTTOM NAV
-        ========================================================= */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 76px;
-            background: rgba(3, 1, 6, 0.98); backdrop-filter: blur(25px);
-            border-top: 2.5px solid var(--main-accent); box-shadow: 0 -5px 25px rgba(189, 0, 255, 0.5);
-            
-            /* 4 እኩል አምዶች - በየትኛውም ስልክ ላይ አይንሸራተቱም ሙሉ በሙሉ ይገጥማሉ */
-            display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; z-index: 1000;
-        }
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); cursor: pointer; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .nav-item i { font-size: 21px; margin-bottom: 5px; }
-        .nav-item.active, .nav-item:hover { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-
-        /* POPUP ENHANCED MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
-        .modal-content { background: #080112; border: 2.5px solid var(--neon-pink); box-shadow: var(--glow-pink); border-radius: 22px; padding: 25px; width: 100%; max-width: 450px; }
-        .close-btn { float: right; font-size: 26px; cursor: pointer; color: var(--neon-pink); text-shadow: var(--glow-pink); }
-        .modal-info-box { background: rgba(0,0,0,0.6); padding: 14px; border-radius: 12px; margin-top: 12px; font-size: 13px; line-height: 1.6; border-left: 4px solid var(--neon-green); }
-
+        /* Game Over Screen */
+        #gameOverScreen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); color: white; flex-direction: column; justify-content: center; align-items: center; z-index: 20; }
+        #restartBtn { margin-top: 15px; padding: 10px 25px; font-size: 18px; background: #e74c3c; color: white; border: none; border-radius: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="splash">
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="splash-text">AA HUB</div>
-        <div class="creator-tag"><i class="fa-solid fa-code-merge"></i> Created by Akalewold</div>
+<div id="gameContainer">
+    <div class="hud">
+        <div class="stat-box">SCORE: <span id="score">0</span></div>
+        <div class="stat-box">COINS: <span id="coins">0</span></div>
     </div>
 
-    <div class="app-container" id="mainApp">
-        
-        <header>
-            <div class="header-title">
-                <h1 id="lang-title">የተማሪዎች ሲስተም OS v5.0 🎓</h1>
-                <p id="lang-subtitle">NEON ULTRA SCIENTIFIC WORKSPACE</p>
-            </div>
-            <div style="font-size: 22px; color: var(--neon-pink); filter:drop-shadow(0 0 8px var(--neon-pink));"><i class="fa-solid fa-radiation"></i></div>
-        </header>
+    <div class="city"></div>
+    <div class="track"></div>
+    <div id="player"></div>
 
-        <div id="page-home" class="page-section active">
-            <div id="categories-menu-view">
-                <h4 style="margin-bottom: 15px; font-weight: 700; color:var(--neon-blue);" id="lang-choose-sub"><i class="fa-solid fa-square-poll-vertical"></i> ማውጫውን ይምረጡ (2x2)፦</h4>
-                
-                <div class="subject-grid">
-                    <div class="subject-card sub-math" onclick="openSubject('math')">
-                        <i class="fa-solid fa-calculator"></i>
-                        <h2>Mathematics</h2>
-                        <p>የሂሳብ ቀመሮች</p>
-                    </div>
-                    <div class="subject-card sub-physics" onclick="openSubject('physics')">
-                        <i class="fa-solid fa-atom"></i>
-                        <h2>Physics</h2>
-                        <p>የፊዚክስ ህግጋት</p>
-                    </div>
-                    <div class="subject-card sub-chem" onclick="openSubject('chem')">
-                        <i class="fa-solid fa-flask-vial"></i>
-                        <h2>Chemistry</h2>
-                        <p>የኬሚስትሪ ውህዶች</p>
-                    </div>
-                    <div class="subject-card sub-bio" onclick="openSubject('bio')">
-                        <i class="fa-solid fa-dna"></i>
-                        <h2>Biology</h2>
-                        <p>የባዮሎጂ መዋቅር</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="formulas-list-view" style="display: none;">
-                <div class="view-header">
-                    <button class="back-btn" onclick="backToCategories()"><i class="fa-solid fa-backward-step"></i> <span id="lang-back">ተመለስ</span></button>
-                    <h2 id="selected-subject-title" style="color: var(--neon-blue); font-size: 18px; text-shadow: 0 0 5px var(--neon-blue);">Subject</h2>
-                </div>
-                <div class="formulas-grid" id="formulas-container"></div>
-            </div>
-        </div>
-
-        <div id="page-calculator" class="page-section">
-            <h2 style="margin-bottom: 15px; font-size: 18px; text-align:center; color:var(--neon-pink); text-shadow:0 0 8px var(--neon-pink);"><i class="fa-solid fa-microchip"></i> <span id="lang-calc-title">ሳይንሳዊ የሂሳብ ማሽን</span></h2>
-            
-            <div class="calculator-wrapper">
-                <input type="text" class="calc-screen" id="calcDisplay" readonly value="0">
-                <div class="calc-grid">
-                    <button class="calc-btn btn-op" onclick="clearCalc()">C</button>
-                    <button class="calc-btn btn-op" onclick="pressCalc('(')">(</button>
-                    <button class="calc-btn btn-op" onclick="pressCalc(')')">)</button>
-                    <button class="calc-btn btn-op" onclick="backspaceCalc()"><i class="fa-solid fa-delete-left"></i></button>
-                    <button class="calc-btn btn-op" onclick="pressCalc('/')">÷</button>
-
-                    <button class="calc-btn btn-sci" onclick="pressSci('sin')">sin</button>
-                    <button class="calc-btn" onclick="pressCalc('7')">7</button>
-                    <button class="calc-btn" onclick="pressCalc('8')">8</button>
-                    <button class="calc-btn" onclick="pressCalc('9')">9</button>
-                    <button class="calc-btn btn-op" onclick="pressCalc('*')">×</button>
-
-                    <button class="calc-btn btn-sci" onclick="pressSci('cos')">cos</button>
-                    <button class="calc-btn" onclick="pressCalc('4')">4</button>
-                    <button class="calc-btn" onclick="pressCalc('5')">5</button>
-                    <button class="calc-btn" onclick="pressCalc('6')">6</button>
-                    <button class="calc-btn btn-op" onclick="pressCalc('-')">-</button>
-
-                    <button class="calc-btn btn-sci" onclick="pressSci('tan')">tan</button>
-                    <button class="calc-btn" onclick="pressCalc('1')">1</button>
-                    <button class="calc-btn" onclick="pressCalc('2')">2</button>
-                    <button class="calc-btn" onclick="pressCalc('3')">3</button>
-                    <button class="calc-btn btn-op" onclick="pressCalc('+')">+</button>
-
-                    <button class="calc-btn btn-sci" onclick="pressSci('√')">√</button>
-                    <button class="calc-btn btn-sci" onclick="pressSci('π')">π</button>
-                    <button class="calc-btn" onclick="pressCalc('0')">0</button>
-                    <button class="calc-btn" onclick="pressCalc('.')">.</button>
-                    <button class="calc-btn btn-eq" onclick="solveCalc()">=</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="page-notes" class="page-section">
-            <h2 style="margin-bottom: 15px; font-size: 18px; color:var(--neon-green);"><i class="fa-solid fa-code-terminal"></i> <span id="lang-notes-title">የግል ማስታወሻ ደብተር</span></h2>
-            <div class="input-group">
-                <input type="text" id="note-input" placeholder="አዲስ ቀመር ወይም ማስታወሻ እዚህ ያስገቡ...">
-                <button class="btn-run" onclick="addNewNote()"><i class="fa-solid fa-plus"></i></button>
-            </div>
-            <div id="notes-wrapper" style="margin-top: 15px;"></div>
-        </div>
-
-        <div id="page-settings" class="page-section">
-            <div class="settings-card">
-                <h3 style="color:var(--neon-yellow); text-shadow:0 0 5px var(--neon-yellow);"><i class="fa-solid fa-gears"></i> <span id="lang-set-visual">የስርዓት ቅንብሮች</span></h3>
-                <div class="settings-row">
-                    <span>የመተግበሪያው ማድመቂያ ኒዮን፡</span>
-                    <div>
-                        <div class="color-dot" style="background:#bd00ff;" onclick="updateTheme('#bd00ff')"></div>
-                        <div class="color-dot" style="background:#ff007f;" onclick="updateTheme('#ff007f')"></div>
-                        <div class="color-dot" style="background:#00f0ff;" onclick="updateTheme('#00f0ff')"></div>
-                        <div class="color-dot" style="background:#39ff14;" onclick="updateTheme('#39ff14')"></div>
-                    </div>
-                </div>
-                <div class="settings-row">
-                    <span>የሲስተም ቋንቋ (Language)፦</span>
-                    <select id="langSelect" onchange="translateAppUI()" style="max-width: 120px; border-color:var(--neon-yellow); box-shadow:0 0 5px var(--neon-yellow)">
-                        <option value="am">አማርኛ</option>
-                        <option value="en">English</option>
-                    </select>
-                </div>
-                <div class="settings-row">
-                    <span>የስሪት መለያ (Version Code)</span>
-                    <span style="color:var(--neon-green); font-weight:700;">v5.0.0 Ultra Pro</span>
-                </div>
-                <button class="btn-run" style="background:var(--neon-pink); width:100%; margin-top:15px; box-shadow:0 0 10px var(--neon-pink);" onclick="wipeStorage()"><i class="fa-solid fa-trash-blind"></i> ማህደሩን ሙሉ በሙሉ አጽዳ (Reset App)</button>
-            </div>
-        </div>
-
+    <div class="controls">
+        <button class="btn" id="slideBtn" onmousedown="slide()" onmouseup="standUp()" ontouchstart="slide()" ontouchend="standUp()">SLIDE</button>
+        <button class="btn" id="jumpBtn" onclick="jump()">JUMP</button>
     </div>
 
-    <div class="bottom-nav" id="bottomNav" style="display:none;">
-        <div class="nav-item active" onclick="appRouter('home', this)">
-            <i class="fa-solid fa-table-cells-large"></i>
-            <span id="nav-home">ማውጫ</span>
-        </div>
-        <div class="nav-item" onclick="appRouter('calculator', this)">
-            <i class="fa-solid fa-calculator"></i>
-            <span id="nav-calc">ማሽን</span>
-        </div>
-        <div class="nav-item" onclick="appRouter('notes', this)">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span id="nav-notes">ማስታወሻ</span>
-        </div>
-        <div class="nav-item" onclick="appRouter('settings', this)">
-            <i class="fa-solid fa-sliders"></i>
-            <span id="nav-sets">ቅንብር</span>
-        </div>
+    <div id="gameOverScreen">
+        <h1>GAME OVER 💥</h1>
+        <p>የተሰበሰበ ነጥብ: <span id="finalScore">0</span></p>
+        <button id="restartBtn" onclick="restartGame()">እንደገና ጀምር</button>
     </div>
+</div>
 
-    <div class="modal" id="detailsModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <h3 id="mTitle" style="color: var(--neon-blue); font-size:16px;">Title</h3>
-            <div class="formula-display" id="mDisplay">Formula</div>
-            <div class="modal-info-box" id="mDesc">Description...</div>
-            <div class="modal-info-box" id="mExample" style="background:rgba(0,0,0,0.7); border-color:var(--neon-pink)">Example...</div>
-        </div>
-    </div>
+<script>
+    const player = document.getElementById('player');
+    const scoreText = document.getElementById('score');
+    const coinsText = document.getElementById('coins');
+    const gameOverScreen = document.getElementById('gameOverScreen');
+    const finalScore = document.getElementById('finalScore');
+    const container = document.getElementById('gameContainer');
 
-    <script>
-        // የዳታቤዝ ማህደር
-        const formulasDatabase = [
-            { id: 1, subject: "math", title: "Quadratic Formula", formula: "x = (-b ± √(b² - 4ac)) / 2a", desc: "የሁለተኛ ዲግሪ የፖሊኖሚያል እኩልታዎችን መፍቻ ቀመር።", ex: "x² - 5x + 6 = 0 ከሆነ, x=2 ወይም x=3 ይመጣል።", title_en: "Quadratic Formula", desc_en: "Finds roots of second-degree equations." },
-            { id: 2, subject: "math", title: "Pythagorean Theorem", formula: "a² + b² = c²", desc: "በቀኝ ማዕዘን ሶስት ማዕዘን ላይ የረጅሙን ጎን መፈለጊያ ቀመር።", ex: "ጎኖቹ 3 እና 4 ከሆኑ, c = √9+16 = 5 ይሆናል።", title_en: "Pythagorean Theorem", desc_en: "Calculates the hypotenuse of a right triangle." },
-            { id: 3, subject: "physics", title: "Newton's Second Law", formula: "F = m × a", desc: "ጉልበት ከቁስ አካል ግዝፈትና ፍጥነት መጨመር ጋር እኩል ነው።", ex: "m = 5kg, a = 4m/s² ቢሆን, F = 20 N ይሆናል።", title_en: "Newton's Second Law", desc_en: "Relates mass, acceleration and net force." },
-            { id: 4, subject: "physics", title: "Ohm's Law", formula: "V = I × R", desc: "በኤሌክትሪክ ውስጥ የቮልቴጅ፣ ከረንት እና ሬዚስታንስ ዝምድና ማሳያ።", ex: "Current(I) = 2A, Resistance(R) = 6Ω ቢሆን, V = 12V ይሆናል።", title_en: "Ohm's Law", desc_en: "Voltage equals current multiplied by resistance." },
-            { id: 5, subject: "chem", title: "Ideal Gas Law", formula: "PV = nRT", desc: "የጋዞች ግፊት፣ መጠን፣ ሞል እና ሙቀት ድብልቅ ግንኙነት።", ex: "R የጋዞች ቋሚ ቁጥር ሲሆን ዋጋው 0.0821 L·atm/mol·K ነው።", title_en: "Ideal Gas Law", desc_en: "Equation of state for an ideal gas." },
-            { id: 6, subject: "bio", title: "Photosynthesis Process", formula: "6CO₂ + 6H₂O ➔ C₆H₁₂O₆ + 6O₂", desc: "ዕፅዋት የፀሐይን ብርሃን ተጠቅመው ምግብ (Glucose) የሚያዘጋጁበት ኬሚካላዊ ሂደት።", ex: "ካርቦንዳይኦክሳይድ እና ውሃ ተዋህደው ግሉኮስና ኦክስጅን ይሰጣሉ።", title_en: "Photosynthesis Formula", desc_en: "Biochemical equation for plant food production." }
-        ];
+    let isJumping = false;
+    let isSliding = false;
+    let score = 0;
+    let coins = 0;
+    let gameInterval;
+    let obstacleTimeout;
+    let isGameOver = false;
 
-        let savedNotes = JSON.parse(localStorage.getItem('aa_notes_v5')) || [];
-        let sysLang = "am";
-
-        // ውስብስብ የጀርባ አልጎሪዝም (Invisible Automations and Sort Optimization)
-        function runSilentOptimizationEngine() {
-            formulasDatabase.sort((x, y) => x.id - y.id);
-            console.log("System Data Engine Optimization Completed Successfully in background.");
-        }
-
-        // Splash control trigger
-        window.addEventListener('load', () => {
-            runSilentOptimizationEngine();
-            setTimeout(() => {
-                document.getElementById('splash').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('bottomNav').style.display = 'grid'; // Grid ለደህንነቱ እጅግ አስተማማኝ ነዉ
-                renderNotes();
-            }, 3000);
-        });
-
-        function openSubject(subject) {
-            document.getElementById('categories-menu-view').style.display = 'none';
-            document.getElementById('formulas-list-view').style.display = 'block';
-            
-            document.getElementById('selected-subject-title').innerText = subject.toUpperCase() + " SECTIONS";
-            const filtered = formulasDatabase.filter(f => f.subject === subject);
-            const container = document.getElementById('formulas-container');
-            container.innerHTML = "";
-            
-            filtered.forEach(item => {
-                const title = sysLang === "am" ? item.title : item.title_en;
-                const desc = sysLang === "am" ? item.desc : item.desc_en;
-                container.innerHTML += `
-                    <div class="formula-card" onclick="openPopup(${item.id})">
-                        <strong style="color:var(--neon-blue); font-size:14px;">${title}</strong>
-                        <div class="formula-display">${item.formula}</div>
-                        <p style="font-size:11px; color:var(--text-muted); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${desc}</p>
-                    </div>
-                `;
-            });
-        }
-
-        function backToCategories() {
-            document.getElementById('formulas-list-view').style.display = 'none';
-            document.getElementById('categories-menu-view').style.display = 'block';
-        }
-
-        function appRouter(pageId, navElement) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            navElement.classList.add('active');
-            document.getElementById(`page-${pageId}`).classList.add('active');
-        }
-
-        // =========================================================
-        // HIGH-TECH SCIENTIFIC CALCULATOR ALGORITHM ENGINE
-        // =========================================================
-        const calcScreen = document.getElementById('calcDisplay');
-        
-        function pressCalc(val) {
-            if (calcScreen.value === "0" || calcScreen.value === "Error") calcScreen.value = val;
-            else calcScreen.value += val;
-        }
-        
-        function pressSci(op) {
-            if (calcScreen.value === "0" || calcScreen.value === "Error") {
-                if(op === 'π') calcScreen.value = 'π';
-                else calcScreen.value = op + '(';
-            } else {
-                if(op === 'π') calcScreen.value += 'π';
-                else calcScreen.value += op + '(';
+    // Jump Function
+    function jump() {
+        if (isJumping || isSliding || isGameOver) return;
+        isJumping = true;
+        let position = 80;
+        let timer = setInterval(() => {
+            if (position >= 220) {
+                clearInterval(timer);
+                let downTimer = setInterval(() => {
+                    if (position <= 80) {
+                        clearInterval(downTimer);
+                        isJumping = false;
+                    }
+                    position -= 8;
+                    player.style.bottom = position + 'px';
+                }, 20);
             }
-        }
+            position += 12;
+            player.style.bottom = position + 'px';
+        }, 20);
+    }
 
-        function clearCalc() { calcScreen.value = "0"; }
-        
-        function backspaceCalc() {
-            calcScreen.value = calcScreen.value.slice(0, -1);
-            if (calcScreen.value === "") calcScreen.value = "0";
-        }
+    // Slide Function
+    function slide() {
+        if (isJumping || isGameOver) return;
+        isSliding = true;
+        player.style.height = '35px';
+    }
 
-        // ውስብስብ የሳይንስ ስሌቶችን ፈልቅቆ የሚፈታ የጀርባ አልጎሪዝም
-        function solveCalc() {
-            try {
-                let formulaString = calcScreen.value;
-                
-                // የቁምፊዎችን ትርጉም ወደ ጃቫስክሪፕት ማሽነሪ መቀየር
-                formulaString = formulaString.replace(/×/g, '*').replace(/÷/g, '/');
-                formulaString = formulaString.replace(/π/g, 'Math.PI');
-                formulaString = formulaString.replace(/sin\(/g, 'Math.sin(');
-                formulaString = formulaString.replace(/cos\(/g, 'Math.cos(');
-                formulaString = formulaString.replace(/tan\(/g, 'Math.tan(');
-                formulaString = formulaString.replace(/√\(/g, 'Math.sqrt(');
-                
-                // የቅንፍ መዘጋት ጉድለቶችን በራስ-ሰር በጀርባ ማስተካከል (Auto-close bracket logic)
-                let openBrackets = (formulaString.match(/\(/g) || []).length;
-                let closeBrackets = (formulaString.match(/\)/g) || []).length;
-                while(openBrackets > closeBrackets) {
-                    formulaString += ')';
-                    closeBrackets++;
-                }
+    function standUp() {
+        isSliding = false;
+        player.style.height = '70px';
+    }
 
-                let finalOutput = eval(formulaString);
-                
-                // ረዣዥም የदशमलव ቁጥሮችን ማሳመር
-                if (finalOutput % 1 !== 0) {
-                    finalOutput = parseFloat(finalOutput.toFixed(6));
-                }
-                calcScreen.value = finalOutput;
-            } catch (err) {
-                calcScreen.value = "Error";
+    // Generate Obstacles
+    function createObstacle() {
+        if (isGameOver) return;
+        const obstacle = document.createElement('div');
+        obstacle.classList.add('obstacle');
+        container.appendChild(obstacle);
+
+        let obstacleLeft = 800;
+        obstacle.style.left = obstacleLeft + 'px';
+
+        let timer = setInterval(() => {
+            if (isGameOver) {
+                clearInterval(timer);
+                obstacle.remove();
+                return;
             }
-        }
 
-        // ፖፕ-አፕ ቁጥጥር
-        function openPopup(id) {
-            const item = formulasDatabase.find(f => f.id === id);
-            document.getElementById('mTitle').innerText = sysLang === "am" ? item.title : item.title_en;
-            document.getElementById('mDisplay').innerText = item.formula;
-            document.getElementById('mDesc').innerText = sysLang === "am" ? item.desc : item.desc_en;
-            document.getElementById('mExample').innerHTML = sysLang === "am" ? `<strong>ምሳሌ:</strong> ${item.ex}` : `<strong>Example:</strong> ${item.ex}`;
-            document.getElementById('detailsModal').style.display = 'flex';
-        }
-        function closePopup() { document.getElementById('detailsModal').style.display = 'none'; }
-
-        // ማስታወሻ መጻፊያ ክፍል
-        function addNewNote() {
-            const txt = document.getElementById('note-input').value;
-            if(!txt) return;
-            savedNotes.push(txt);
-            localStorage.setItem('aa_notes_v5', JSON.stringify(savedNotes));
-            document.getElementById('note-input').value = "";
-            renderNotes();
-        }
-        function renderNotes() {
-            const wrapper = document.getElementById('notes-wrapper');
-            wrapper.innerHTML = "";
-            savedNotes.forEach((note, index) => {
-                wrapper.innerHTML += `
-                    <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:2px solid var(--neon-pink); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                        <span style="flex:1; font-size:13px;">${note}</span>
-                        <i class="fa-solid fa-trash-arrow-up" style="color:var(--neon-pink); cursor:pointer;" onclick="deleteNote(${index})"></i>
-                    </div>
-                `;
-            });
-        }
-        function deleteNote(idx) {
-            savedNotes.splice(idx, 1);
-            localStorage.setItem('aa_notes_v5', JSON.stringify(savedNotes));
-            renderNotes();
-        }
-
-        function updateTheme(color) {
-            document.documentElement.style.setProperty('--main-accent', color);
-        }
-
-        // ሙሉ ቋንቋ መቀያየሪያ ሲስተም
-        function translateAppUI() {
-            sysLang = document.getElementById('langSelect').value;
-            if(sysLang === "en") {
-                document.getElementById('lang-title').innerText = "Student Hub Engine v5.0 🎓";
-                document.getElementById('lang-choose-sub').innerHTML = "<i class='fa-solid fa-square-poll-vertical'></i> Core Workspace Index (2x2):";
-                document.getElementById('lang-back').innerText = "Back";
-                document.getElementById('lang-calc-title').innerText = "Scientific Advanced Computer";
-                document.getElementById('lang-notes-title').innerText = "Secure Interactive Data Notebook";
-                document.getElementById('lang-set-visual').innerText = "Main Terminal Control Deck";
-                document.getElementById('nav-home').innerText = "Index";
-                document.getElementById('nav-calc').innerText = "Scientific";
-                document.getElementById('nav-notes').innerText = "Notes";
-                document.getElementById('nav-sets').innerText = "Settings";
-            } else {
-                document.getElementById('lang-title').innerText = "የተማሪዎች ሲስተም OS v5.0 🎓";
-                document.getElementById('lang-choose-sub').innerHTML = "<i class='fa-solid fa-square-poll-vertical'></i> ማውጫውን ይምረጡ (2x2)፦";
-                document.getElementById('lang-back').innerText = "ተመለስ";
-                document.getElementById('lang-calc-title').innerText = "ሳይንሳዊ የሂሳብ ማሽን";
-                document.getElementById('lang-notes-title').innerText = "የግል ማስታወሻ ደብተር";
-                document.getElementById('nav-home').innerText = "ማውጫ";
-                document.getElementById('nav-calc').innerText = "ማሽን";
-                document.getElementById('nav-notes').innerText = "ማስታወሻ";
-                document.getElementById('nav-sets').innerText = "ቅንብር";
+            if (obstacleLeft < -40) {
+                clearInterval(timer);
+                obstacle.remove();
+                score += 10;
+                if (score % 50 === 0) coins += 5;
+                scoreText.textContent = score;
+                coinsText.textContent = coins;
             }
-        }
 
-        function wipeStorage() {
-            localStorage.clear();
-            location.reload();
-        }
-    </script>
+            // Collision Detection
+            const playerBottom = parseInt(player.style.bottom || '80');
+            if (obstacleLeft > 80 && obstacleLeft < 120 && playerBottom < 120 && !isSliding) {
+                endGame();
+            }
+
+            obstacleLeft -= 8;
+            obstacle.style.left = obstacleLeft + 'px';
+        }, 20);
+
+        let randomTime = Math.random() * 2000 + 1000;
+        obstacleTimeout = setTimeout(createObstacle, randomTime);
+    }
+
+    function endGame() {
+        isGameOver = true;
+        finalScore.textContent = score;
+        gameOverScreen.style.display = 'flex';
+    }
+
+    function restartGame() {
+        isGameOver = false;
+        score = 0;
+        coins = 0;
+        scoreText.textContent = '0';
+        coinsText.textContent = '0';
+        gameOverScreen.style.display = 'none';
+        document.querySelectorAll('.obstacle').forEach(o => o.remove());
+        clearTimeout(obstacleTimeout);
+        createObstacle();
+    }
+
+    // Keyboards Support
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' || e.code === 'ArrowUp') jump();
+        if (e.code === 'ArrowDown') slide();
+    });
+    document.addEventListener('keyup', (e) => {
+        if (e.code === 'ArrowDown') standUp();
+    });
+
+    createObstacle();
+</script>
 </body>
 </html>
