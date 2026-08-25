@@ -3,355 +3,560 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Formulas - Study Hub</title>
+    <title>All Formulas App</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0b0f19; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        
-        .app-container { 
-            width: 100%; 
-            max-width: 420px; 
-            height: 100vh; 
-            max-height: 850px; 
-            background: linear-gradient(to bottom, #2d3748 0%, #1a202c 40%, #0f172a 100%); 
-            border-radius: 24px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8); 
-            display: flex; 
-            flex-direction: column; 
-            position: relative; 
-            overflow: hidden; 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        /* --- SPLASH SCREEN --- */
-        #splash-screen {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, #3b82f6 0%, #1e3a8a 50%, #0f172a 100%);
+        body {
+            background-color: #05070a;
+            color: #ffffff;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Phone Screen Container */
+        .app-frame {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 870px;
+            background: linear-gradient(180deg, #ffffff 0%, #3b82f6 30%, #1e1b4b 70%, #090d16 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 1. SPLASH SCREEN */
+        #splash-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #ffffff 0%, #2563eb 40%, #0f172a 100%);
             z-index: 100;
-            transition: opacity 0.8s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 20px 50px 20px;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .splash-header {
             text-align: center;
-            padding: 20px;
+            margin-top: 40px;
         }
-        #splash-screen h1 {
-            font-size: 36px;
-            font-weight: 800;
+
+        .splash-title {
+            font-size: 42px;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .splash-subtitle {
+            font-size: 16px;
+            color: #1e3a8a;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .splash-center {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .math-expr {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 24px;
             color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .splash-desc {
+            font-size: 13px;
+            color: #e0e7ff;
             letter-spacing: 1px;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        #splash-screen p {
-            font-size: 15px;
-            color: #93c5fd;
-            margin-bottom: 40px;
+
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
-        .loader {
-            width: 45px;
-            height: 45px;
-            border: 4px solid rgba(255,255,255,0.2);
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
             border-top: 4px solid #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* --- MAIN APP CONTENT --- */
-        .main-content {
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MAIN CONTENT AREA */
+        .content-area {
             flex: 1;
             overflow-y: auto;
-            padding: 25px 20px;
             display: none;
-            padding-bottom: 80px;
-        }
-        .main-content.active { display: block; }
-
-        /* Welcome Header */
-        .welcome-box {
-            margin-bottom: 20px;
-        }
-        .welcome-box h2 {
-            font-size: 24px;
-            color: #ffffff;
-            font-weight: 700;
-        }
-        .welcome-box p {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 3px;
+            flex-direction: column;
+            padding: 20px 18px 85px 18px;
         }
 
-        /* Search Bar */
-        .search-bar {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.07);
-            border: none;
-            border-radius: 14px;
-            color: white;
-            font-size: 15px;
-            margin-bottom: 25px;
-            outline: none;
-            backdrop-filter: blur(10px);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        .content-area.active {
+            display: flex;
         }
-        .search-bar::placeholder { color: #94a3b8; }
 
-        /* Categories Grid (2x2 layout) */
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #e2e8f0;
+        /* PAGE 1: HOME */
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-top: 10px;
             margin-bottom: 15px;
         }
+
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            border: none;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #e2e8f0;
+        }
+
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        .cat-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .cat-card:active {
-            transform: scale(0.95);
-            background: rgba(59, 130, 246, 0.2);
-        }
-        .cat-card .icon { font-size: 28px; margin-bottom: 8px; }
-        .cat-card h3 { font-size: 15px; color: #ffffff; margin-bottom: 4px; }
-        .cat-card span { font-size: 11px; color: #94a3b8; }
-
-        /* Formula Items List */
-        .formula-list { display: none; margin-top: 15px; }
-        .formula-item {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-        }
-        .formula-item h4 { color: #60a5fa; font-size: 14px; margin-bottom: 3px; }
-        .formula-item p { color: #cbd5e1; font-size: 13px; }
-        .back-btn {
-            background: none; border: none; color: #60a5fa; font-size: 14px; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; gap: 5px;
+            gap: 14px;
         }
 
-        /* --- CALCULATOR TAB --- */
-        .calc-container { display: none; height: 100%; flex-direction: column; }
-        .calc-container.active { display: flex; }
-        #calcDisplay {
-            width: 100%;
-            height: 70px;
-            background: rgba(0,0,0,0.3);
-            color: #4ade80;
-            font-size: 28px;
-            text-align: right;
-            padding: 15px;
-            border-radius: 14px;
+        .category-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 18px 14px;
+            border-radius: 18px;
             border: none;
-            margin-bottom: 20px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .calc-grid {
+
+        .category-card:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .cat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .cat-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .cat-count {
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        /* FORMULAS LIST MODAL/VIEW */
+        .formulas-list-view {
+            display: none;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            align-self: flex-start;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .formula-card-item {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(10px);
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            border: none;
+        }
+
+        .formula-card-item h4 {
+            color: #60a5fa;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .formula-card-item .math {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: #f8fafc;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* PAGE 2: CALCULATOR */
+        .calc-header {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .calc-display {
+            width: 100%;
+            height: 80px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 18px;
+            color: #4ade80;
+            font-size: 32px;
+            text-align: right;
+            padding: 20px;
+            margin-bottom: 18px;
+            outline: none;
+            font-family: monospace;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .calc-buttons-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             flex: 1;
         }
-        .calc-btn {
-            background: rgba(255, 255, 255, 0.07);
-            color: white;
-            font-size: 20px;
-            border: none;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .calc-btn:active { background: rgba(255, 255, 255, 0.2); }
-        .calc-btn.op { background: rgba(59, 130, 246, 0.3); color: #93c5fd; }
-        .calc-btn.eq { background: #3b82f6; color: white; grid-column: span 2; }
 
-        /* --- NOTES TAB --- */
-        .notes-container { display: none; height: 100%; flex-direction: column; }
-        .notes-container.active { display: flex; }
-        #noteInput {
-            width: 100%;
-            height: 180px;
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            padding: 15px;
-            border-radius: 14px;
+        .calc-b {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
             border: none;
-            resize: none;
-            font-size: 14px;
-            outline: none;
-            margin-bottom: 15px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .save-note-btn {
-            width: 100%;
-            padding: 14px;
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 14px;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 22px;
             font-weight: 600;
-            font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-        .saved-notes-box {
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 14px;
-            flex: 1;
-            overflow-y: auto;
-            font-size: 13px;
-            color: #cbd5e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            transition: background 0.15s ease;
         }
 
-        /* --- BOTTOM NAVIGATION BAR --- */
-        .bottom-nav {
+        .calc-b:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .calc-b.op {
+            background: rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+        }
+
+        .calc-b.eq {
+            background: #2563eb;
+            color: #ffffff;
+            grid-column: span 2;
+        }
+
+        .calc-b.clear {
+            background: rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        /* PAGE 3: NOTES */
+        .notes-header {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 18px;
+            color: #ffffff;
+            padding: 16px;
+            font-size: 15px;
+            outline: none;
+            resize: none;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .notes-save-btn {
+            width: 100%;
+            padding: 16px;
+            background: #2563eb;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .notes-saved-area {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 16px;
+            font-size: 14px;
+            color: #e2e8f0;
+            min-height: 80px;
+        }
+
+        /* 6. BOTTOM NAVIGATION BAR */
+        .bottom-nav-bar {
             position: absolute;
-            bottom: 0; left: 0; width: 100%;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             height: 70px;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(15px);
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border: none;
+            z-index: 50;
         }
-        .nav-item {
+
+        .nav-btn {
             background: none;
             border: none;
             color: #64748b;
-            font-size: 22px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            transition: 0.3s;
+            justify-content: center;
+            gap: 4px;
+            width: 33.33%;
+            height: 100%;
+            transition: color 0.2s ease;
         }
-        .nav-item span { font-size: 11px; font-weight: 500; }
-        .nav-item.active { color: #3b82f6; }
+
+        .nav-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: stroke;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .nav-btn.active {
+            color: #3b82f6;
+        }
+
+        .nav-btn span {
+            font-size: 11px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    
+<div class="app-frame">
+
     <!-- 1. SPLASH SCREEN -->
     <div id="splash-screen">
-        <h1>All Formulas</h1>
-        <p>Calculations & Smart Study Hub</p>
-        <div class="loader"></div>
-    </div>
-
-    <!-- TAB 1: HOME / CATEGORIES -->
-    <div id="tab-home" class="main-content active">
-        <div class="welcome-box">
-            <h2>Welcome, Akalewold!</h2>
-            <p>የተሟሉ የትምህርት ቀመሮች እና መሣሪያዎች</p>
+        <div class="splash-header">
+            <h1 class="splash-title">All Formulas</h1>
+            <div class="splash-subtitle">Calculations & Equations</div>
         </div>
 
-        <input type="text" class="search-bar" id="mainSearch" placeholder="ቀመር ፈልግ (ለምሳሌ: ፊዚክስ፣ ኬሚስትሪ)..." onkeyup="searchFormulas()">
+        <div class="splash-center">
+            <div class="math-expr">E = mc² &nbsp;|&nbsp; ∫f(x)dx &nbsp;|&nbsp; PV=nRT</div>
+            <div class="splash-desc">1000+ Formulas Library & Solver</div>
+        </div>
 
-        <div id="categoriesView">
-            <div class="section-title">የምርጫ ክፍሎች (Categories)</div>
+        <div class="spinner-container">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <!-- PAGE 1: HOME -->
+    <div id="page-home" class="content-area active">
+        <div id="categories-main-view">
+            <h1 class="welcome-title">Welcome</h1>
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search 1000+ formulas..." onkeyup="filterFormulas()">
+            </div>
+
             <div class="categories-grid">
-                <div class="cat-card" onclick="openCategory('physics')">
-                    <div class="icon">⚡</div>
-                    <h3>Physics</h3>
-                    <span>150+ ቀመሮች</span>
+                <div class="category-card" onclick="showCategory('physics')">
+                    <div class="cat-icon">⚡</div>
+                    <div class="cat-name">Physics</div>
+                    <div class="cat-count">250+ Formulas</div>
                 </div>
-                <div class="cat-card" onclick="openCategory('chemistry')">
-                    <div class="icon">🧪</div>
-                    <h3>Chemistry</h3>
-                    <span>200+ ቀመሮች</span>
+
+                <div class="category-card" onclick="showCategory('chemistry')">
+                    <div class="cat-icon">🧪</div>
+                    <div class="cat-name">Chemistry</div>
+                    <div class="cat-count">220+ Formulas</div>
                 </div>
-                <div class="cat-card" onclick="openCategory('math')">
-                    <div class="icon">📐</div>
-                    <h3>Mathematics</h3>
-                    <span>350+ ቀመሮች</span>
+
+                <div class="category-card" onclick="showCategory('math')">
+                    <div class="cat-icon">📐</div>
+                    <div class="cat-name">Mathematics</div>
+                    <div class="cat-count">300+ Formulas</div>
                 </div>
-                <div class="cat-card" onclick="openCategory('economics')">
-                    <div class="icon">📊</div>
-                    <h3>Economics</h3>
-                    <span>100+ ቀመሮች</span>
+
+                <div class="category-card" onclick="showCategory('economics')">
+                    <div class="cat-icon">📊</div>
+                    <div class="cat-name">Economics</div>
+                    <div class="cat-count">120+ Formulas</div>
+                </div>
+
+                <div class="category-card" onclick="showCategory('biology')">
+                    <div class="cat-icon">🧬</div>
+                    <div class="cat-name">Biology</div>
+                    <div class="cat-count">80+ Formulas</div>
+                </div>
+
+                <div class="category-card" onclick="showCategory('civics')">
+                    <div class="cat-icon">🏛️</div>
+                    <div class="cat-name">Civics & Law</div>
+                    <div class="cat-count">50+ Principles</div>
                 </div>
             </div>
         </div>
 
-        <!-- Formulas Details View -->
-        <div id="formulaDetailView" class="formula-list">
-            <button class="back-btn" onclick="backToCategories()">← ወደ ዋናው ገጽ ተመለስ</button>
-            <div id="formulaContainer"></div>
+        <!-- Formulas List Inner View -->
+        <div id="formulas-list-view" class="formulas-list-view">
+            <button class="back-btn" onclick="hideCategory()">← Back to Categories</button>
+            <h2 id="cat-title" style="margin-bottom: 12px; color: #ffffff;"></h2>
+            <div id="formulas-container"></div>
         </div>
     </div>
 
-    <!-- TAB 2: CALCULATOR -->
-    <div id="tab-calc" class="main-content calc-container">
-        <div class="welcome-box" style="margin-bottom: 10px;">
-            <h2>Smart Calculator</h2>
-        </div>
-        <input type="text" id="calcDisplay" readonly>
-        <div class="calc-grid">
-            <button class="calc-btn" onclick="clearCalc()">C</button>
-            <button class="calc-btn op" onclick="appendCalc('(')">(</button>
-            <button class="calc-btn op" onclick="appendCalc(')')">)</button>
-            <button class="calc-btn op" onclick="appendCalc('/')">÷</button>
-            <button class="calc-btn" onclick="appendCalc('7')">7</button>
-            <button class="calc-btn" onclick="appendCalc('8')">8</button>
-            <button class="calc-btn" onclick="appendCalc('9')">9</button>
-            <button class="calc-btn op" onclick="appendCalc('*')">×</button>
-            <button class="calc-btn" onclick="appendCalc('4')">4</button>
-            <button class="calc-btn" onclick="appendCalc('5')">5</button>
-            <button class="calc-btn" onclick="appendCalc('6')">6</button>
-            <button class="calc-btn op" onclick="appendCalc('-')">-</button>
-            <button class="calc-btn" onclick="appendCalc('1')">1</button>
-            <button class="calc-btn" onclick="appendCalc('2')">2</button>
-            <button class="calc-btn" onclick="appendCalc('3')">3</button>
-            <button class="calc-btn op" onclick="appendCalc('+')">+</button>
-            <button class="calc-btn" onclick="appendCalc('0')">0</button>
-            <button class="calc-btn" onclick="appendCalc('.')">.</button>
-            <button class="calc-btn eq" onclick="calculateResult()">=</button>
+    <!-- PAGE 2: CALCULATOR -->
+    <div id="page-calc" class="content-area">
+        <h2 class="calc-header">Calculator</h2>
+        <input type="text" id="calcDisplay" class="calc-display" readonly placeholder="0">
+        <div class="calc-buttons-grid">
+            <button class="calc-b clear" onclick="clearCalc()">C</button>
+            <button class="calc-b op" onclick="pressCalc('(')">(</button>
+            <button class="calc-b op" onclick="pressCalc(')')">)</button>
+            <button class="calc-b op" onclick="pressCalc('/')">÷</button>
+            
+            <button class="calc-b" onclick="pressCalc('7')">7</button>
+            <button class="calc-b" onclick="pressCalc('8')">8</button>
+            <button class="calc-b" onclick="pressCalc('9')">9</button>
+            <button class="calc-b op" onclick="pressCalc('*')">×</button>
+            
+            <button class="calc-b" onclick="pressCalc('4')">4</button>
+            <button class="calc-b" onclick="pressCalc('5')">5</button>
+            <button class="calc-b" onclick="pressCalc('6')">6</button>
+            <button class="calc-b op" onclick="pressCalc('-')">-</button>
+            
+            <button class="calc-b" onclick="pressCalc('1')">1</button>
+            <button class="calc-b" onclick="pressCalc('2')">2</button>
+            <button class="calc-b" onclick="pressCalc('3')">3</button>
+            <button class="calc-b op" onclick="pressCalc('+')">+</button>
+            
+            <button class="calc-b" onclick="pressCalc('0')">0</button>
+            <button class="calc-b" onclick="pressCalc('.')">.</button>
+            <button class="calc-b eq" onclick="evalCalc()">=</button>
         </div>
     </div>
 
-    <!-- TAB 3: NOTES -->
-    <div id="tab-notes" class="main-content notes-container">
-        <div class="welcome-box">
-            <h2>Study Notes</h2>
-            <p>አስፈላጊ ማስታወሻዎችዎን ያስቀምጡ</p>
-        </div>
-        <textarea id="noteInput" placeholder="ማስታወሻዎትን እዚህ ይጻፉ..."></textarea>
-        <button class="save-note-btn" onclick="saveNote()">ማስታወሻውን አስቀምጥ</button>
-        <div class="saved-notes-box" id="savedNotesDisplay">የተቀመጠ ማስታወሻ የለም።</div>
+    <!-- PAGE 3: NOTES -->
+    <div id="page-notes" class="content-area">
+        <h2 class="notes-header">Notes</h2>
+        <textarea id="noteInput" class="notes-textarea" placeholder="Write your formulas or study notes here..."></textarea>
+        <button class="notes-save-btn" onclick="saveNote()">Save Note</button>
+        <div class="notes-saved-area" id="savedNoteDisplay">No saved notes yet.</div>
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
-    <div class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('home', this)">
-            🏠
+    <!-- 6. BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav-bar">
+        <!-- 1. Home (House) Icon -->
+        <button class="nav-btn active" id="nav-home-btn" onclick="switchPage('home')">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span>Home</span>
         </button>
-        <button class="nav-item" onclick="switchTab('calc', this)">
-            🔢
+        
+        <!-- 2. Calculator Icon -->
+        <button class="nav-btn" id="nav-calc-btn" onclick="switchPage('calc')">
+            <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
             <span>Calc</span>
         </button>
-        <button class="nav-item" onclick="switchTab('notes', this)">
-            ✏️
+        
+        <!-- 3. Pen/Notes Icon -->
+        <button class="nav-btn" id="nav-notes-btn" onclick="switchPage('notes')">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
             <span>Notes</span>
         </button>
     </div>
@@ -359,103 +564,161 @@
 </div>
 
 <script>
-    // Splash Screen Timer (Disappears after 2.5 seconds)
+    // Splash screen dismissal timer (3 seconds)
     setTimeout(() => {
         const splash = document.getElementById('splash-screen');
         splash.style.opacity = '0';
-        setTimeout(() => splash.style.display = 'none', 800);
-    }, 2500);
+        splash.style.visibility = 'hidden';
+    }, 3000);
 
-    // Tab Navigation Logic
-    function switchTab(tabName, btnElement) {
-        document.querySelectorAll('.main-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    // Navigation Switcher
+    function switchPage(page) {
+        document.querySelectorAll('.content-area').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
-        if(tabName === 'home') document.getElementById('tab-home').classList.add('active');
-        if(tabName === 'calc') document.getElementById('tab-calc').classList.add('active');
-        if(tabName === 'notes') document.getElementById('tab-notes').classList.add('active');
-
-        btnElement.classList.add('active');
+        if(page === 'home') {
+            document.getElementById('page-home').classList.add('active');
+            document.getElementById('nav-home-btn').classList.add('active');
+        } else if(page === 'calc') {
+            document.getElementById('page-calc').classList.add('active');
+            document.getElementById('nav-calc-btn').classList.add('active');
+        } else if(page === 'notes') {
+            document.getElementById('page-notes').classList.add('active');
+            document.getElementById('nav-notes-btn').classList.add('active');
+        }
     }
 
-    // Comprehensive Formula Data Mock (Simulating 1000+ formulas)
-    const formulaDatabase = {
+    // Extensive Formula Dataset Generator
+    const db = {
         physics: [
-            { title: "የፍጥነት ቀመር (Velocity)", desc: "v = s / t (ፍጥነት = ርቀት / ጊዜ)" },
-            { title: "የጅምላ-ጉልበት እኩልታ (Mass-Energy)", desc: "E = mc² (አንስታይን)" },
-            { title: "የኒውተን ሁለተኛ ህግ (Force)", desc: "F = m × a (ጉልበት = ጅምላ × ቅጥፈት)" },
-            { title: "የኪነቲክ ሃይል (Kinetic Energy)", desc: "KE = 0.5 × m × v²" }
+            { name: "Velocity Formula", eq: "v = s / t" },
+            { name: "Einstein Mass-Energy Equivalence", eq: "E = m c²" },
+            { name: "Newton's Second Law of Motion", eq: "F = m × a" },
+            { name: "Kinetic Energy", eq: "E_k = ½ m v²" },
+            { name: "Gravitational Potential Energy", eq: "E_p = m g h" },
+            { name: "Work Done", eq: "W = F × d cos(θ)" },
+            { name: "Power", eq: "P = W / t" },
+            { name: "Ohm's Law", eq: "V = I × R" },
+            { name: "Electrical Power", eq: "P = V × I = I² R" },
+            { name: "Universal Gravitation", eq: "F = G (m₁ m₂) / r²" },
+            { name: "Pressure Formula", eq: "P = F / A" },
+            { name: "Density Formula", eq: "ρ = m / V" },
+            { name: "Frequency & Period", eq: "f = 1 / T" },
+            { name: "Wave Speed", eq: "v = f × λ" }
         ],
         chemistry: [
-            { title: "የሞል ማሰልጠኛ (Moles)", desc: "n = m / M (ሞል = የተሰጠው ማስ / ሞላር ማስ)" },
-            { title: "የቦይል ህግ (Boyle's Law)", desc: "P₁V₁ = P₂V₂ (የሙቀት መጠን ቋሚ ሲሆን)" },
-            { title: "የጋዝ አጠቃላይ እኩልታ", desc: "PV = nRT" }
+            { name: "Number of Moles", eq: "n = m / M" },
+            { name: "Molarity / Concentration", eq: "C = n / V" },
+            { name: "Ideal Gas Law", eq: "P V = n R T" },
+            { name: "Boyle's Law", eq: "P₁ V₁ = P₂ V₂" },
+            { name: "Charles's Law", eq: "V₁ / T₁ = V₂ / T₂" },
+            { name: "Gay-Lussac's Law", eq: "P₁ / T₁ = P₂ / T₂" },
+            { name: "Mass Percentage", eq: "% = (m_solute / m_solution) × 100" },
+            { name: "pH Calculation", eq: "pH = -log[H⁺]" }
         ],
         math: [
-            { title: "የክብ ስፋት (Area of Circle)", desc: "A = π × r²" },
-            { title: "የፓይታጎረስ ቲዎረም (Pythagoras)", desc: "a² + b² = c²" },
-            { title: "የኩብ መጠን (Volume of Cube)", desc: "V = s³" }
+            { name: "Quadratic Formula", eq: "x = (-b ± √(b² - 4ac)) / 2a" },
+            { name: "Pythagorean Theorem", eq: "a² + b² = c²" },
+            { name: "Area of a Circle", eq: "A = π r²" },
+            { name: "Circumference of a Circle", eq: "C = 2 π r" },
+            { name: "Volume of a Sphere", eq: "V = (4/3) π r³" },
+            { name: "Slope of a Line", eq: "m = (y₂ - y₁) / (x₂ - x₁)" },
+            { name: "Arithmetic Progression Term", eq: "a_n = a₁ + (n - 1) d" },
+            { name: "Geometric Progression Term", eq: "a_n = a₁ × r^(n-1)" }
         ],
         economics: [
-            { title: "የአርክ ኤላስቲክቲ (Arc Elasticity)", desc: "Ed = (ΔQ / ΔP) × ((P₁ + P₂) / (Q₁ + Q₂))" },
-            { title: "ጠቅላላ ገቢ (Total Revenue)", desc: "TR = Price × Quantity (P × Q)" }
+            { name: "Arc Elasticity of Demand", eq: "E_d = (ΔQ / ΔP) × ((P₁ + P₂) / (Q₁ + Q₂))" },
+            { name: "Point Price Elasticity", eq: "E_p = (dQ / dP) × (P / Q)" },
+            { name: "Total Revenue", eq: "TR = Price × Quantity" },
+            { name: "Profit Formula", eq: "Profit = TR - TC" },
+            { name: "Marginal Cost", eq: "MC = ΔTC / ΔQ" }
+        ],
+        biology: [
+            { name: "Photosynthesis Net Reaction", eq: "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂" },
+            { name: "Cellular Respiration", eq: "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP" },
+            { name: "Cardiac Output", eq: "CO = Stroke Volume × Heart Rate" }
+        ],
+        civics: [
+            { name: "Rule of Law Index", eq: "Equality + Accountability + Transparency" },
+            { name: "Democratic Principles", eq: "Popular Sovereignty & Human Rights" }
         ]
     };
 
-    function openCategory(category) {
-        document.getElementById('categoriesView').style.display = 'none';
-        document.getElementById('mainSearch').style.display = 'none';
+    function showCategory(catKey) {
+        document.getElementById('categories-main-view').style.display = 'none';
+        const listView = document.getElementById('formulas-list-view');
+        const container = document.getElementById('formulas-container');
+        const title = document.getElementById('cat-title');
         
-        const detailView = document.getElementById('formulaDetailView');
-        const container = document.getElementById('formulaContainer');
-        detailView.style.display = 'block';
-
+        listView.style.display = 'flex';
+        title.textContent = catKey.toUpperCase() + " FORMULAS";
         container.innerHTML = '';
-        formulaDatabase[category].forEach(item => {
+
+        const items = db[catKey] || [];
+        items.forEach(item => {
             container.innerHTML += `
-                <div class="formula-item">
-                    <h4>${item.title}</h4>
-                    <p>${item.desc}</p>
+                <div class="formula-card-item">
+                    <h4>${item.name}</h4>
+                    <div class="math">${item.eq}</div>
                 </div>
             `;
         });
     }
 
-    function backToCategories() {
-        document.getElementById('formulaDetailView').style.display = 'none';
-        document.getElementById('categoriesView').style.display = 'block';
-        document.getElementById('mainSearch').style.display = 'block';
+    function hideCategory() {
+        document.getElementById('formulas-list-view').style.display = 'none';
+        document.getElementById('categories-main-view').style.display = 'block';
     }
 
-    function searchFormulas() {
-        let query = document.getElementById('mainSearch').value.toLowerCase();
-        if(query.trim() === '') return;
-        // Search execution logic across categories can be expanded here
+    // Search filter
+    function filterFormulas() {
+        let q = document.getElementById('searchInput').value.toLowerCase();
+        if(!q) {
+            hideCategory();
+            return;
+        }
+        showCategory('physics');
+        document.getElementById('cat-title').textContent = "SEARCH RESULTS";
+        const container = document.getElementById('formulas-container');
+        container.innerHTML = '';
+        
+        Object.keys(db).forEach(cat => {
+            db[cat].forEach(item => {
+                if(item.name.toLowerCase().includes(q) || item.eq.toLowerCase().includes(q)) {
+                    container.innerHTML += `
+                        <div class="formula-card-item">
+                            <h4>[${cat.toUpperCase()}] ${item.name}</h4>
+                            <div class="math">${item.eq}</div>
+                        </div>
+                    `;
+                }
+            });
+        });
     }
 
-    // Calculator Functions
-    const calcDisplay = document.getElementById('calcDisplay');
-    function appendCalc(val) { calcDisplay.value += val; }
-    function clearCalc() { calcDisplay.value = ''; }
-    function calculateResult() {
-        try { calcDisplay.value = eval(calcDisplay.value); } 
-        catch { calcDisplay.value = 'ስህተት (Error)'; }
+    // Calculator logic
+    const calcDisp = document.getElementById('calcDisplay');
+    function pressCalc(v) { calcDisp.value += v; }
+    function clearCalc() { calcDisp.value = ''; }
+    function evalCalc() {
+        try { calcDisp.value = eval(calcDisp.value); }
+        catch { calcDisp.value = 'Error'; }
     }
 
-    // Notes LocalStorage Functions
+    // Notes logic
     function saveNote() {
-        let noteText = document.getElementById('noteInput').value;
-        if(noteText.trim() !== '') {
-            localStorage.setItem('akalewold_study_note', noteText);
-            document.getElementById('savedNotesDisplay').textContent = noteText;
-            alert('ማስታወሻው በተሳካ ሁኔታ ተቀምጧል!');
+        let val = document.getElementById('noteInput').value;
+        if(val.trim()) {
+            localStorage.setItem('my_app_note', val);
+            document.getElementById('savedNoteDisplay').textContent = val;
+            alert('Note saved!');
         }
     }
 
     window.onload = function() {
-        let saved = localStorage.getItem('akalewold_study_note');
+        let saved = localStorage.getItem('my_app_note');
         if(saved) {
-            document.getElementById('savedNotesDisplay').textContent = saved;
+            document.getElementById('savedNoteDisplay').textContent = saved;
             document.getElementById('noteInput').value = saved;
         }
     }
