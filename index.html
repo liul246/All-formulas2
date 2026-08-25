@@ -3,39 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Formulas App</title>
+    <title>Smart Calculator</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             user-select: none;
             -webkit-user-select: none;
         }
 
         body {
-            background-color: #05070a;
+            background-color: #030712;
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
-        /* Phone Screen Container */
-        .app-frame {
+        /* Outer Glow & Animated Gradient Border Box */
+        .phone-wrapper {
+            position: relative;
             width: 100%;
             max-width: 412px;
             height: 100vh;
             max-height: 870px;
-            background: linear-gradient(180deg, #ffffff 0%, #3b82f6 30%, #1e1b4b 70%, #090d16 100%);
+            border-radius: 40px;
+            padding: 4px;
+            background: linear-gradient(45deg, #ff007f, #7928ca, #00dfd8, #ff007f);
+            background-size: 300% 300%;
+            animation: glowingBorder 6s ease infinite;
+            box-shadow: 0 0 35px rgba(121, 40, 202, 0.5), 0 0 15px rgba(0, 223, 216, 0.4);
+        }
+
+        @keyframes glowingBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* App Frame */
+        .app-frame {
+            width: 100%;
+            height: 100%;
+            background: #090d16;
+            border-radius: 36px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Background Animated Graphics Blobs */
+        .bg-blob {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.45;
+            z-index: 1;
+            animation: floatBlob 8s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -50px;
+            left: -50px;
+            background: #ff007f;
+        }
+
+        .blob-2 {
+            bottom: -50px;
+            right: -50px;
+            background: #00dfd8;
+            animation-delay: -4s;
+        }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 40px) scale(1.2); }
         }
 
         /* 1. SPLASH SCREEN */
@@ -45,77 +95,60 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #ffffff 0%, #2563eb 40%, #0f172a 100%);
+            background: rgba(9, 13, 22, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 100;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 60px 20px 50px 20px;
+            padding: 80px 20px 60px 20px;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
         .splash-header {
             text-align: center;
-            margin-top: 40px;
+        }
+
+        .splash-icon {
+            font-size: 64px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px #7928ca);
+            animation: pulseIcon 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .splash-title {
-            font-size: 42px;
+            font-size: 40px;
             font-weight: 900;
-            color: #0f172a;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
-            margin-bottom: 5px;
+            background: linear-gradient(135deg, #ffffff, #93c5fd, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         .splash-subtitle {
-            font-size: 16px;
-            color: #1e3a8a;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .splash-center {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .math-expr {
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            font-size: 24px;
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .splash-desc {
-            font-size: 13px;
-            color: #e0e7ff;
-            letter-spacing: 1px;
-        }
-
-        .spinner-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+            font-size: 14px;
+            color: #94a3b8;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            text-transform: uppercase;
         }
 
         .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid #ffffff;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #00dfd8;
+            border-right: 4px solid #ff007f;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.9s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
         }
 
         @keyframes spin {
@@ -126,174 +159,79 @@
         /* MAIN CONTENT AREA */
         .content-area {
             flex: 1;
-            overflow-y: auto;
-            display: none;
-            flex-direction: column;
-            padding: 20px 18px 85px 18px;
-        }
-
-        .content-area.active {
-            display: flex;
-        }
-
-        /* PAGE 1: HOME */
-        .welcome-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-top: 10px;
-            margin-bottom: 15px;
-        }
-
-        .search-wrapper {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 16px;
-            border: none;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-input::placeholder {
-            color: #e2e8f0;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
-
-        .category-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 18px 14px;
-            border-radius: 18px;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease;
+            z-index: 10;
             display: flex;
             flex-direction: column;
+            padding: 45px 20px 85px 20px;
+        }
+
+        /* HEADER */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-        }
-
-        .category-card:active {
-            transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.22);
-        }
-
-        .cat-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .cat-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .cat-count {
-            font-size: 11px;
-            color: #cbd5e1;
-        }
-
-        /* FORMULAS LIST MODAL/VIEW */
-        .formulas-list-view {
-            display: none;
-            flex-direction: column;
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            color: #ffffff;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            cursor: pointer;
-            align-self: flex-start;
             margin-bottom: 15px;
-            backdrop-filter: blur(5px);
         }
 
-        .formula-card-item {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(10px);
-            padding: 14px;
-            border-radius: 14px;
-            margin-bottom: 10px;
-            border: none;
-        }
-
-        .formula-card-item h4 {
-            color: #60a5fa;
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
-
-        .formula-card-item .math {
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            font-size: 16px;
-            color: #f8fafc;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 6px 10px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 4px;
-        }
-
-        /* PAGE 2: CALCULATOR */
-        .calc-header {
+        .app-header h1 {
             font-size: 24px;
             font-weight: 800;
-            margin-bottom: 15px;
-            color: #ffffff;
+            background: linear-gradient(90deg, #ffffff, #00dfd8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .calc-display {
-            width: 100%;
-            height: 80px;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(10px);
-            border: none;
-            border-radius: 18px;
-            color: #4ade80;
-            font-size: 32px;
-            text-align: right;
+        /* CALCULATOR DISPLAY */
+        .calc-display-container {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
             padding: 20px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 120px;
+        }
+
+        .history-text {
+            color: #64748b;
+            font-size: 16px;
+            text-align: right;
+            min-height: 24px;
+            font-family: monospace;
+        }
+
+        .main-input {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #00dfd8;
+            font-size: 38px;
+            text-align: right;
             outline: none;
             font-family: monospace;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 223, 216, 0.3);
         }
 
-        .calc-buttons-grid {
+        /* BUTTONS GRID */
+        .calc-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             flex: 1;
         }
 
-        .calc-b {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(8px);
-            border: none;
-            border-radius: 16px;
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
             color: #ffffff;
             font-size: 22px;
             font-weight: 600;
@@ -301,425 +239,173 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 60px;
-            transition: background 0.15s ease;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .calc-b:active {
-            background: rgba(255, 255, 255, 0.3);
+        .btn:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        .calc-b.op {
-            background: rgba(59, 130, 246, 0.4);
-            color: #93c5fd;
+        /* Specialized Buttons Graphics */
+        .btn.op {
+            background: rgba(121, 40, 202, 0.25);
+            color: #c084fc;
+            border: 1px solid rgba(192, 132, 252, 0.3);
         }
 
-        .calc-b.eq {
-            background: #2563eb;
+        .btn.op:active {
+            background: rgba(121, 40, 202, 0.5);
+        }
+
+        .btn.func {
+            background: rgba(0, 223, 216, 0.15);
+            color: #5eead4;
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            font-size: 18px;
+        }
+
+        .btn.clear {
+            background: rgba(255, 0, 127, 0.25);
+            color: #ff70a6;
+            border: 1px solid rgba(255, 0, 127, 0.4);
+        }
+
+        .btn.equal {
+            background: linear-gradient(135deg, #ff007f, #7928ca);
             color: #ffffff;
             grid-column: span 2;
-        }
-
-        .calc-b.clear {
-            background: rgba(239, 68, 68, 0.4);
-            color: #fca5a5;
-        }
-
-        /* PAGE 3: NOTES */
-        .notes-header {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        .notes-textarea {
-            width: 100%;
-            height: 200px;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(10px);
             border: none;
-            border-radius: 18px;
-            color: #ffffff;
-            padding: 16px;
-            font-size: 15px;
-            outline: none;
-            resize: none;
-            margin-bottom: 15px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+            font-size: 26px;
         }
 
-        .notes-save-btn {
-            width: 100%;
-            padding: 16px;
-            background: #2563eb;
-            border: none;
-            border-radius: 16px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-        }
-
-        .notes-saved-area {
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            border-radius: 16px;
-            font-size: 14px;
-            color: #e2e8f0;
-            min-height: 80px;
-        }
-
-        /* 6. BOTTOM NAVIGATION BAR */
-        .bottom-nav-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(9, 13, 22, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border: none;
-            z-index: 50;
-        }
-
-        .nav-btn {
-            background: none;
-            border: none;
-            color: #64748b;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            width: 33.33%;
-            height: 100%;
-            transition: color 0.2s ease;
-        }
-
-        .nav-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: stroke;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .nav-btn.active {
-            color: #3b82f6;
-        }
-
-        .nav-btn span {
-            font-size: 11px;
-            font-weight: 600;
+        .btn.equal:active {
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.8);
         }
     </style>
 </head>
 <body>
 
-<div class="app-frame">
+<div class="phone-wrapper">
+    <div class="app-frame">
 
-    <!-- 1. SPLASH SCREEN -->
-    <div id="splash-screen">
-        <div class="splash-header">
-            <h1 class="splash-title">All Formulas</h1>
-            <div class="splash-subtitle">Calculations & Equations</div>
-        </div>
+        <!-- Background Graphics Glowing Blobs -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
 
-        <div class="splash-center">
-            <div class="math-expr">E = mc² &nbsp;|&nbsp; ∫f(x)dx &nbsp;|&nbsp; PV=nRT</div>
-            <div class="splash-desc">1000+ Formulas Library & Solver</div>
-        </div>
+        <!-- 1. SPLASH SCREEN -->
+        <div id="splash-screen">
+            <div class="splash-header">
+                <div class="splash-icon">🧮</div>
+                <h1 class="splash-title">Calculator</h1>
+                <div class="splash-subtitle">Smart & Powerful Solver</div>
+            </div>
 
-        <div class="spinner-container">
             <div class="spinner"></div>
         </div>
-    </div>
 
-    <!-- PAGE 1: HOME -->
-    <div id="page-home" class="content-area active">
-        <div id="categories-main-view">
-            <h1 class="welcome-title">Welcome</h1>
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search 1000+ formulas..." onkeyup="filterFormulas()">
+        <!-- MAIN CALCULATOR APP AREA -->
+        <div class="content-area">
+
+            <!-- Header -->
+            <div class="app-header">
+                <h1>Smart Calculator</h1>
             </div>
 
-            <div class="categories-grid">
-                <div class="category-card" onclick="showCategory('physics')">
-                    <div class="cat-icon">⚡</div>
-                    <div class="cat-name">Physics</div>
-                    <div class="cat-count">250+ Formulas</div>
-                </div>
-
-                <div class="category-card" onclick="showCategory('chemistry')">
-                    <div class="cat-icon">🧪</div>
-                    <div class="cat-name">Chemistry</div>
-                    <div class="cat-count">220+ Formulas</div>
-                </div>
-
-                <div class="category-card" onclick="showCategory('math')">
-                    <div class="cat-icon">📐</div>
-                    <div class="cat-name">Mathematics</div>
-                    <div class="cat-count">300+ Formulas</div>
-                </div>
-
-                <div class="category-card" onclick="showCategory('economics')">
-                    <div class="cat-icon">📊</div>
-                    <div class="cat-name">Economics</div>
-                    <div class="cat-count">120+ Formulas</div>
-                </div>
-
-                <div class="category-card" onclick="showCategory('biology')">
-                    <div class="cat-icon">🧬</div>
-                    <div class="cat-name">Biology</div>
-                    <div class="cat-count">80+ Formulas</div>
-                </div>
-
-                <div class="category-card" onclick="showCategory('civics')">
-                    <div class="cat-icon">🏛️</div>
-                    <div class="cat-name">Civics & Law</div>
-                    <div class="cat-count">50+ Principles</div>
-                </div>
+            <!-- Display Screen -->
+            <div class="calc-display-container">
+                <div id="historyDisplay" class="history-text"></div>
+                <input type="text" id="calcDisplay" class="main-input" readonly placeholder="0">
             </div>
+
+            <!-- Buttons Grid -->
+            <div class="calc-grid">
+                <button class="btn clear" onclick="clearCalc()">C</button>
+                <button class="btn func" onclick="deleteLast()">⌫</button>
+                <button class="btn op" onclick="pressCalc('(')">(</button>
+                <button class="btn op" onclick="pressCalc(')')">)</button>
+
+                <button class="btn func" onclick="pressCalc('sin(')">sin</button>
+                <button class="btn func" onclick="pressCalc('cos(')">cos</button>
+                <button class="btn func" onclick="pressCalc('√(')">√</button>
+                <button class="btn op" onclick="pressCalc('/')">÷</button>
+
+                <button class="btn" onclick="pressCalc('7')">7</button>
+                <button class="btn" onclick="pressCalc('8')">8</button>
+                <button class="btn" onclick="pressCalc('9')">9</button>
+                <button class="btn op" onclick="pressCalc('*')">×</button>
+
+                <button class="btn" onclick="pressCalc('4')">4</button>
+                <button class="btn" onclick="pressCalc('5')">5</button>
+                <button class="btn" onclick="pressCalc('6')">6</button>
+                <button class="btn op" onclick="pressCalc('-')">-</button>
+
+                <button class="btn" onclick="pressCalc('1')">1</button>
+                <button class="btn" onclick="pressCalc('2')">2</button>
+                <button class="btn" onclick="pressCalc('3')">3</button>
+                <button class="btn op" onclick="pressCalc('+')">+</button>
+
+                <button class="btn" onclick="pressCalc('0')">0</button>
+                <button class="btn" onclick="pressCalc('.')">.</button>
+                <button class="btn equal" onclick="evalCalc()">=</button>
+            </div>
+
         </div>
 
-        <!-- Formulas List Inner View -->
-        <div id="formulas-list-view" class="formulas-list-view">
-            <button class="back-btn" onclick="hideCategory()">← Back to Categories</button>
-            <h2 id="cat-title" style="margin-bottom: 12px; color: #ffffff;"></h2>
-            <div id="formulas-container"></div>
-        </div>
     </div>
-
-    <!-- PAGE 2: CALCULATOR -->
-    <div id="page-calc" class="content-area">
-        <h2 class="calc-header">Calculator</h2>
-        <input type="text" id="calcDisplay" class="calc-display" readonly placeholder="0">
-        <div class="calc-buttons-grid">
-            <button class="calc-b clear" onclick="clearCalc()">C</button>
-            <button class="calc-b op" onclick="pressCalc('(')">(</button>
-            <button class="calc-b op" onclick="pressCalc(')')">)</button>
-            <button class="calc-b op" onclick="pressCalc('/')">÷</button>
-            
-            <button class="calc-b" onclick="pressCalc('7')">7</button>
-            <button class="calc-b" onclick="pressCalc('8')">8</button>
-            <button class="calc-b" onclick="pressCalc('9')">9</button>
-            <button class="calc-b op" onclick="pressCalc('*')">×</button>
-            
-            <button class="calc-b" onclick="pressCalc('4')">4</button>
-            <button class="calc-b" onclick="pressCalc('5')">5</button>
-            <button class="calc-b" onclick="pressCalc('6')">6</button>
-            <button class="calc-b op" onclick="pressCalc('-')">-</button>
-            
-            <button class="calc-b" onclick="pressCalc('1')">1</button>
-            <button class="calc-b" onclick="pressCalc('2')">2</button>
-            <button class="calc-b" onclick="pressCalc('3')">3</button>
-            <button class="calc-b op" onclick="pressCalc('+')">+</button>
-            
-            <button class="calc-b" onclick="pressCalc('0')">0</button>
-            <button class="calc-b" onclick="pressCalc('.')">.</button>
-            <button class="calc-b eq" onclick="evalCalc()">=</button>
-        </div>
-    </div>
-
-    <!-- PAGE 3: NOTES -->
-    <div id="page-notes" class="content-area">
-        <h2 class="notes-header">Notes</h2>
-        <textarea id="noteInput" class="notes-textarea" placeholder="Write your formulas or study notes here..."></textarea>
-        <button class="notes-save-btn" onclick="saveNote()">Save Note</button>
-        <div class="notes-saved-area" id="savedNoteDisplay">No saved notes yet.</div>
-    </div>
-
-    <!-- 6. BOTTOM NAVIGATION BAR -->
-    <div class="bottom-nav-bar">
-        <!-- 1. Home (House) Icon -->
-        <button class="nav-btn active" id="nav-home-btn" onclick="switchPage('home')">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Home</span>
-        </button>
-        
-        <!-- 2. Calculator Icon -->
-        <button class="nav-btn" id="nav-calc-btn" onclick="switchPage('calc')">
-            <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
-            <span>Calc</span>
-        </button>
-        
-        <!-- 3. Pen/Notes Icon -->
-        <button class="nav-btn" id="nav-notes-btn" onclick="switchPage('notes')">
-            <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            <span>Notes</span>
-        </button>
-    </div>
-
 </div>
 
 <script>
-    // Splash screen dismissal timer (3 seconds)
+    // Splash screen timer (2.5 seconds)
     setTimeout(() => {
         const splash = document.getElementById('splash-screen');
         splash.style.opacity = '0';
         splash.style.visibility = 'hidden';
-    }, 3000);
+    }, 2500);
 
-    // Navigation Switcher
-    function switchPage(page) {
-        document.querySelectorAll('.content-area').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-
-        if(page === 'home') {
-            document.getElementById('page-home').classList.add('active');
-            document.getElementById('nav-home-btn').classList.add('active');
-        } else if(page === 'calc') {
-            document.getElementById('page-calc').classList.add('active');
-            document.getElementById('nav-calc-btn').classList.add('active');
-        } else if(page === 'notes') {
-            document.getElementById('page-notes').classList.add('active');
-            document.getElementById('nav-notes-btn').classList.add('active');
-        }
-    }
-
-    // Extensive Formula Dataset Generator
-    const db = {
-        physics: [
-            { name: "Velocity Formula", eq: "v = s / t" },
-            { name: "Einstein Mass-Energy Equivalence", eq: "E = m c²" },
-            { name: "Newton's Second Law of Motion", eq: "F = m × a" },
-            { name: "Kinetic Energy", eq: "E_k = ½ m v²" },
-            { name: "Gravitational Potential Energy", eq: "E_p = m g h" },
-            { name: "Work Done", eq: "W = F × d cos(θ)" },
-            { name: "Power", eq: "P = W / t" },
-            { name: "Ohm's Law", eq: "V = I × R" },
-            { name: "Electrical Power", eq: "P = V × I = I² R" },
-            { name: "Universal Gravitation", eq: "F = G (m₁ m₂) / r²" },
-            { name: "Pressure Formula", eq: "P = F / A" },
-            { name: "Density Formula", eq: "ρ = m / V" },
-            { name: "Frequency & Period", eq: "f = 1 / T" },
-            { name: "Wave Speed", eq: "v = f × λ" }
-        ],
-        chemistry: [
-            { name: "Number of Moles", eq: "n = m / M" },
-            { name: "Molarity / Concentration", eq: "C = n / V" },
-            { name: "Ideal Gas Law", eq: "P V = n R T" },
-            { name: "Boyle's Law", eq: "P₁ V₁ = P₂ V₂" },
-            { name: "Charles's Law", eq: "V₁ / T₁ = V₂ / T₂" },
-            { name: "Gay-Lussac's Law", eq: "P₁ / T₁ = P₂ / T₂" },
-            { name: "Mass Percentage", eq: "% = (m_solute / m_solution) × 100" },
-            { name: "pH Calculation", eq: "pH = -log[H⁺]" }
-        ],
-        math: [
-            { name: "Quadratic Formula", eq: "x = (-b ± √(b² - 4ac)) / 2a" },
-            { name: "Pythagorean Theorem", eq: "a² + b² = c²" },
-            { name: "Area of a Circle", eq: "A = π r²" },
-            { name: "Circumference of a Circle", eq: "C = 2 π r" },
-            { name: "Volume of a Sphere", eq: "V = (4/3) π r³" },
-            { name: "Slope of a Line", eq: "m = (y₂ - y₁) / (x₂ - x₁)" },
-            { name: "Arithmetic Progression Term", eq: "a_n = a₁ + (n - 1) d" },
-            { name: "Geometric Progression Term", eq: "a_n = a₁ × r^(n-1)" }
-        ],
-        economics: [
-            { name: "Arc Elasticity of Demand", eq: "E_d = (ΔQ / ΔP) × ((P₁ + P₂) / (Q₁ + Q₂))" },
-            { name: "Point Price Elasticity", eq: "E_p = (dQ / dP) × (P / Q)" },
-            { name: "Total Revenue", eq: "TR = Price × Quantity" },
-            { name: "Profit Formula", eq: "Profit = TR - TC" },
-            { name: "Marginal Cost", eq: "MC = ΔTC / ΔQ" }
-        ],
-        biology: [
-            { name: "Photosynthesis Net Reaction", eq: "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂" },
-            { name: "Cellular Respiration", eq: "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP" },
-            { name: "Cardiac Output", eq: "CO = Stroke Volume × Heart Rate" }
-        ],
-        civics: [
-            { name: "Rule of Law Index", eq: "Equality + Accountability + Transparency" },
-            { name: "Democratic Principles", eq: "Popular Sovereignty & Human Rights" }
-        ]
-    };
-
-    function showCategory(catKey) {
-        document.getElementById('categories-main-view').style.display = 'none';
-        const listView = document.getElementById('formulas-list-view');
-        const container = document.getElementById('formulas-container');
-        const title = document.getElementById('cat-title');
-        
-        listView.style.display = 'flex';
-        title.textContent = catKey.toUpperCase() + " FORMULAS";
-        container.innerHTML = '';
-
-        const items = db[catKey] || [];
-        items.forEach(item => {
-            container.innerHTML += `
-                <div class="formula-card-item">
-                    <h4>${item.name}</h4>
-                    <div class="math">${item.eq}</div>
-                </div>
-            `;
-        });
-    }
-
-    function hideCategory() {
-        document.getElementById('formulas-list-view').style.display = 'none';
-        document.getElementById('categories-main-view').style.display = 'block';
-    }
-
-    // Search filter
-    function filterFormulas() {
-        let q = document.getElementById('searchInput').value.toLowerCase();
-        if(!q) {
-            hideCategory();
-            return;
-        }
-        showCategory('physics');
-        document.getElementById('cat-title').textContent = "SEARCH RESULTS";
-        const container = document.getElementById('formulas-container');
-        container.innerHTML = '';
-        
-        Object.keys(db).forEach(cat => {
-            db[cat].forEach(item => {
-                if(item.name.toLowerCase().includes(q) || item.eq.toLowerCase().includes(q)) {
-                    container.innerHTML += `
-                        <div class="formula-card-item">
-                            <h4>[${cat.toUpperCase()}] ${item.name}</h4>
-                            <div class="math">${item.eq}</div>
-                        </div>
-                    `;
-                }
-            });
-        });
-    }
-
-    // Calculator logic
     const calcDisp = document.getElementById('calcDisplay');
-    function pressCalc(v) { calcDisp.value += v; }
-    function clearCalc() { calcDisp.value = ''; }
+    const histDisp = document.getElementById('historyDisplay');
+
+    function pressCalc(v) {
+        if (calcDisp.value === 'Error') calcDisp.value = '';
+        calcDisp.value += v;
+    }
+
+    function clearCalc() {
+        calcDisp.value = '';
+        histDisp.textContent = '';
+    }
+
+    function deleteLast() {
+        calcDisp.value = calcDisp.value.slice(0, -1);
+    }
+
     function evalCalc() {
-        try { calcDisp.value = eval(calcDisp.value); }
-        catch { calcDisp.value = 'Error'; }
-    }
+        try {
+            let expr = calcDisp.value;
+            if(!expr) return;
+            histDisp.textContent = expr + ' =';
 
-    // Notes logic
-    function saveNote() {
-        let val = document.getElementById('noteInput').value;
-        if(val.trim()) {
-            localStorage.setItem('my_app_note', val);
-            document.getElementById('savedNoteDisplay').textContent = val;
-            alert('Note saved!');
-        }
-    }
+            // Advanced Math Functions Replacing
+            let parsedExpr = expr
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/')
+                .replace(/√\(/g, 'Math.sqrt(')
+                .replace(/sin\(/g, 'Math.sin(')
+                .replace(/cos\(/g, 'Math.cos(');
 
-    window.onload = function() {
-        let saved = localStorage.getItem('my_app_note');
-        if(saved) {
-            document.getElementById('savedNoteDisplay').textContent = saved;
-            document.getElementById('noteInput').value = saved;
+            let result = eval(parsedExpr);
+            
+            // Limit floating numbers precision
+            if (Number.isFinite(result) && !Number.isInteger(result)) {
+                result = parseFloat(result.toFixed(6));
+            }
+            
+            calcDisp.value = result;
+        } catch (e) {
+            calcDisp.value = 'Error';
         }
     }
 </script>
