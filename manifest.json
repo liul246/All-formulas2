@@ -40,6 +40,7 @@
   },
   "scope_extensions": [
     {
+      "type": "origin",
       "origin": "https://akalewold15-cloud.github.io"
     }
   ],
@@ -53,8 +54,8 @@
       "description": "Quick calculator widget",
       "tag": "calc-widget",
       "template": "widget-template",
-      "ms_ac_template": "widget-template.json",
-      "data": "widget-data.json",
+      "ms_ac_template": "./widget-template.json",
+      "data": "./widget-data.json",
       "type": "text/html",
       "output_security": "sandbox",
       "auth": false,
