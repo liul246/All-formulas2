@@ -1,17 +1,50 @@
 {
   "name": "Smart Calculator",
   "short_name": "Calculator",
-  "description": "Fast and simple offline calculator app",
+  "description": "A fast, lightweight, elegant, and fully functional offline calculator app.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0d1117",
   "theme_color": "#0d1117",
-  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "productivity",
+    "education"
+  ],
+  "prefer_related_applications": false,
   "icons": [
+    {
+      "src": "https://via.placeholder.com/192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "https://via.placeholder.com/512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://via.placeholder.com/540x720.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Calculator Main View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Calculator",
+      "short_name": "Calc",
+      "description": "Start calculating immediately",
+      "url": "./index.html"
     }
   ]
 }
