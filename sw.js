@@ -6,6 +6,7 @@ const ASSETS_TO_CACHE = [
   './icon-512.png'
 ];
 
+// Offline caching
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -28,6 +29,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Full Offline Support
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
