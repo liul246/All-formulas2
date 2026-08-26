@@ -75,9 +75,10 @@
       "update_interval": 86400,
       "screenshots": [
         {
-          "src": "https://via.placeholder.com/540x720.png",
-          "sizes": "540x720",
+          "src": "https://via.placeholder.com/1280x720.png",
+          "sizes": "1280x720",
           "type": "image/png",
+          "form_factor": "wide",
           "label": "Widget Screenshot"
         }
       ],
@@ -117,16 +118,23 @@
       "src": "https://via.placeholder.com/512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "https://via.placeholder.com/540x720.png",
-      "sizes": "540x720",
+      "src": "https://via.placeholder.com/1080x1920.png",
+      "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Calculator Screen"
+      "label": "Calculator Mobile View"
+    },
+    {
+      "src": "https://via.placeholder.com/1920x1080.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Calculator Desktop View"
     }
   ],
   "shortcuts": [
