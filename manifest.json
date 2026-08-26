@@ -12,21 +12,61 @@
   "theme_color": "#0d1117",
   "lang": "en",
   "dir": "ltr",
-  "iarc_rating_id": "",
+  "iarc_rating_id": "e84b078d-6a01-443e-a131-7eef277150a0",
   "prefer_related_applications": false,
   "related_applications": [],
-  "protocol_handlers": [],
-  "file_handlers": [],
+  "protocol_handlers": [
+    {
+      "protocol": "web+calc",
+      "url": "./index.html?calc=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "./index.html",
+      "accept": {
+        "text/plain": [".txt"]
+      }
+    }
+  ],
   "launch_handler": {
     "client_mode": "focus-existing"
   },
-  "scope_extensions": [],
+  "scope_extensions": [
+    {
+      "origin": "*.github.io"
+    }
+  ],
   "edge_side_panel": {
     "preferred_width": 400
   },
-  "widgets": [],
-  "note_taking": {},
-  "share_target": {},
+  "widgets": [
+    {
+      "name": "Calculator Widget",
+      "short_name": "Calc",
+      "description": "Quick calculator widget",
+      "tag": "calc-widget",
+      "template": "widget-template",
+      "ms_ac_template": "widget-template.json",
+      "data": "widget-data.json",
+      "type": "text/html",
+      "output_security": "sandbox",
+      "auth": false,
+      "update_interval": 86400
+    }
+  ],
+  "note_taking": {
+    "new_note_url": "./index.html"
+  },
+  "share_target": {
+    "action": "./index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
   "categories": [
     "utilities",
     "productivity"
