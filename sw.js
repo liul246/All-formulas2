@@ -1,24 +1,20 @@
 const CACHE_NAME = 'smart-calculator-v1';
-
-// ከኢንተርኔት ውጭ (Offline) እንዲያዙ የሚፈለጉ ፋይሎች
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json'
 ];
 
-// 1. Service Worker ሲጫን (Install) ፋይሎቹን Cache ማድረግ
+// 1. Service Worker Install
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => {
-      return self.skipWaiting();
-    })
+    }).then(() => self.skipWaiting())
   );
 });
 
-// 2. አዲስ ስሪት ሲኖር አሮጌውን Cache ማጽዳት (Activate)
+// 2. Service Worker Activate
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -29,23 +25,40 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => {
-      return self.clients.claim();
+    }).then(() => self.clients.claim())
+  );
+});
+
+// 3. Fetch Request (Offline Support)
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
     })
   );
 });
 
-// 3. አፑ ሲከፈት ከ Cache መውሰድ (Offline Support)
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(() => {
-        // የኔትወርክ ጥያቄው ካልሰራ ከካሽ index.html እንዲመልስ
-        return caches.match('./index.html');
-      });
-    })
+// 4. Push Notifications Support
+self.addEventListener('push', (event) => {
+  const options = {
+    body: event.data ? event.data.text() : 'Notification from Smart Calculator',
+    icon: 'https://via.placeholder.com/192.png'
+  };
+  event.waitUntil(
+    self.registration.showNotification('Smart Calculator', options)
   );
+});
+
+// 5. Background Sync Support
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'sync-data') {
+    console.log('Background sync event triggered');
+  }
+});
+
+// 6. Periodic Background Sync Support
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'update-cache') {
+    console.log('Periodic sync event triggered');
+  }
 });
