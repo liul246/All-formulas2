@@ -6,7 +6,20 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "tabbed", "standalone", "minimal-ui"],
+  "display_override": [
+    "tabbed",
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "tab_strip": {
+    "home_tab": {
+      "scope": "./"
+    },
+    "new_tab_button": {
+      "url": "./index.html"
+    }
+  },
   "orientation": "portrait",
   "background_color": "#0d1117",
   "theme_color": "#0d1117",
