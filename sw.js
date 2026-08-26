@@ -1,38 +1,51 @@
-const CACHE_NAME = 'calculator-v1';
-const ASSETS = [
+const CACHE_NAME = 'smart-calculator-v1';
+
+// ከኢንተርኔት ውጭ (Offline) እንዲያዙ የሚፈለጉ ፋይሎች
+const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json'
 ];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
+// 1. Service Worker ሲጫን (Install) ፋይሎቹን Cache ማድረግ
+self.addEventListener('install', (event) => {
+  event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
+      return cache.addAll(ASSETS_TO_CACHE);
+    }).then(() => {
+      return self.skipWaiting();
     })
   );
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
+// 2. አዲስ ስሪት ሲኖር አሮጌውን Cache ማጽዳት (Activate)
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
           }
         })
       );
+    }).then(() => {
+      return self.clients.claim();
     })
   );
-  self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      return cachedResponse || fetch(e.request);
+// 3. አፑ ሲከፈት ከ Cache መውሰድ (Offline Support)
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).catch(() => {
+        // የኔትወርክ ጥያቄው ካልሰራ ከካሽ index.html እንዲመልስ
+        return caches.match('./index.html');
+      });
     })
   );
 });
