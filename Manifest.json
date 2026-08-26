@@ -1,21 +1,36 @@
 {
+  "id": "com.smart.calculator.app",
   "name": "Smart Calculator",
   "short_name": "Calculator",
-  "description": "A fast, lightweight, elegant, and fully functional offline calculator app.",
+  "description": "Fast, lightweight, and offline functional calculator application.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#0d1117",
   "theme_color": "#0d1117",
   "lang": "en",
   "dir": "ltr",
+  "iarc_rating_id": "",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "protocol_handlers": [],
+  "file_handlers": [],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "scope_extensions": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "widgets": [],
+  "note_taking": {},
+  "share_target": {},
   "categories": [
     "utilities",
-    "productivity",
-    "education"
+    "productivity"
   ],
-  "prefer_related_applications": false,
   "icons": [
     {
       "src": "https://via.placeholder.com/192.png",
@@ -36,14 +51,14 @@
       "sizes": "540x720",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Calculator Main View"
+      "label": "Calculator Screen"
     }
   ],
   "shortcuts": [
     {
-      "name": "Open Calculator",
+      "name": "Calculator",
       "short_name": "Calc",
-      "description": "Start calculating immediately",
+      "description": "Open Calculator",
       "url": "./index.html"
     }
   ]
