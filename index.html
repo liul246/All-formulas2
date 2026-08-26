@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Calculator</title>
+  <title>Smart Calculator</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d1117">
   <style>
     * {
       box-sizing: border-box;
@@ -170,6 +172,10 @@
       output.innerText = 'Error';
       currentExpr = '';
     }
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
   }
 </script>
 
