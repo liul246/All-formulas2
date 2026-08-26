@@ -7,19 +7,9 @@
   "scope": "./",
   "display": "standalone",
   "display_override": [
-    "tabbed",
-    "window-controls-overlay",
     "standalone",
     "minimal-ui"
   ],
-  "tab_strip": {
-    "home_tab": {
-      "scope": "./"
-    },
-    "new_tab_button": {
-      "url": "./index.html"
-    }
-  },
   "orientation": "portrait",
   "background_color": "#0d1117",
   "theme_color": "#0d1117",
@@ -75,17 +65,16 @@
       "update_interval": 86400,
       "screenshots": [
         {
-          "src": "https://dummyimage.com/1280x720/000/fff.png",
-          "sizes": "1280x720",
+          "src": "./icon-512.png",
+          "sizes": "512x512",
           "type": "image/png",
-          "form_factor": "wide",
           "label": "Widget Screenshot"
         }
       ],
       "icons": [
         {
-          "src": "https://dummyimage.com/192x192/000/fff.png",
-          "sizes": "192x192",
+          "src": "./icon-512.png",
+          "sizes": "512x512",
           "type": "image/png"
         }
       ]
@@ -109,13 +98,13 @@
   ],
   "icons": [
     {
-      "src": "https://dummyimage.com/192x192/000/fff.png",
+      "src": "./icon-512.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://dummyimage.com/512x512/000/fff.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -123,15 +112,15 @@
   ],
   "screenshots": [
     {
-      "src": "https://dummyimage.com/1080x1920/000/fff.png",
-      "sizes": "1080x1920",
+      "src": "./icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Calculator Mobile View"
     },
     {
-      "src": "https://dummyimage.com/1920x1080/000/fff.png",
-      "sizes": "1920x1080",
+      "src": "./icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Calculator Desktop View"
