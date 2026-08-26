@@ -40,7 +40,7 @@
   },
   "scope_extensions": [
     {
-      "origin": "akalewold15-cloud.github.io"
+      "origin": "https://akalewold15-cloud.github.io"
     }
   ],
   "edge_side_panel": {
@@ -53,12 +53,20 @@
       "description": "Quick calculator widget",
       "tag": "calc-widget",
       "template": "widget-template",
-      "ms_ac_template": "./widget-template.json",
-      "data": "./widget-data.json",
+      "ms_ac_template": "widget-template.json",
+      "data": "widget-data.json",
       "type": "text/html",
       "output_security": "sandbox",
       "auth": false,
       "update_interval": 86400,
+      "screenshots": [
+        {
+          "src": "https://via.placeholder.com/540x720.png",
+          "sizes": "540x720",
+          "type": "image/png",
+          "label": "Widget Screenshot"
+        }
+      ],
       "icons": [
         {
           "src": "https://via.placeholder.com/192.png",
