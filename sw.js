@@ -1,5 +1,5 @@
-/* Calc Pro — Service Worker */
-const CACHE = "calc-pro-v1";
+/* Calc Pro — Service Worker v2 */
+const CACHE = "calc-pro-v2";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (e) => {
