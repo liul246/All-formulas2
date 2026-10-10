@@ -2,17 +2,18 @@
   "id": "/calc-pro-max/",
   "name": "Calculator Pro Max",
   "short_name": "Calc Pro",
-  "description": "Advanced scientific calculator with graph, converter, solver, constants and matrix",
+  "description": "Advanced scientific calculator with graph, converter, solver, constants, matrix and widgets",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "display_override": [
     "window-controls-overlay",
+    "tabbed",
     "standalone",
     "minimal-ui",
     "fullscreen"
   ],
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
   "lang": "en",
@@ -20,7 +21,22 @@
   "categories": ["utilities", "productivity", "education", "tools"],
   "iarc_rating_id": "e5c5e5a5-5e5e-5e5e-5e5e-5e5e5e5e5e5e",
   "prefer_related_applications": false,
-  "related_applications": [],
+
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.yourname.calcpro",
+      "id": "com.yourname.calcpro"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/calc-pro/id0000000000"
+    },
+    {
+      "platform": "webapp",
+      "url": "./manifest.json"
+    }
+  ],
 
   "icons": [
     {
@@ -34,12 +50,18 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a0a0f'/%3E%3Ctext x='256' y='300' font-size='200' text-anchor='middle'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
     }
   ],
 
   "screenshots": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 844'%3E%3Crect width='390' height='844' fill='%230a0a0f'/%3E%3Ctext x='195' y='422' font-size='80' text-anchor='middle'%3E%F0%9F%A7%AE%3C/text%3E%3Ctext x='195' y='500' font-size='24' fill='%23fff' text-anchor='middle'%3ECalc Pro Max%3C/text%3E%3C/svg%3E",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 844'%3E%3Crect width='390' height='844' fill='%230a0a0f'/%3E%3Ctext x='195' y='422' font-size='80' text-anchor='middle'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
       "sizes": "390x844",
       "type": "image/svg+xml",
       "form_factor": "narrow",
@@ -60,28 +82,35 @@
       "short_name": "Calc",
       "description": "Open scientific calculator",
       "url": "./index.html?tab=calc",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧮</text></svg>", "sizes": "96x96" }]
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧮</text></svg>", "sizes": "96x96", "type": "image/svg+xml" }]
     },
     {
       "name": "Graph Plotter",
       "short_name": "Graph",
       "description": "Plot mathematical functions",
       "url": "./index.html?tab=graph",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>📈</text></svg>", "sizes": "96x96" }]
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>📈</text></svg>", "sizes": "96x96", "type": "image/svg+xml" }]
     },
     {
       "name": "Unit Converter",
       "short_name": "Convert",
       "description": "Convert between units",
       "url": "./index.html?tab=convert",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🔄</text></svg>", "sizes": "96x96" }]
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🔄</text></svg>", "sizes": "96x96", "type": "image/svg+xml" }]
     },
     {
       "name": "Equation Solver",
       "short_name": "Solve",
       "description": "Solve equations",
       "url": "./index.html?tab=solve",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧠</text></svg>", "sizes": "96x96" }]
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧠</text></svg>", "sizes": "96x96", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "New Calculation",
+      "short_name": "New",
+      "description": "Start a fresh calculation",
+      "url": "./index.html?action=new",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>➕</text></svg>", "sizes": "96x96", "type": "image/svg+xml" }]
     }
   ],
 
@@ -89,6 +118,10 @@
     {
       "protocol": "web+calc",
       "url": "./index.html?expr=%s"
+    },
+    {
+      "protocol": "web+math",
+      "url": "./index.html?solve=%s"
     }
   ],
 
@@ -107,7 +140,9 @@
     {
       "action": "./index.html",
       "accept": {
-        "text/plain": [".txt", ".csv"]
+        "text/plain": [".txt", ".csv"],
+        "text/csv": [".csv"],
+        "application/json": [".json"]
       }
     }
   ],
@@ -120,9 +155,80 @@
     "preferred_width": 400
   },
 
-  "scope_extensions": [],
+  "tabbed": {
+    "home_tab": {
+      "scope_patterns": [
+        { "pathname": "/index.html" },
+        { "pathname": "/index.html?tab=calc" }
+      ]
+    },
+    "new_tab_button": {
+      "url": "./index.html?tab=calc",
+      "label": "New Calculation"
+    }
+  },
 
   "note_taking": {
-    "new_note_url": "./index.html?tab=calc"
-  }
+    "new_note_url": "./index.html?tab=calc&mode=note"
+  },
+
+  "scope_extensions": [
+    {
+      "type": "origin",
+      "origin": "https://yourdomain.com"
+    },
+    {
+      "type": "origin",
+      "origin": "https://cdn.yourdomain.com"
+    }
+  ],
+
+  "widgets": [
+    {
+      "name": "Quick Calculator",
+      "short_name": "Calc",
+      "description": "Fast access to basic calculator",
+      "tag": "quick-calc",
+      "template": "2x2",
+      "ms_ac_template": "./index.html?widget=quick",
+      "data": "./index.html?widget=quick",
+      "type": "application/xml",
+      "screenshots": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' rx='20' fill='%230a0a0f'/%3E%3Ctext x='200' y='120' font-size='60' text-anchor='middle'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+          "sizes": "400x200",
+          "type": "image/svg+xml",
+          "label": "Quick calc widget"
+        }
+      ],
+      "icons": [
+        { "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧮</text></svg>", "sizes": "96x96" }
+      ],
+      "auth": false,
+      "update": 86400
+    },
+    {
+      "name": "Today's Calculations",
+      "short_name": "History",
+      "description": "Recent calculations at a glance",
+      "tag": "history-widget",
+      "template": "4x2",
+      "ms_ac_template": "./index.html?widget=history",
+      "data": "./index.html?widget=history",
+      "type": "application/xml",
+      "screenshots": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' rx='20' fill='%230a0a0f'/%3E%3Ctext x='200' y='120' font-size='60' text-anchor='middle'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E",
+          "sizes": "400x200",
+          "type": "image/svg+xml",
+          "label": "History widget"
+        }
+      ],
+      "icons": [
+        { "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>📊</text></svg>", "sizes": "96x96" }
+      ],
+      "auth": false,
+      "update": 3600
+    }
+  ]
 }
