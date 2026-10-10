@@ -8,16 +8,18 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Calc Pro">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Professional Scientific Calculator">
 <title>Calc Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%230a0a0f'/><text x='256' y='340' font-size='260' text-anchor='middle'>🧮</text></svg>">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
+  /* ═══ DARK THEME — All backgrounds #0a0a0f ═══ */
   :root {
-    --bg1: #1a1a2e;
-    --bg2: #0a0a0f;
-    --card: #14141c;
+    --bg: #0a0a0f;
+    --card: #0a0a0f;
     --btn: #1e1e28;
     --btn-hover: #282834;
     --accent: #ff9f0a;
@@ -30,17 +32,17 @@
     --op: #2c2c38;
     --green: #30d158;
     --border: rgba(255,255,255,.06);
-    --input-bg: #0f172a;
+    --input-bg: #14141c;
     --shadow: rgba(0,0,0,.7);
     --danger: #ff453a;
   }
 
+  /* ═══ LIGHT THEME ═══ */
   body.light {
-    --bg1: #e8eef7;
-    --bg2: #f5f7fb;
-    --card: #ffffff;
-    --btn: #f0f2f7;
-    --btn-hover: #e2e6ee;
+    --bg: #f5f7fb;
+    --card: #f5f7fb;
+    --btn: #ffffff;
+    --btn-hover: #e8ebf2;
     --accent: #ff9500;
     --accent-2: #007aff;
     --sci: #e3ecff;
@@ -51,64 +53,65 @@
     --op: #e8ebf2;
     --green: #34c759;
     --border: rgba(0,0,0,.08);
-    --input-bg: #f8f9fc;
-    --shadow: rgba(0,0,0,.12);
+    --input-bg: #ffffff;
+    --shadow: rgba(0,0,0,.08);
   }
 
-  /* ═══ TRULY FULL SCREEN — NO BODY PADDING ═══ */
-  html, body {
+  /* ═══ FULL SCREEN — NO BODY MARGIN/PADDING ═══ */
+  html {
     margin: 0 !important;
     padding: 0 !important;
-    width: 100%;
-    min-height: 100%;
+    background: var(--bg);
     height: 100%;
-    overflow-x: hidden;
     overscroll-behavior: none;
   }
   body {
-    background: var(--card);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-    color: var(--text);
-    display: block;
-    transition: background .4s, color .3s;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* ═══ APP — FULL BLEED ON MOBILE ═══ */
-  .app {
-    width: 100% !important;
-    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     min-height: 100vh;
     min-height: 100dvh;
-    background: var(--card);
-    border-radius: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: background .3s, color .3s;
+    display: block;
+  }
+
+  /* ═══ APP — FULL BLEED (NO BORDER, NO RADIUS) ═══ */
+  .app {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     padding: 12px;
     padding-top: calc(12px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 20px);
     position: relative;
-    transition: background .4s;
+    transition: background .3s;
   }
 
-  /* Desktop / Tablet — nice card look */
+  /* Desktop — nice card */
   @media (min-width: 600px) {
     body {
       display: grid;
       place-items: center;
       padding: 20px !important;
-      background: radial-gradient(circle at 50% 0%, var(--bg1) 0%, var(--bg2) 60%);
-      background-attachment: fixed;
     }
     .app {
-      width: 100% !important;
-      max-width: 480px !important;
+      width: 100%;
+      max-width: 480px;
       min-height: auto;
-      border-radius: 32px !important;
-      padding: 16px !important;
-      box-shadow: 0 30px 80px var(--shadow) !important;
-      border: 1px solid var(--border) !important;
+      border-radius: 32px;
+      padding: 16px;
+      box-shadow: 0 30px 80px var(--shadow);
+      border: 1px solid var(--border);
       overflow: hidden;
     }
   }
@@ -117,7 +120,7 @@
   .splash {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 50% 40%, #1a1a2e, #0a0a0f);
+    background: #0a0a0f;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -151,7 +154,8 @@
 
   /* ═══ TABS ═══ */
   .tabs {
-    display: flex; gap: 4px;
+    display: flex;
+    gap: 4px;
     background: var(--btn);
     padding: 4px;
     border-radius: 14px;
@@ -159,8 +163,6 @@
     position: sticky;
     top: calc(env(safe-area-inset-top, 0px) + 8px);
     z-index: 5;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
   .tabs button {
     flex: 1;
@@ -183,6 +185,12 @@
   .tabs button.active {
     background: var(--card);
     color: var(--text);
+  }
+  body:not(.light) .tabs button.active {
+    background: #1e1e28;
+  }
+  body.light .tabs button.active {
+    background: #ffffff;
     box-shadow: 0 2px 6px var(--shadow);
   }
 
@@ -236,12 +244,12 @@
   .icon-btn:hover { background: var(--btn); color: var(--text); }
   .icon-btn:active { transform: scale(.92); }
 
-  /* ═══ BACK BUTTON ═══ */
+  /* ═══ BACK BUTTON — Blue Square ═══ */
   .back-btn {
     background: var(--accent-2);
     color: #fff;
     border: none;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
     cursor: pointer;
     padding: 0;
@@ -255,8 +263,8 @@
     height: 42px;
     flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(10,132,255,.35);
+    line-height: 1;
   }
-  .back-btn:hover { filter: brightness(1.1); }
   .back-btn:active { transform: scale(.9); }
 
   /* ═══ DISPLAY ═══ */
@@ -385,11 +393,11 @@
   body.light .ripple { background: rgba(0,0,0,.15); }
   @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
-  /* ═══ HISTORY — FULL SCREEN + STICKY HEADER ═══ */
+  /* ═══ HISTORY — FULL SCREEN OVERLAY ═══ */
   .history {
     position: fixed;
     inset: 0;
-    background: var(--card);
+    background: var(--bg);
     border-radius: 0;
     display: flex;
     flex-direction: column;
@@ -407,17 +415,15 @@
     gap: 12px;
     padding: 14px 16px;
     padding-top: calc(14px + env(safe-area-inset-top, 0px));
-    background: var(--card);
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
-    box-shadow: 0 2px 12px rgba(0,0,0,.15);
   }
   .panel-header h2 {
     font-size: 1.1rem;
     font-weight: 600;
     flex: 1;
     text-align: center;
-    margin-right: 42px;
   }
 
   .history-list {
@@ -555,7 +561,7 @@
     font-size: .9rem;
     border-radius: 10px;
     border: 1px solid var(--border);
-    background: var(--card);
+    background: var(--btn);
     color: var(--text);
     outline: none;
     font-family: inherit;
@@ -582,7 +588,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 12px;
-    background: var(--card);
+    background: var(--btn);
     border-radius: 10px;
     margin-bottom: 6px;
     font-family: "SF Mono", Menlo, monospace;
@@ -636,7 +642,7 @@
     font-size: .9rem;
     border-radius: 8px;
     border: 1px solid var(--border);
-    background: var(--card);
+    background: var(--btn);
     color: var(--text);
     outline: none;
     font-family: inherit;
@@ -663,7 +669,7 @@
     margin-top: 10px;
     padding: 10px 12px;
     border-radius: 10px;
-    background: var(--card);
+    background: var(--btn);
     font-family: "SF Mono", Menlo, monospace;
     font-size: .9rem;
     color: var(--green);
@@ -682,7 +688,7 @@
     font-size: .88rem;
     border-radius: 10px;
     border: 1px solid var(--border);
-    background: var(--card);
+    background: var(--btn);
     color: var(--text);
     outline: none;
     font-family: "SF Mono", Menlo, monospace;
@@ -697,7 +703,7 @@
     margin-top: 8px;
   }
   .stat-box {
-    background: var(--card);
+    background: var(--btn);
     padding: 10px;
     border-radius: 10px;
     border: 1px solid var(--border);
@@ -728,7 +734,7 @@
     font-size: .85rem;
     border-radius: 10px;
     border: 1px solid var(--border);
-    background: var(--card);
+    background: var(--btn);
     color: var(--text);
     outline: none;
     font-family: inherit;
@@ -776,11 +782,11 @@
     <div class="topbar">
       <span class="brand">SCIENTIFIC</span>
       <div class="top-actions">
-        <button class="mode-btn" id="angleBtn" title="Angle">DEG</button>
-        <button class="icon-btn" id="soundBtn" title="Sound">🔊</button>
-        <button class="icon-btn" id="themeBtn" title="Theme">🌙</button>
-        <button class="icon-btn" id="backspaceBtn" title="Back">⌫</button>
-        <button class="icon-btn" id="historyBtn" title="History">🕘</button>
+        <button class="mode-btn" id="angleBtn">DEG</button>
+        <button class="icon-btn" id="soundBtn">🔊</button>
+        <button class="icon-btn" id="themeBtn">🌙</button>
+        <button class="icon-btn" id="backspaceBtn">⌫</button>
+        <button class="icon-btn" id="historyBtn">🕘</button>
       </div>
     </div>
 
@@ -837,12 +843,12 @@
       <button class="key eq" data-action="equals">=</button>
     </div>
 
-    <!-- ═══ HISTORY PANEL WITH STICKY BACK BUTTON ═══ -->
+    <!-- ═══ HISTORY WITH BACK BUTTON ═══ -->
     <div class="history" id="historyPanel">
       <div class="panel-header">
-        <button class="back-btn" id="closeHistory" title="Back">←</button>
+        <button class="back-btn" id="closeHistory">←</button>
         <h2>🕘 ታሪክ</h2>
-        <button class="icon-btn" id="clearHistory" title="Clear all" style="margin-left:auto">🗑</button>
+        <button class="icon-btn" id="clearHistory">🗑</button>
       </div>
       <div class="history-list" id="historyList">
         <p class="empty">እስካሁን ምንም ስሌት የለም</p>
@@ -903,7 +909,7 @@
 
     <div class="conv-section">
       <h3>💻 Base Converter</h3>
-      <input id="baseInput" class="graph-input" value="255" placeholder="Enter number..." style="margin-bottom:8px">
+      <input id="baseInput" class="graph-input" value="255" style="margin-bottom:8px">
       <div class="base-row"><span class="lbl">Decimal</span><span class="val" id="baseDec">255</span></div>
       <div class="base-row"><span class="lbl">Binary</span><span class="val" id="baseBin">11111111</span></div>
       <div class="base-row"><span class="lbl">Octal</span><span class="val" id="baseOct">377</span></div>
@@ -916,9 +922,9 @@
     <div class="solve-section">
       <h3>📐 Linear Equation (ax + b = 0)</h3>
       <div class="solve-inputs">
-        <input id="linA" type="number" value="2" step="any">
+        <input id="linA" type="number" value="2">
         <span class="lbl">x +</span>
-        <input id="linB" type="number" value="-8" step="any">
+        <input id="linB" type="number" value="-8">
         <span class="lbl">= 0</span>
       </div>
       <button class="solve-btn" data-solve="linear">Solve Linear</button>
@@ -928,11 +934,11 @@
     <div class="solve-section">
       <h3>📊 Quadratic (ax² + bx + c = 0)</h3>
       <div class="solve-inputs">
-        <input id="qA" type="number" value="1" step="any">
+        <input id="qA" type="number" value="1">
         <span class="lbl">x² +</span>
-        <input id="qB" type="number" value="-5" step="any">
+        <input id="qB" type="number" value="-5">
         <span class="lbl">x +</span>
-        <input id="qC" type="number" value="6" step="any">
+        <input id="qC" type="number" value="6">
       </div>
       <button class="solve-btn" data-solve="quad">Solve Quadratic</button>
       <div class="solve-result" id="quadResult">—</div>
@@ -940,7 +946,7 @@
 
     <div class="solve-section">
       <h3>📈 Statistics</h3>
-      <textarea id="statsInput" class="stats-input" placeholder="Numbers separated by comma">10, 20, 30, 40, 50</textarea>
+      <textarea id="statsInput" class="stats-input">10, 20, 30, 40, 50</textarea>
       <button class="solve-btn" data-solve="stats">Calculate</button>
       <div class="stats-grid">
         <div class="stat-box"><div class="lbl">Count</div><div class="val" id="statCount">—</div></div>
@@ -1430,7 +1436,7 @@
     });
   };
 
-  /* ═══ GRAPH ═══ */
+  /* GRAPH */
   const canvas = document.getElementById("graphCanvas");
   const ctx = canvas.getContext("2d");
   const graphFnEl = document.getElementById("graphFn");
@@ -1535,7 +1541,7 @@
     if (document.getElementById("tab-graph").classList.contains("active")) plotGraph();
   });
 
-  /* ═══ UNIT CONVERTER ═══ */
+  /* UNIT CONVERTER */
   const UNIT_DATA = {
     length: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254 },
     mass: { kg: 1, g: 0.001, mg: 1e-6, lb: 0.45359237, oz: 0.028349523125, t: 1000 },
@@ -1592,7 +1598,7 @@
     convert(); playClick(); haptic(8);
   });
 
-  /* ═══ BASE CONVERTER ═══ */
+  /* BASE CONVERTER */
   const baseInput = document.getElementById("baseInput");
   function updateBases() {
     const raw = baseInput.value.trim();
@@ -1610,7 +1616,7 @@
   }
   baseInput.addEventListener("input", updateBases);
 
-  /* ═══ SOLVER ═══ */
+  /* SOLVER */
   document.querySelectorAll("[data-solve]").forEach(btn => {
     btn.addEventListener("click", () => {
       const t = btn.dataset.solve;
@@ -1686,7 +1692,7 @@
     out.innerHTML = `${days} days<br>≈ ${(days / 365.25).toFixed(2)} years`;
   }
 
-  /* ═══ INIT ═══ */
+  /* INIT */
   renderHistory();
   updateDisplay();
   populateUnits();
