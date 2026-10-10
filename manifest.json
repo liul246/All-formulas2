@@ -1,14 +1,14 @@
 {
-  "id": "/calc-pro-max/",
+  "id": "./",
   "name": "Calculator Pro Max",
   "short_name": "Calc Pro",
-  "description": "Advanced scientific calculator with graph, converter, solver, constants, matrix and widgets",
+  "description": "Advanced scientific calculator with graph, converter, solver, constants and matrix",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "display_override": [
-    "window-controls-overlay",
     "tabbed",
+    "window-controls-overlay",
     "standalone",
     "minimal-ui",
     "fullscreen"
@@ -21,46 +21,16 @@
   "categories": ["utilities", "productivity", "education", "tools"],
   "iarc_rating_id": "e5c5e5a5-5e5e-5e5e-5e5e-5e5e5e5e5e5e",
   "prefer_related_applications": false,
-
   "related_applications": [],
 
   "icons": [
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "monochrome"
-    },
-    {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%230a0a0f'/%3E%3Ctext x='256' y='340' font-size='260' text-anchor='middle'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
+    { "src": "./icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "./icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
 
   "screenshots": [
@@ -69,7 +39,7 @@
       "sizes": "390x844",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Calculator on mobile"
+      "label": "Scientific calculator on mobile"
     },
     {
       "src": "./icons/screenshot-desktop.png",
@@ -86,58 +56,40 @@
       "short_name": "Calc",
       "description": "Open scientific calculator",
       "url": "./index.html?tab=calc",
-      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Graph Plotter",
       "short_name": "Graph",
-      "description": "Plot mathematical functions",
+      "description": "Plot functions",
       "url": "./index.html?tab=graph",
-      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Unit Converter",
       "short_name": "Convert",
-      "description": "Convert between units",
+      "description": "Convert units",
       "url": "./index.html?tab=convert",
-      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Equation Solver",
       "short_name": "Solve",
       "description": "Solve equations",
       "url": "./index.html?tab=solve",
-      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
-    },
-    {
-      "name": "New Calculation",
-      "short_name": "New",
-      "description": "Start fresh calculation",
-      "url": "./index.html?action=new",
-      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
     }
   ],
 
   "protocol_handlers": [
-    {
-      "protocol": "web+calc",
-      "url": "./index.html?expr=%s"
-    },
-    {
-      "protocol": "web+math",
-      "url": "./index.html?solve=%s"
-    }
+    { "protocol": "web+calc", "url": "./index.html?expr=%s" }
   ],
 
   "share_target": {
     "action": "./index.html",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
+    "params": { "title": "title", "text": "text", "url": "url" }
   },
 
   "file_handlers": [
@@ -145,8 +97,7 @@
       "action": "./index.html",
       "accept": {
         "text/plain": [".txt"],
-        "text/csv": [".csv"],
-        "application/json": [".json"]
+        "text/csv": [".csv"]
       }
     }
   ],
@@ -155,9 +106,7 @@
     "client_mode": ["navigate-existing", "auto"]
   },
 
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
+  "edge_side_panel": { "preferred_width": 400 },
 
   "tabbed": {
     "home_tab": {
@@ -167,42 +116,14 @@
       ]
     },
     "new_tab_button": {
-      "url": "./index.html?new=1",
+      "url": "./index.html?tab=calc",
       "label": "New Tab"
     }
   },
 
   "note_taking": {
-    "new_note_url": "./index.html?tab=calc&mode=note"
+    "new_note_url": "./index.html?tab=calc"
   },
 
-  "scope_extensions": [
-    { "type": "origin", "origin": "https://yourdomain.com" }
-  ],
-
-  "widgets": [
-    {
-      "name": "Quick Calculator",
-      "short_name": "Calc",
-      "description": "Fast access to basic calculator",
-      "tag": "quick-calc",
-      "template": "2x2",
-      "ms_ac_template": "./index.html?widget=quick",
-      "data": "./index.html?widget=quick",
-      "type": "application/xml",
-      "screenshots": [
-        {
-          "src": "./icons/widget-quick.png",
-          "sizes": "400x200",
-          "type": "image/png",
-          "label": "Quick calc widget"
-        }
-      ],
-      "icons": [
-        { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" }
-      ],
-      "auth": false,
-      "update": 86400
-    }
-  ]
+  "scope_extensions": []
 }
