@@ -7,14 +7,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Calc Pro">
-<title>Calc Pro</title>
+<title>Calculator Pro Max</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%230a0a0f'/><text x='256' y='340' font-size='260' text-anchor='middle'>🧮</text></svg>">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   :root {
     --bg: #0a0a0f;
+    --card: #14141c;
     --btn: #1e1e28;
     --btn-hover: #282834;
     --accent: #ff9f0a;
@@ -25,12 +27,15 @@
     --muted: #8e8e93;
     --op: #2c2c38;
     --green: #30d158;
-    --border: rgba(255,255,255,.06);
+    --red: #ff453a;
+    --purple: #bf5af2;
+    --border: rgba(255,255,255,.07);
     --input-bg: #14141c;
     --danger: #ff453a;
   }
   body.light {
     --bg: #f5f7fb;
+    --card: #ffffff;
     --btn: #ffffff;
     --btn-hover: #e8ebf2;
     --accent: #ff9500;
@@ -41,17 +46,18 @@
     --muted: #6c6c70;
     --op: #e8ebf2;
     --green: #34c759;
+    --red: #ff3b30;
+    --purple: #af52de;
     --border: rgba(0,0,0,.08);
     --input-bg: #ffffff;
   }
 
-  /* ═══ NO BODY MARGIN/PADDING — FULL SCREEN ═══ */
   html, body {
     margin: 0 !important;
     padding: 0 !important;
     width: 100%;
     min-height: 100%;
-    background: var(--bg) !important;
+    background: var(--bg);
     overscroll-behavior: none;
   }
   body {
@@ -61,83 +67,24 @@
     transition: background .3s, color .3s;
   }
 
-  /* ═══ APP — TRULY FULL SCREEN, NO CARD ═══ */
-  .app {
-    width: 100%;
-    max-width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: var(--bg);
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    padding: 12px;
-    padding-top: calc(12px + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 20px);
-  }
-
-  /* ═══ GLOBAL HEADER WITH BACK BUTTON ═══ */
-  .app-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 0 10px;
-    margin-bottom: 6px;
-  }
-  .back-btn {
-    background: var(--accent-2);
-    color: #fff;
-    border: none;
-    font-size: 1.4rem;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 0;
-    border-radius: 12px;
-    transition: .2s;
-    font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-  .back-btn:active { transform: scale(.9); }
-  .app-header .title {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--text);
-    flex: 1;
-  }
-  .app-header .actions {
-    display: flex;
-    gap: 4px;
-  }
-
   /* ═══ SPLASH ═══ */
   .splash {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: #0a0a0f;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    z-index: 9999;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px; z-index: 9999;
     transition: opacity .4s;
   }
   .splash.hide { opacity: 0; visibility: hidden; }
   .splash-logo {
     font-size: 4.5rem;
-    animation: splashPop .6s cubic-bezier(.34,1.56,.64,1);
+    animation: pop .6s cubic-bezier(.34,1.56,.64,1);
     filter: drop-shadow(0 8px 24px rgba(255,159,10,.5));
   }
   .splash-name {
     font-size: .95rem; font-weight: 700; letter-spacing: 5px;
-    color: #fff; animation: splashFade .5s .25s backwards;
+    color: #fff; animation: fade .5s .25s backwards;
   }
   .splash-bar {
     width: 140px; height: 3px; background: rgba(255,255,255,.08);
@@ -146,57 +93,86 @@
   .splash-fill {
     height: 100%; width: 0;
     background: linear-gradient(90deg, #0a84ff, #ff9f0a);
-    border-radius: 99px; animation: splashLoad 1s .2s forwards;
+    border-radius: 99px; animation: load 1s .2s forwards;
   }
-  @keyframes splashPop { 0% { transform: scale(.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-  @keyframes splashFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-  @keyframes splashLoad { to { width: 100%; } }
+  @keyframes pop { 0% { transform: scale(.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes load { to { width: 100%; } }
+
+  /* ═══ APP ═══ */
+  .app {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+    padding: 12px;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 20px);
+  }
+
+  /* ═══ HEADER ═══ */
+  .app-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 0 10px;
+    margin-bottom: 6px;
+  }
+  .back-btn {
+    background: var(--accent-2); color: #fff;
+    border: none; font-size: 1.4rem; font-weight: 700;
+    cursor: pointer; padding: 0; border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; flex-shrink: 0; line-height: 1;
+    transition: .2s;
+  }
+  .back-btn:active { transform: scale(.9); }
+  .app-header .title {
+    font-size: 1rem; font-weight: 700; letter-spacing: 2.5px;
+    color: var(--text); flex: 1;
+  }
+  .icon-btn {
+    background: none; border: none; color: var(--muted);
+    font-size: 1.05rem; cursor: pointer; padding: 5px 8px;
+    border-radius: 8px; font-family: inherit;
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 34px; min-height: 34px;
+    transition: .15s;
+  }
+  .icon-btn:active { background: var(--btn); color: var(--text); transform: scale(.92); }
 
   /* ═══ TABS ═══ */
   .tabs {
-    display: flex;
-    gap: 4px;
-    background: var(--btn);
-    padding: 4px;
-    border-radius: 14px;
-    margin-bottom: 8px;
+    display: flex; gap: 3px;
+    background: var(--btn); padding: 4px;
+    border-radius: 14px; margin-bottom: 10px;
+    overflow-x: auto; scrollbar-width: none;
     position: sticky;
-    top: calc(env(safe-area-inset-top, 0px) + 8px);
+    top: calc(env(safe-area-inset-top, 0px) + 6px);
     z-index: 5;
   }
+  .tabs::-webkit-scrollbar { display: none; }
   .tabs button {
-    flex: 1;
-    padding: 8px 4px;
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-size: .72rem;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: .2s;
-    font-family: inherit;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
+    flex: 1; min-width: 70px;
+    padding: 8px 4px; border: none;
+    background: transparent; color: var(--muted);
+    font-size: .7rem; font-weight: 600;
+    border-radius: 10px; cursor: pointer;
+    font-family: inherit; display: flex;
+    flex-direction: column; align-items: center; gap: 2px;
+    transition: .2s; white-space: nowrap;
   }
-  .tabs button .ico { font-size: 1rem; }
+  .tabs button .ico { font-size: .95rem; }
   body:not(.light) .tabs button.active { background: var(--btn-hover); color: var(--text); }
   body.light .tabs button.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
 
   .tab-panel { display: none; }
-  .tab-panel.active { display: block; animation: fadeIn .25s; padding-bottom: 40px; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .tab-panel.active { display: block; animation: slideUp .25s; padding-bottom: 30px; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
   /* ═══ TOP BAR ═══ */
   .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-    padding: 0 4px;
-    gap: 4px;
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 6px;
+    padding: 0 4px; gap: 4px;
   }
   .brand { font-size: .68rem; letter-spacing: 2.5px; color: var(--muted); font-weight: 600; }
   .top-actions { display: flex; gap: 4px; align-items: center; }
@@ -205,104 +181,146 @@
     background: var(--btn);
     color: var(--accent-2);
     border: none;
-    font-size: .68rem;
-    font-weight: 700;
-    padding: 5px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    letter-spacing: 1px;
-    font-family: inherit;
+    font-size: .68rem; font-weight: 700;
+    padding: 5px 10px; border-radius: 8px;
+    cursor: pointer; letter-spacing: 1px;
+    transition: .2s; font-family: inherit;
   }
   .mode-btn.rad { color: var(--green); }
-
-  .icon-btn {
-    background: none; border: none; color: var(--muted);
-    font-size: 1.05rem; cursor: pointer; padding: 5px 8px;
-    border-radius: 8px; font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 34px;
-    min-height: 32px;
-  }
-  .icon-btn:active { background: var(--btn); color: var(--text); transform: scale(.92); }
 
   /* ═══ DISPLAY ═══ */
   .display {
     padding: 18px 8px 10px;
     text-align: right;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
+    min-height: 110px;
+    display: flex; flex-direction: column;
     justify-content: flex-end;
+    overflow: hidden;
+  }
+  .mem-indicator {
+    font-size: .65rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 1px;
+    height: 12px;
+    text-align: left;
+    padding-left: 4px;
   }
   .expression {
-    font-size: .9rem; color: var(--muted); min-height: 20px;
-    word-break: break-all; font-variant-numeric: tabular-nums;
+    font-size: .9rem; color: var(--muted);
+    min-height: 20px; word-break: break-all;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
   }
   .result {
-    font-size: 2.6rem; font-weight: 300; letter-spacing: -1px;
-    word-break: break-all; font-variant-numeric: tabular-nums;
+    font-size: 2.6rem; font-weight: 300;
+    letter-spacing: -1px; line-height: 1.1;
+    word-break: break-all;
+    font-variant-numeric: tabular-nums;
     margin-top: 4px; transition: .15s;
   }
   .result.pop { transform: scale(1.06); color: var(--accent); }
   .result.error { color: var(--danger); font-size: 1.7rem; }
 
-  /* ═══ SCI ═══ */
+  /* ═══ MEMORY ROW ═══ */
+  .mem-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 6px;
+    padding: 0 4px;
+  }
+  .mem-row button {
+    padding: 6px 2px;
+    border: none;
+    background: var(--btn);
+    color: var(--accent);
+    font-size: .72rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: .15s;
+  }
+  .mem-row button:active { transform: scale(.92); background: var(--btn-hover); }
+  .mem-row button.active { color: var(--green); }
+
+  /* ═══ SCI TOGGLE ═══ */
   .sci-toggle {
     width: 100%; padding: 8px; margin: 2px 0 6px;
     background: transparent;
     border: 1px dashed rgba(90,200,250,.35);
     border-radius: 12px;
     color: var(--sci-text);
-    font-size: .74rem; font-weight: 600; letter-spacing: 1px;
-    cursor: pointer; font-family: inherit;
-    display: flex; justify-content: center; align-items: center; gap: 6px;
+    font-size: .74rem; font-weight: 600;
+    letter-spacing: 1px; cursor: pointer;
+    font-family: inherit;
+    display: flex; justify-content: center;
+    align-items: center; gap: 6px;
+    transition: .25s;
   }
   .sci-toggle .arrow { transition: transform .3s; font-size: .65rem; }
   .sci-toggle.open .arrow { transform: rotate(180deg); }
   .sci-toggle .fx { font-style: italic; font-weight: 700; }
-  .sci-panel { max-height: 0; overflow: hidden; transition: max-height .35s; }
-  .sci-panel.open { max-height: 340px; margin-bottom: 6px; }
-  .sci-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding-bottom: 4px; }
+
+  .sci-panel {
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s, opacity .25s;
+    opacity: 0;
+  }
+  .sci-panel.open { max-height: 400px; opacity: 1; margin-bottom: 6px; }
+  .sci-keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding-bottom: 4px;
+  }
 
   /* ═══ KEYS ═══ */
-  .keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 4px; }
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 4px;
+  }
   button.key {
     aspect-ratio: 1 / 1;
     border: none; border-radius: 50%;
     background: var(--btn); color: var(--text);
-    font-size: 1.45rem; font-weight: 400;
+    font-size: 1.4rem; font-weight: 400;
     cursor: pointer; font-family: inherit;
     display: grid; place-items: center;
-    user-select: none; position: relative; overflow: hidden;
+    user-select: none; position: relative;
+    overflow: hidden; transition: .1s;
   }
   button.key:active { transform: scale(.92); background: var(--btn-hover); }
   .key.op { background: var(--op); color: var(--accent); font-weight: 500; }
-  .key.fn { background: var(--op); color: var(--accent-2); font-size: 1.15rem; }
+  .key.fn { background: var(--op); color: var(--accent-2); font-size: 1.1rem; }
   .key.eq { background: linear-gradient(135deg, var(--accent), #ff6b00); color: #fff; font-weight: 600; }
-  .key.sci { height: 42px; aspect-ratio: auto; border-radius: 12px; background: var(--sci); color: var(--sci-text); font-size: .85rem; font-weight: 600; }
-  .key.sci sup { font-size: .6rem; vertical-align: super; }
+  .key.sci { height: 42px; aspect-ratio: auto; border-radius: 12px; background: var(--sci); color: var(--sci-text); font-size: .82rem; font-weight: 600; }
+  .key.sci sup { font-size: .58rem; vertical-align: super; }
 
   .ripple {
     position: absolute; border-radius: 50%;
     background: rgba(255,255,255,.35);
-    transform: scale(0); animation: ripple .5s ease-out; pointer-events: none;
+    transform: scale(0); animation: ripple .5s ease-out;
+    pointer-events: none;
   }
   body.light .ripple { background: rgba(0,0,0,.15); }
   @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
-  /* ═══ HISTORY ═══ */
-  .history {
+  /* ═══ HISTORY OVERLAY ═══ */
+  .overlay {
     position: fixed; inset: 0;
     background: var(--bg);
     display: flex; flex-direction: column;
-    transform: translateY(100%); opacity: 0; pointer-events: none;
+    transform: translateY(100%);
+    opacity: 0; pointer-events: none;
     transition: .32s cubic-bezier(.32,.72,0,1);
     z-index: 100;
   }
-  .history.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-  .panel-header {
+  .overlay.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .overlay-header {
     display: flex; align-items: center; gap: 12px;
     padding: 14px 16px;
     padding-top: calc(14px + env(safe-area-inset-top, 0px));
@@ -310,151 +328,321 @@
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
-  .panel-header h2 { font-size: 1.1rem; font-weight: 600; flex: 1; text-align: center; }
-  .history-list {
-    flex: 1; overflow-y: auto; padding: 8px 16px;
+  .overlay-header h2 { font-size: 1.05rem; font-weight: 600; flex: 1; text-align: center; }
+  .overlay-body {
+    flex: 1; overflow-y: auto;
+    padding: 12px 16px;
     padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    -webkit-overflow-scrolling: touch;
   }
   .history-item {
     padding: 12px 10px;
     border-bottom: 1px solid var(--border);
     cursor: pointer; border-radius: 10px;
+    transition: .15s;
   }
   .history-item:active { background: var(--btn); }
-  .history-item .h-exp { font-size: .8rem; color: var(--muted); word-break: break-all; font-family: "SF Mono", Menlo, monospace; }
-  .history-item .h-res { font-size: 1.25rem; margin-top: 4px; color: var(--accent-2); font-family: "SF Mono", Menlo, monospace; }
-  .empty { color: var(--muted); font-size: .9rem; text-align: center; margin-top: 60px; }
+  .history-item .h-exp {
+    font-size: .8rem; color: var(--muted);
+    word-break: break-all;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .history-item .h-res {
+    font-size: 1.2rem; margin-top: 4px;
+    color: var(--accent-2);
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .empty {
+    color: var(--muted);
+    font-size: .9rem; text-align: center;
+    margin-top: 60px;
+  }
 
   /* ═══ GRAPH ═══ */
   .graph-wrap { display: flex; flex-direction: column; gap: 8px; }
-  .graph-input {
-    width: 100%; padding: 12px 14px; font-size: .95rem;
-    border-radius: 12px; border: 1px solid var(--border);
-    background: var(--input-bg); color: var(--text); outline: none;
+  .input-full {
+    width: 100%; padding: 12px 14px;
+    font-size: .92rem; border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text); outline: none;
     font-family: "SF Mono", Menlo, monospace;
+    transition: border-color .2s;
   }
-  .graph-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .graph-row input {
+  .input-full:focus { border-color: var(--accent-2); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .grid-2 input {
     padding: 8px 12px; font-size: .85rem;
     border-radius: 10px; border: 1px solid var(--border);
-    background: var(--input-bg); color: var(--text); outline: none;
-    font-family: inherit; min-width: 0;
+    background: var(--input-bg); color: var(--text);
+    outline: none; font-family: inherit;
+    min-width: 0;
   }
   canvas#graphCanvas {
     width: 100%; height: 260px;
-    background: var(--input-bg); border-radius: 14px;
-    border: 1px solid var(--border); display: block;
+    background: var(--input-bg);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    display: block; touch-action: none;
   }
-  .graph-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .graph-btns button {
-    padding: 10px; border: none; border-radius: 10px;
+  .btn-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .btn-grid button {
+    padding: 10px; border: none;
+    border-radius: 10px;
     background: var(--btn); color: var(--text);
-    font-family: inherit; font-weight: 600; font-size: .8rem;
+    font-family: inherit; font-weight: 600;
+    font-size: .8rem; cursor: pointer;
+    transition: .15s;
   }
-  .graph-btns button.primary {
-    background: linear-gradient(135deg, var(--accent), #ff6b00); color: #fff;
+  .btn-grid button:active { transform: scale(.95); background: var(--btn-hover); }
+  .btn-grid button.primary {
+    background: linear-gradient(135deg, var(--accent), #ff6b00);
+    color: #fff;
   }
 
-  /* ═══ CONVERTER ═══ */
-  .conv-section {
-    background: var(--input-bg); border-radius: 14px;
-    padding: 14px; margin-bottom: 10px;
+  /* ═══ CARDS ═══ */
+  .card {
+    background: var(--input-bg);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
     border: 1px solid var(--border);
   }
-  .conv-section h3 {
-    font-size: .78rem; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 1.2px;
-    margin-bottom: 10px; font-weight: 700;
+  .card h3 {
+    font-size: .74rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 10px;
+    font-weight: 700;
   }
-  .conv-cat { display: flex; gap: 4px; margin-bottom: 10px; overflow-x: auto; scrollbar-width: none; }
-  .conv-cat::-webkit-scrollbar { display: none; }
-  .conv-cat button {
-    padding: 6px 12px; border: none; border-radius: 8px;
+
+  .chip-row {
+    display: flex; gap: 4px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip-row button {
+    padding: 6px 12px; border: none;
+    border-radius: 8px;
     background: var(--btn); color: var(--muted);
-    font-size: .78rem; font-family: inherit; font-weight: 600;
-    white-space: nowrap;
+    font-size: .76rem; font-family: inherit;
+    font-weight: 600; cursor: pointer;
+    white-space: nowrap; transition: .2s;
   }
-  .conv-cat button.active { background: var(--accent-2); color: #fff; }
-  .conv-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px; align-items: center; margin-bottom: 8px; }
-  .conv-row input, .conv-row select {
-    width: 100%; padding: 10px 12px; font-size: .9rem;
-    border-radius: 10px; border: 1px solid var(--border);
-    background: var(--btn); color: var(--text); outline: none;
-    font-family: inherit; min-width: 0;
+  .chip-row button.active { background: var(--accent-2); color: #fff; }
+
+  .row-3 {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 6px; align-items: center;
+    margin-bottom: 8px;
   }
+  .row-3 input, .row-3 select {
+    width: 100%; padding: 10px 12px;
+    font-size: .9rem; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--btn); color: var(--text);
+    outline: none; font-family: inherit;
+    min-width: 0; transition: .15s;
+  }
+  .row-3 input:focus, .row-3 select:focus { border-color: var(--accent-2); }
   .swap-btn {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: none; background: var(--btn); color: var(--accent-2);
-    font-size: 1rem; cursor: pointer; flex-shrink: 0;
+    width: 34px; height: 34px;
+    border-radius: 50%; border: none;
+    background: var(--btn); color: var(--accent-2);
+    font-size: 1rem; cursor: pointer;
+    flex-shrink: 0; transition: .2s;
   }
+  .swap-btn:active { transform: rotate(180deg) scale(.9); }
+
   .base-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 12px; background: var(--btn);
-    border-radius: 10px; margin-bottom: 6px;
+    display: flex; justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: var(--btn);
+    border-radius: 10px;
+    margin-bottom: 6px;
     font-family: "SF Mono", Menlo, monospace;
     border: 1px solid var(--border);
   }
-  .base-row .lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: -apple-system, sans-serif; }
-  .base-row .val { font-size: .95rem; color: var(--accent-2); word-break: break-all; text-align: right; max-width: 60%; }
+  .base-row .lbl {
+    font-size: .7rem; color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    font-family: -apple-system, sans-serif;
+  }
+  .base-row .val {
+    font-size: .92rem;
+    color: var(--accent-2);
+    word-break: break-all;
+    text-align: right;
+    max-width: 60%;
+  }
 
-  /* ═══ SOLVER ═══ */
-  .solve-section {
-    background: var(--input-bg); border-radius: 14px;
-    padding: 14px; margin-bottom: 12px;
-    border: 1px solid var(--border);
-  }
-  .solve-section h3 {
-    font-size: .78rem; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 1.2px;
-    margin-bottom: 10px; font-weight: 700;
-  }
   .solve-inputs {
-    display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; align-items: center;
+    display: flex; gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    align-items: center;
     font-family: "SF Mono", Menlo, monospace;
   }
   .solve-inputs input {
-    width: 62px; padding: 8px 10px; font-size: .9rem;
-    border-radius: 8px; border: 1px solid var(--border);
-    background: var(--btn); color: var(--text); outline: none;
-    font-family: inherit; text-align: center;
+    width: 62px; padding: 8px 10px;
+    font-size: .9rem; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--btn); color: var(--text);
+    outline: none; font-family: inherit;
+    text-align: center;
   }
+  .solve-inputs input:focus { border-color: var(--accent-2); }
   .solve-inputs .lbl { color: var(--muted); font-size: .85rem; }
-  .solve-btn {
-    width: 100%; padding: 11px; border: none; border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent-2), #0a84ff);
-    color: #fff; font-family: inherit; font-weight: 700; font-size: .9rem;
+
+  .primary-btn {
+    width: 100%; padding: 12px;
+    border: none; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-2), #0071e3);
+    color: #fff; font-family: inherit;
+    font-weight: 700; font-size: .9rem;
+    cursor: pointer; transition: .15s;
   }
-  .solve-result {
-    margin-top: 10px; padding: 10px 12px; border-radius: 10px;
-    background: var(--btn); font-family: "SF Mono", Menlo, monospace;
-    font-size: .9rem; color: var(--green); min-height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center; word-break: break-all;
+  .primary-btn:active { transform: scale(.98); }
+
+  .result-box {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--btn);
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: .9rem;
+    color: var(--green);
+    min-height: 44px;
+    display: flex; align-items: center;
+    justify-content: center;
+    text-align: center;
+    word-break: break-all;
     border: 1px solid var(--border);
   }
-  .stats-input {
-    width: 100%; padding: 10px 12px; font-size: .88rem;
-    border-radius: 10px; border: 1px solid var(--border);
-    background: var(--btn); color: var(--text); outline: none;
-    font-family: "SF Mono", Menlo, monospace;
-    margin-bottom: 8px; min-height: 60px; resize: vertical;
-  }
-  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 8px; }
-  .stat-box { background: var(--btn); padding: 10px; border-radius: 10px; border: 1px solid var(--border); }
-  .stat-box .lbl { font-size: .65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 3px; }
-  .stat-box .val { font-size: 1rem; color: var(--accent-2); font-family: "SF Mono", Menlo, monospace; word-break: break-all; }
 
-  .date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px; margin-top: 8px;
+  }
+  .stat-box {
+    background: var(--btn);
+    padding: 10px; border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .stat-box .lbl {
+    font-size: .62rem; color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .stat-box .val {
+    font-size: .95rem; color: var(--accent-2);
+    font-family: "SF Mono", Menlo, monospace;
+    word-break: break-all;
+  }
+
+  .stats-input {
+    width: 100%; padding: 10px 12px;
+    font-size: .85rem; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--btn); color: var(--text);
+    outline: none;
+    font-family: "SF Mono", Menlo, monospace;
+    margin-bottom: 8px; min-height: 60px;
+    resize: vertical;
+  }
+
+  .date-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6px; margin-bottom: 8px;
+  }
   .date-row input {
     padding: 10px 12px; font-size: .85rem;
-    border-radius: 10px; border: 1px solid var(--border);
-    background: var(--btn); color: var(--text); outline: none;
-    font-family: inherit; min-width: 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--btn); color: var(--text);
+    outline: none; font-family: inherit;
+    min-width: 0;
   }
 
+  /* ═══ CONSTANTS LIST ═══ */
+  .const-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: .15s;
+    border-radius: 8px;
+  }
+  .const-item:active { background: var(--btn); }
+  .const-item .c-info { flex: 1; min-width: 0; }
+  .const-item .c-name {
+    font-size: .88rem; font-weight: 600;
+    color: var(--text); margin-bottom: 2px;
+  }
+  .const-item .c-sym {
+    font-size: .72rem; color: var(--muted);
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .const-item .c-val {
+    font-size: .85rem;
+    color: var(--accent-2);
+    font-family: "SF Mono", Menlo, monospace;
+    text-align: right;
+    margin-left: 10px;
+    max-width: 45%;
+    word-break: break-all;
+  }
+
+  /* ═══ MATRIX ═══ */
+  .matrix-wrap {
+    display: flex; gap: 10px;
+    align-items: center; justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  .matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 8px;
+    background: var(--btn);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .matrix input {
+    width: 56px; padding: 8px 4px;
+    font-size: .85rem; border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    font-family: inherit;
+    text-align: center;
+  }
+  .matrix-sym {
+    font-size: 1.4rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ═══ SMALL SCREEN ═══ */
   @media (max-height: 780px) {
     .result { font-size: 2.2rem; }
-    .display { min-height: 84px; padding: 12px 8px 8px; }
+    .display { min-height: 88px; padding: 12px 8px 8px; }
     button.key { font-size: 1.2rem; }
     .key.sci { height: 36px; font-size: .78rem; }
     canvas#graphCanvas { height: 220px; }
@@ -472,27 +660,28 @@
 
 <div class="splash" id="splash">
   <div class="splash-logo">🧮</div>
-  <div class="splash-name">CALC PRO</div>
+  <div class="splash-name">CALC PRO MAX</div>
   <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
 <div class="app">
 
-  <!-- ═══ GLOBAL HEADER WITH BACK BUTTON ═══ -->
+  <!-- HEADER -->
   <div class="app-header">
-    <button class="back-btn" id="globalBack" title="Back">←</button>
-    <span class="title">CALC PRO</span>
-    <div class="actions">
-      <button class="icon-btn" id="soundBtn" title="Sound">🔊</button>
-      <button class="icon-btn" id="themeBtn" title="Theme">🌙</button>
-    </div>
+    <button class="back-btn" id="globalBack">←</button>
+    <span class="title">CALC PRO MAX</span>
+    <button class="icon-btn" id="soundBtn">🔊</button>
+    <button class="icon-btn" id="themeBtn">🌙</button>
   </div>
 
+  <!-- TABS -->
   <div class="tabs">
     <button class="active" data-tab="calc"><span class="ico">🧮</span>Calc</button>
     <button data-tab="graph"><span class="ico">📈</span>Graph</button>
-    <button data-tab="convert"><span class="ico">🔄</span>Convert</button>
+    <button data-tab="convert"><span class="ico">🔄</span>Units</button>
     <button data-tab="solve"><span class="ico">🧠</span>Solve</button>
+    <button data-tab="constants"><span class="ico">⚛️</span>Const</button>
+    <button data-tab="matrix"><span class="ico">🔢</span>Matrix</button>
   </div>
 
   <!-- ═══ CALC TAB ═══ -->
@@ -507,8 +696,17 @@
     </div>
 
     <div class="display">
+      <div class="mem-indicator" id="memInd"></div>
       <div class="expression" id="expression"></div>
       <div class="result" id="result">0</div>
+    </div>
+
+    <div class="mem-row">
+      <button data-mem="MC">MC</button>
+      <button data-mem="MR">MR</button>
+      <button data-mem="M+">M+</button>
+      <button data-mem="M-">M−</button>
+      <button data-mem="MS">MS</button>
     </div>
 
     <button class="sci-toggle" id="sciToggle">
@@ -533,6 +731,10 @@
         <button class="key sci" data-action="inv">1/x</button>
         <button class="key sci" data-func="abs">|x|</button>
         <button class="key sci" data-action="fact">n!</button>
+        <button class="key sci" data-func="sinh">sinh</button>
+        <button class="key sci" data-func="cosh">cosh</button>
+        <button class="key sci" data-func="tanh">tanh</button>
+        <button class="key sci" data-action="cbrt">∛x</button>
       </div>
     </div>
 
@@ -559,15 +761,14 @@
       <button class="key eq" data-action="equals">=</button>
     </div>
 
-    <!-- History overlay (no separate back button since global one works) -->
-    <div class="history" id="historyPanel">
-      <div class="panel-header">
+    <div class="overlay" id="historyPanel">
+      <div class="overlay-header">
         <button class="back-btn" id="closeHistory">←</button>
         <h2>🕘 ታሪክ</h2>
         <button class="icon-btn" id="clearHistory">🗑</button>
       </div>
-      <div class="history-list" id="historyList">
-        <p class="empty">እስካሁን ምንም ስሌት የለም</p>
+      <div class="overlay-body">
+        <div id="historyList"></div>
       </div>
     </div>
   </div>
@@ -575,57 +776,66 @@
   <!-- ═══ GRAPH TAB ═══ -->
   <div class="tab-panel" id="tab-graph">
     <div class="graph-wrap">
-      <input class="graph-input" id="graphFn" value="sin(x)" placeholder="f(x) = ..." spellcheck="false">
-      <div class="graph-row">
+      <input class="input-full" id="graphFn" value="sin(x)" placeholder="f(x) = ..." spellcheck="false">
+      <div class="grid-2">
         <input id="xmin" type="number" value="-10" placeholder="x min">
         <input id="xmax" type="number" value="10" placeholder="x max">
       </div>
-      <div class="graph-row">
+      <div class="grid-2">
         <input id="ymin" type="number" value="-5" placeholder="y min">
         <input id="ymax" type="number" value="5" placeholder="y max">
       </div>
       <canvas id="graphCanvas"></canvas>
-      <div class="graph-btns">
-        <button data-graph="sin(x)">sin(x)</button>
-        <button data-graph="cos(x)">cos(x)</button>
+      <div class="btn-grid">
+        <button data-graph="sin(x)">sin</button>
+        <button data-graph="cos(x)">cos</button>
+        <button data-graph="tan(x)">tan</button>
         <button data-graph="x^2">x²</button>
-        <button data-graph="x^3">x³</button>
       </div>
-      <div class="graph-btns">
+      <div class="btn-grid">
+        <button data-graph="x^3">x³</button>
         <button data-graph="√(x)">√x</button>
         <button data-graph="1/x">1/x</button>
         <button data-graph="log(x)">log</button>
-        <button class="primary" id="plotBtn">Plot</button>
+      </div>
+      <div class="btn-grid">
+        <button data-graph="e^x">eˣ</button>
+        <button data-graph="abs(x)">|x|</button>
+        <button data-graph="x^2-4">x²−4</button>
+        <button class="primary" id="plotBtn">📈 Plot</button>
       </div>
     </div>
   </div>
 
   <!-- ═══ CONVERT TAB ═══ -->
   <div class="tab-panel" id="tab-convert">
-    <div class="conv-section">
+    <div class="card">
       <h3>📏 Unit Converter</h3>
-      <div class="conv-cat" id="convCat">
+      <div class="chip-row" id="convCat">
         <button class="active" data-cat="length">Length</button>
         <button data-cat="mass">Mass</button>
         <button data-cat="temp">Temp</button>
         <button data-cat="area">Area</button>
+        <button data-cat="volume">Volume</button>
+        <button data-cat="speed">Speed</button>
         <button data-cat="time">Time</button>
+        <button data-cat="data">Data</button>
       </div>
-      <div class="conv-row">
+      <div class="row-3">
         <input id="convFrom" type="number" value="1" step="any">
         <button class="swap-btn" id="swapConv">⇅</button>
         <input id="convTo" type="number" readonly>
       </div>
-      <div class="conv-row">
+      <div class="row-3">
         <select id="unitFrom"></select>
         <span></span>
         <select id="unitTo"></select>
       </div>
     </div>
 
-    <div class="conv-section">
+    <div class="card">
       <h3>💻 Base Converter</h3>
-      <input id="baseInput" class="graph-input" value="255" style="margin-bottom:8px">
+      <input id="baseInput" class="input-full" value="255" placeholder="Enter number..." style="margin-bottom:8px">
       <div class="base-row"><span class="lbl">Decimal</span><span class="val" id="baseDec">255</span></div>
       <div class="base-row"><span class="lbl">Binary</span><span class="val" id="baseBin">11111111</span></div>
       <div class="base-row"><span class="lbl">Octal</span><span class="val" id="baseOct">377</span></div>
@@ -635,7 +845,7 @@
 
   <!-- ═══ SOLVE TAB ═══ -->
   <div class="tab-panel" id="tab-solve">
-    <div class="solve-section">
+    <div class="card">
       <h3>📐 Linear (ax + b = 0)</h3>
       <div class="solve-inputs">
         <input id="linA" type="number" value="2">
@@ -643,11 +853,11 @@
         <input id="linB" type="number" value="-8">
         <span class="lbl">= 0</span>
       </div>
-      <button class="solve-btn" data-solve="linear">Solve Linear</button>
-      <div class="solve-result" id="linearResult">—</div>
+      <button class="primary-btn" data-solve="linear">Solve</button>
+      <div class="result-box" id="linearResult">—</div>
     </div>
 
-    <div class="solve-section">
+    <div class="card">
       <h3>📊 Quadratic (ax² + bx + c = 0)</h3>
       <div class="solve-inputs">
         <input id="qA" type="number" value="1">
@@ -656,14 +866,14 @@
         <span class="lbl">x +</span>
         <input id="qC" type="number" value="6">
       </div>
-      <button class="solve-btn" data-solve="quad">Solve Quadratic</button>
-      <div class="solve-result" id="quadResult">—</div>
+      <button class="primary-btn" data-solve="quad">Solve</button>
+      <div class="result-box" id="quadResult">—</div>
     </div>
 
-    <div class="solve-section">
+    <div class="card">
       <h3>📈 Statistics</h3>
       <textarea id="statsInput" class="stats-input">10, 20, 30, 40, 50</textarea>
-      <button class="solve-btn" data-solve="stats">Calculate</button>
+      <button class="primary-btn" data-solve="stats">Calculate</button>
       <div class="stats-grid">
         <div class="stat-box"><div class="lbl">Count</div><div class="val" id="statCount">—</div></div>
         <div class="stat-box"><div class="lbl">Sum</div><div class="val" id="statSum">—</div></div>
@@ -676,14 +886,53 @@
       </div>
     </div>
 
-    <div class="solve-section">
+    <div class="card">
       <h3>📅 Date Calculator</h3>
       <div class="date-row">
         <input id="dateA" type="date">
         <input id="dateB" type="date">
       </div>
-      <button class="solve-btn" data-solve="date">Calculate Difference</button>
-      <div class="solve-result" id="dateResult">—</div>
+      <button class="primary-btn" data-solve="date">Calculate</button>
+      <div class="result-box" id="dateResult">—</div>
+    </div>
+  </div>
+
+  <!-- ═══ CONSTANTS TAB ═══ -->
+  <div class="tab-panel" id="tab-constants">
+    <div class="card">
+      <h3>⚛️ Physics Constants</h3>
+      <div class="chip-row" id="constCat">
+        <button class="active" data-ccat="physics">Physics</button>
+        <button data-ccat="math">Math</button>
+        <button data-ccat="astro">Astro</button>
+      </div>
+      <div id="constList"></div>
+    </div>
+  </div>
+
+  <!-- ═══ MATRIX TAB ═══ -->
+  <div class="tab-panel" id="tab-matrix">
+    <div class="card">
+      <h3>🔢 Matrix Calculator (2×2)</h3>
+      <div class="matrix-wrap">
+        <div class="matrix" id="matA">
+          <input type="number" value="1" step="any"><input type="number" value="2" step="any">
+          <input type="number" value="3" step="any"><input type="number" value="4" step="any">
+        </div>
+        <span class="matrix-sym" id="matOp">+</span>
+        <div class="matrix" id="matB">
+          <input type="number" value="5" step="any"><input type="number" value="6" step="any">
+          <input type="number" value="7" step="any"><input type="number" value="8" step="any">
+        </div>
+      </div>
+      <div class="btn-grid" style="margin-bottom:10px">
+        <button data-matop="+" class="active">A+B</button>
+        <button data-matop="-">A−B</button>
+        <button data-matop="*">A×B</button>
+        <button data-matop="det">Det A</button>
+      </div>
+      <button class="primary-btn" id="calcMat">Calculate</button>
+      <div class="result-box" id="matResult" style="font-size:.85rem">—</div>
     </div>
   </div>
 
@@ -693,6 +942,7 @@
 (function () {
   "use strict";
 
+  /* ═══ SW ═══ */
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
@@ -705,6 +955,7 @@
     setTimeout(() => s.remove(), 1500);
   });
 
+  /* ═══ SOUND + HAPTIC ═══ */
   const soundOn = { v: localStorage.getItem("calc_sound") !== "off" };
   let audioCtx = null;
   function playClick(type) {
@@ -742,25 +993,14 @@
     });
   });
 
-  /* ═══ GLOBAL BACK BUTTON ═══ */
+  /* ═══ GLOBAL BACK ═══ */
   const histPanel = document.getElementById("historyPanel");
   document.getElementById("globalBack").addEventListener("click", () => {
     playClick(); haptic(8);
-    // 1. If history is open → close it
-    if (histPanel.classList.contains("open")) {
-      histPanel.classList.remove("open");
-      return;
-    }
-    // 2. If not on Calc tab → go to Calc tab
+    if (histPanel.classList.contains("open")) { histPanel.classList.remove("open"); return; }
     const activeTab = document.querySelector(".tabs button.active")?.dataset.tab;
-    if (activeTab && activeTab !== "calc") {
-      switchTab("calc");
-      return;
-    }
-    // 3. Already on Calc → try to go back in history
-    if (window.history.length > 1) {
-      window.history.back();
-    }
+    if (activeTab && activeTab !== "calc") { switchTab("calc"); return; }
+    if (window.history.length > 1) window.history.back();
   });
 
   /* ═══ THEME + SOUND ═══ */
@@ -788,37 +1028,37 @@
   });
 
   /* ═══ MATH ENGINE ═══ */
-  const FUNCS = ["asin","acos","atan","sin","cos","tan","log","ln","√","abs"];
+  const FUNCS = ["asin","acos","atan","sinh","cosh","tanh","sin","cos","tan","log","ln","√","abs"];
   function tokenize(s) {
-    const tokens = []; let i = 0;
+    const t = []; let i = 0;
     while (i < s.length) {
       const c = s[i];
       if (c === " " || c === "\t") { i++; continue; }
       if (/[0-9.]/.test(c)) {
         let num = "";
         while (i < s.length && /[0-9.]/.test(s[i])) num += s[i++];
-        if ((num.match(/\./g) || []).length > 1) throw new Error("Syntax");
-        tokens.push({ t: "num", v: parseFloat(num) }); continue;
+        if ((num.match(/\./g) || []).length > 1) throw new Error("S");
+        t.push({ t: "num", v: parseFloat(num) }); continue;
       }
-      if (c === "π") { tokens.push({ t: "num", v: Math.PI }); i++; continue; }
-      if (c === "e" && !/[a-z]/.test(s[i+1] || "")) { tokens.push({ t: "num", v: Math.E }); i++; continue; }
-      if (c === "x" || c === "X") { tokens.push({ t: "var", v: "x" }); i++; continue; }
-      let matched = false;
+      if (c === "π") { t.push({ t: "num", v: Math.PI }); i++; continue; }
+      if (c === "e" && !/[a-z]/.test(s[i+1] || "")) { t.push({ t: "num", v: Math.E }); i++; continue; }
+      if (c === "x" || c === "X") { t.push({ t: "var", v: "x" }); i++; continue; }
+      let m = false;
       for (const f of FUNCS) {
-        if (s.startsWith(f, i)) { tokens.push({ t: "func", v: f }); i += f.length; matched = true; break; }
+        if (s.startsWith(f, i)) { t.push({ t: "func", v: f }); i += f.length; m = true; break; }
       }
-      if (matched) continue;
+      if (m) continue;
       if ("+-−×÷*/^".includes(c)) {
         let op = c; if (c === "-") op = "−"; if (c === "*") op = "×"; if (c === "/") op = "÷";
-        tokens.push({ t: "op", v: op }); i++; continue;
+        t.push({ t: "op", v: op }); i++; continue;
       }
-      if (c === "(") { tokens.push({ t: "(" }); i++; continue; }
-      if (c === ")") { tokens.push({ t: ")" }); i++; continue; }
-      if (c === "!") { tokens.push({ t: "post", v: "!" }); i++; continue; }
-      if (c === "%") { tokens.push({ t: "post", v: "%" }); i++; continue; }
-      throw new Error("Bad char");
+      if (c === "(") { t.push({ t: "(" }); i++; continue; }
+      if (c === ")") { t.push({ t: ")" }); i++; continue; }
+      if (c === "!") { t.push({ t: "post", v: "!" }); i++; continue; }
+      if (c === "%") { t.push({ t: "post", v: "%" }); i++; continue; }
+      throw new Error("B");
     }
-    return tokens;
+    return t;
   }
   const prec = { "+": 1, "−": 1, "×": 2, "÷": 2, "u-": 3, "^": 4 };
   const rightAssoc = { "^": true, "u-": true };
@@ -845,7 +1085,7 @@
       } else if (tk.t === "(") ops.push(tk);
       else if (tk.t === ")") {
         while (ops.length && ops[ops.length - 1].t !== "(") out.push(ops.pop());
-        if (!ops.length) throw new Error("Mismatch");
+        if (!ops.length) throw new Error("M");
         ops.pop();
         if (ops.length && ops[ops.length - 1].t === "func") out.push(ops.pop());
       }
@@ -853,13 +1093,13 @@
     }
     while (ops.length) {
       const o = ops.pop();
-      if (o.t === "(") throw new Error("Mismatch");
+      if (o.t === "(") throw new Error("M");
       out.push(o);
     }
     return out;
   }
-  function factorial(n) {
-    if (n < 0 || !Number.isInteger(n)) throw new Error("Math error");
+  function fact(n) {
+    if (n < 0 || !Number.isInteger(n)) throw new Error("E");
     if (n > 170) return Infinity;
     let r = 1; for (let i = 2; i <= n; i++) r *= i;
     return r;
@@ -871,16 +1111,19 @@
     switch (f) {
       case "sin": return Math.sin(toRad);
       case "cos": return Math.cos(toRad);
-      case "tan": { const t = Math.tan(toRad); if (Math.abs(t) > 1e15) throw new Error("Err"); return t; }
-      case "asin": if (x < -1 || x > 1) throw new Error("Err"); return Math.asin(x) * fromRad;
-      case "acos": if (x < -1 || x > 1) throw new Error("Err"); return Math.acos(x) * fromRad;
+      case "tan": { const t = Math.tan(toRad); if (Math.abs(t) > 1e15) throw new Error("E"); return t; }
+      case "asin": if (x < -1 || x > 1) throw new Error("E"); return Math.asin(x) * fromRad;
+      case "acos": if (x < -1 || x > 1) throw new Error("E"); return Math.acos(x) * fromRad;
       case "atan": return Math.atan(x) * fromRad;
-      case "log": if (x <= 0) throw new Error("Err"); return Math.log10(x);
-      case "ln": if (x <= 0) throw new Error("Err"); return Math.log(x);
-      case "√": if (x < 0) throw new Error("Err"); return Math.sqrt(x);
+      case "sinh": return Math.sinh(x);
+      case "cosh": return Math.cosh(x);
+      case "tanh": return Math.tanh(x);
+      case "log": if (x <= 0) throw new Error("E"); return Math.log10(x);
+      case "ln": if (x <= 0) throw new Error("E"); return Math.log(x);
+      case "√": if (x < 0) throw new Error("E"); return Math.sqrt(x);
       case "abs": return Math.abs(x);
     }
-    throw new Error("Unknown");
+    throw new Error("U");
   }
   function applyOp(op, a, b) {
     switch (op) {
@@ -896,7 +1139,7 @@
     for (const tk of rpn) {
       if (tk.t === "num") { st.push(tk.v); continue; }
       if (tk.t === "var") {
-        if (!scope || !(tk.v in scope)) throw new Error("Var");
+        if (!scope || !(tk.v in scope)) throw new Error("V");
         st.push(scope[tk.v]); continue;
       }
       if (tk.t === "func") {
@@ -905,7 +1148,7 @@
       }
       if (tk.t === "post") {
         const x = st.pop(); if (x === undefined) throw new Error("S");
-        if (tk.v === "!") st.push(factorial(x));
+        if (tk.v === "!") st.push(fact(x));
         else if (tk.v === "%") st.push(x / 100);
         continue;
       }
@@ -935,9 +1178,16 @@
   const sciToggle = document.getElementById("sciToggle");
   const histList = document.getElementById("historyList");
   const angleBtn = document.getElementById("angleBtn");
+  const memInd = document.getElementById("memInd");
 
   let expr = "";
-  let history = loadH();
+  let memory = parseFloat(localStorage.getItem("calc_memory") || "0") || 0;
+  let hasMemory = localStorage.getItem("calc_has_mem") === "1";
+  let hist = loadH();
+
+  function updateMemInd() {
+    memInd.textContent = hasMemory ? `M = ${fmt(memory)}` : "";
+  }
 
   function prettify(s) {
     return s.replace(/×/g, " × ").replace(/÷/g, " ÷ ")
@@ -952,10 +1202,13 @@
   function update() {
     exprEl.textContent = prettify(expr);
     if (!expr) { resEl.textContent = "0"; resEl.classList.remove("error"); return; }
-    try { resEl.textContent = fmt(evaluate(autoClose(expr))); resEl.classList.remove("error"); } catch {}
+    try {
+      resEl.textContent = fmt(evaluate(autoClose(expr)));
+      resEl.classList.remove("error");
+    } catch {}
   }
   function addN(n) {
-    if (expr.length > 80) return;
+    if (expr.length > 100) return;
     const last = expr.split(/[+\-−×÷()^!%]/).pop();
     if (n === "." && last.includes(".")) return;
     if (last === "" && n === ".") n = "0.";
@@ -1011,7 +1264,7 @@
       resEl.classList.add("pop");
       setTimeout(() => resEl.classList.remove("pop"), 180);
       hist.unshift({ e: prettify(expr), r: out, t: Date.now() });
-      hist = hist.slice(0, 40); saveH(); renderH();
+      hist = hist.slice(0, 50); saveH(); renderH();
       expr = out; exprEl.textContent = ""; resEl.textContent = out;
     } catch {
       resEl.textContent = "Error";
@@ -1021,11 +1274,14 @@
   }
 
   function loadH() {
-    try { return JSON.parse(localStorage.getItem("calc_h") || "[]"); } catch { return []; }
+    try { return JSON.parse(localStorage.getItem("calc_h2") || "[]"); } catch { return []; }
   }
-  function saveH() { try { localStorage.setItem("calc_h", JSON.stringify(hist.slice(0, 40))); } catch {} }
+  function saveH() { try { localStorage.setItem("calc_h2", JSON.stringify(hist.slice(0, 50))); } catch {} }
   function renderH() {
-    if (!hist.length) { histList.innerHTML = '<p class="empty">እስካሁን ምንም ስሌት የለም</p>'; return; }
+    if (!hist.length) {
+      histList.innerHTML = '<p class="empty">እስካሁን ምንም ስሌት የለም</p>';
+      return;
+    }
     histList.innerHTML = hist.map((h, i) =>
       `<div class="history-item" data-i="${i}">
         <div class="h-exp">${h.e}</div>
@@ -1081,6 +1337,7 @@
       case "pow": expr += "^"; update(); break;
       case "inv": expr += "1÷("; update(); break;
       case "fact": expr += "!"; update(); break;
+      case "cbrt": expr += "cbrt("; update(); break;
     }
   });
   sciToggle.addEventListener("click", () => {
@@ -1105,6 +1362,33 @@
   });
   document.getElementById("clearHistory").addEventListener("click", () => {
     hist = []; saveH(); renderH(); playClick("clear"); haptic(12);
+  });
+
+  /* ═══ MEMORY ═══ */
+  document.querySelectorAll("[data-mem]").forEach(b => {
+    b.addEventListener("click", () => {
+      const op = b.dataset.mem;
+      playClick(); haptic(8);
+      try {
+        if (op === "MC") { memory = 0; hasMemory = false; }
+        else if (op === "MR") { if (hasMemory) { expr += fmt(memory); update(); } }
+        else if (op === "M+") {
+          const val = expr ? evaluate(autoClose(expr)) : 0;
+          memory += val; hasMemory = true;
+        }
+        else if (op === "M-") {
+          const val = expr ? evaluate(autoClose(expr)) : 0;
+          memory -= val; hasMemory = true;
+        }
+        else if (op === "MS") {
+          memory = expr ? evaluate(autoClose(expr)) : 0;
+          hasMemory = true;
+        }
+        localStorage.setItem("calc_memory", memory.toString());
+        localStorage.setItem("calc_has_mem", hasMemory ? "1" : "0");
+        updateMemInd();
+      } catch {}
+    });
   });
 
   document.addEventListener("keydown", (e) => {
@@ -1218,12 +1502,15 @@
     b.addEventListener("click", () => {
       graphFnEl.value = b.dataset.graph;
       const fn = b.dataset.graph;
-      if (fn.includes("sin") || fn.includes("cos")) {
+      if (fn.includes("sin") || fn.includes("cos") || fn.includes("tan")) {
         document.getElementById("xmin").value = -10; document.getElementById("xmax").value = 10;
         document.getElementById("ymin").value = -2; document.getElementById("ymax").value = 2;
       } else if (fn === "1/x" || fn === "log(x)" || fn === "√(x)") {
         document.getElementById("xmin").value = -1; document.getElementById("xmax").value = 10;
         document.getElementById("ymin").value = -5; document.getElementById("ymax").value = 5;
+      } else if (fn === "e^x") {
+        document.getElementById("xmin").value = -3; document.getElementById("xmax").value = 3;
+        document.getElementById("ymin").value = -1; document.getElementById("ymax").value = 20;
       } else {
         document.getElementById("xmin").value = -5; document.getElementById("xmax").value = 5;
         document.getElementById("ymin").value = -10; document.getElementById("ymax").value = 10;
@@ -1235,12 +1522,15 @@
     if (document.getElementById("tab-graph").classList.contains("active")) plotGraph();
   });
 
-  /* ═══ CONVERTER ═══ */
+  /* ═══ UNITS ═══ */
   const UNITS = {
-    length: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254 },
-    mass: { kg: 1, g: 0.001, mg: 1e-6, lb: 0.45359237, oz: 0.028349523125, t: 1000 },
-    area: { "m²": 1, "km²": 1e6, "cm²": 1e-4, "ha": 10000, "acre": 4046.8564224, "ft²": 0.09290304 },
-    time: { s: 1, min: 60, h: 3600, day: 86400, week: 604800, year: 31536000 },
+    length: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254, nmi: 1852 },
+    mass: { kg: 1, g: 0.001, mg: 1e-6, lb: 0.45359237, oz: 0.028349523125, t: 1000, st: 6.35029318 },
+    area: { "m²": 1, "km²": 1e6, "cm²": 1e-4, "ha": 10000, "acre": 4046.8564224, "ft²": 0.09290304, "mi²": 2589988.110336 },
+    volume: { L: 1, mL: 0.001, "m³": 1000, "cm³": 0.001, gal: 3.785411784, qt: 0.946352946, pt: 0.473176473, cup: 0.2365882365, floz: 0.0295735295625 },
+    speed: { "m/s": 1, "km/h": 0.277778, mph: 0.44704, knot: 0.514444, "ft/s": 0.3048 },
+    time: { s: 1, min: 60, h: 3600, day: 86400, week: 604800, month: 2629746, year: 31536000 },
+    data: { B: 1, KB: 1024, MB: 1048576, GB: 1073741824, TB: 1099511627776, bit: 0.125 },
     temp: { "°C": 1, "°F": 1, "K": 1 }
   };
   let curCat = "length";
@@ -1331,7 +1621,10 @@
     const c = parseFloat(document.getElementById("qC").value);
     const o = document.getElementById("quadResult");
     if (isNaN(a) || isNaN(b) || isNaN(c)) { o.textContent = "⚠️ Invalid"; return; }
-    if (a === 0) { sLin(); return; }
+    if (a === 0) {
+      if (b === 0) { o.textContent = c === 0 ? "∞" : "∅"; return; }
+      o.textContent = `x = ${parseFloat((-c / b).toPrecision(10))}`; return;
+    }
     const D = b * b - 4 * a * c;
     if (D > 0) {
       const r1 = (-b + Math.sqrt(D)) / (2 * a);
@@ -1378,11 +1671,120 @@
     o.innerHTML = `${days} days<br>≈ ${(days / 365.25).toFixed(2)} years`;
   }
 
+  /* ═══ CONSTANTS ═══ */
+  const CONSTANTS = {
+    physics: [
+      { n: "Speed of light", s: "c", v: 299792458, u: "m/s" },
+      { n: "Gravitational constant", s: "G", v: 6.67430e-11, u: "m³/kg·s²" },
+      { n: "Planck constant", s: "h", v: 6.62607015e-34, u: "J·s" },
+      { n: "Reduced Planck", s: "ℏ", v: 1.054571817e-34, u: "J·s" },
+      { n: "Boltzmann constant", s: "k_B", v: 1.380649e-23, u: "J/K" },
+      { n: "Avogadro number", s: "N_A", v: 6.02214076e23, u: "1/mol" },
+      { n: "Gas constant", s: "R", v: 8.314462618, u: "J/mol·K" },
+      { n: "Electron mass", s: "m_e", v: 9.1093837015e-31, u: "kg" },
+      { n: "Proton mass", s: "m_p", v: 1.67262192369e-27, u: "kg" },
+      { n: "Neutron mass", s: "m_n", v: 1.67492749804e-27, u: "kg" },
+      { n: "Elementary charge", s: "e", v: 1.602176634e-19, u: "C" },
+      { n: "Vacuum permittivity", s: "ε₀", v: 8.8541878128e-12, u: "F/m" },
+      { n: "Standard gravity", s: "g", v: 9.80665, u: "m/s²" },
+      { n: "Atmospheric pressure", s: "atm", v: 101325, u: "Pa" }
+    ],
+    math: [
+      { n: "Pi", s: "π", v: Math.PI, u: "" },
+      { n: "Euler's number", s: "e", v: Math.E, u: "" },
+      { n: "Golden ratio", s: "φ", v: 1.618033988749895, u: "" },
+      { n: "Euler-Mascheroni", s: "γ", v: 0.5772156649015329, u: "" },
+      { n: "√2", s: "√2", v: 1.4142135623730951, u: "" },
+      { n: "√3", s: "√3", v: 1.7320508075688772, u: "" },
+      { n: "√5", s: "√5", v: 2.23606797749979, u: "" },
+      { n: "ln(2)", s: "ln(2)", v: 0.6931471805599453, u: "" },
+      { n: "ln(10)", s: "ln(10)", v: 2.302585092994046, u: "" }
+    ],
+    astro: [
+      { n: "Astronomical unit", s: "AU", v: 1.495978707e11, u: "m" },
+      { n: "Light year", s: "ly", v: 9.4607304725808e15, u: "m" },
+      { n: "Parsec", s: "pc", v: 3.0856775814913673e16, u: "m" },
+      { n: "Solar mass", s: "M☉", v: 1.98892e30, u: "kg" },
+      { n: "Earth mass", s: "M⊕", v: 5.9722e24, u: "kg" },
+      { n: "Earth radius", s: "R⊕", v: 6371000, u: "m" },
+      { n: "Solar radius", s: "R☉", v: 6.957e8, u: "m" },
+      { n: "Hubble constant", s: "H₀", v: 2.184e-18, u: "1/s" }
+    ]
+  };
+  let curCCat = "physics";
+  function renderConsts() {
+    const list = document.getElementById("constList");
+    list.innerHTML = CONSTANTS[curCCat].map((c, i) => `
+      <div class="const-item" data-ci="${i}">
+        <div class="c-info">
+          <div class="c-name">${c.n}</div>
+          <div class="c-sym">${c.s} ${c.u ? "· " + c.u : ""}</div>
+        </div>
+        <div class="c-val">${c.v.toExponential ? (Math.abs(c.v) < 1e-3 || Math.abs(c.v) > 1e6 ? c.v.toExponential(6) : c.v) : c.v}</div>
+      </div>
+    `).join("");
+  }
+  document.getElementById("constList").addEventListener("click", (ev) => {
+    const item = ev.target.closest(".const-item");
+    if (!item) return;
+    const c = CONSTANTS[curCCat][+item.dataset.ci];
+    switchTab("calc");
+    expr += c.v.toString();
+    update();
+    playClick(); haptic(10);
+  });
+  document.getElementById("constCat").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    document.querySelectorAll("#constCat button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    curCCat = b.dataset.ccat;
+    renderConsts();
+    playClick(); haptic(6);
+  });
+
+  /* ═══ MATRIX ═══ */
+  let matOp = "+";
+  document.querySelectorAll("[data-matop]").forEach(b => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll("[data-matop]").forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+      matOp = b.dataset.matop;
+      document.getElementById("matOp").textContent = matOp === "+" ? "+" : matOp === "-" ? "−" : matOp === "*" ? "×" : "det";
+      playClick(); haptic(6);
+    });
+  });
+  function getMat(id) {
+    return [...document.getElementById(id).querySelectorAll("input")].map(i => parseFloat(i.value) || 0);
+  }
+  document.getElementById("calcMat").addEventListener("click", () => {
+    const A = getMat("matA"), B = getMat("matB");
+    const o = document.getElementById("matResult");
+    let html = "";
+    if (matOp === "+") {
+      html = `⎡ ${A[0]+B[0]}  ${A[1]+B[1]} ⎤<br>⎣ ${A[2]+B[2]}  ${A[3]+B[3]} ⎦`;
+    } else if (matOp === "-") {
+      html = `⎡ ${A[0]-B[0]}  ${A[1]-B[1]} ⎤<br>⎣ ${A[2]-B[2]}  ${A[3]-B[3]} ⎦`;
+    } else if (matOp === "*") {
+      const c0 = A[0]*B[0] + A[1]*B[2];
+      const c1 = A[0]*B[1] + A[1]*B[3];
+      const c2 = A[2]*B[0] + A[3]*B[2];
+      const c3 = A[2]*B[1] + A[3]*B[3];
+      html = `⎡ ${c0}  ${c1} ⎤<br>⎣ ${c2}  ${c3} ⎦`;
+    } else if (matOp === "det") {
+      const d = A[0]*A[3] - A[1]*A[2];
+      html = `det(A) = ${d}`;
+    }
+    o.innerHTML = html;
+    playClick("equals"); haptic(12);
+  });
+
   /* ═══ INIT ═══ */
   renderH();
   update();
+  updateMemInd();
   fillUnits();
   updateB();
+  renderConsts();
   const today = new Date().toISOString().split("T")[0];
   document.getElementById("dateA").value = today;
   document.getElementById("dateB").value = new Date(Date.now() - 7 * 86400000).toISOString().split("T")[0];
