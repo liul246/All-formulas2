@@ -1,7 +1,7 @@
 {
-  "name": "Calc Pro — Scientific Calculator",
+  "name": "Calculator Pro Max",
   "short_name": "Calc Pro",
-  "description": "Professional scientific calculator",
+  "description": "Advanced scientific calculator with graph, converter, solver, constants and memory",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
