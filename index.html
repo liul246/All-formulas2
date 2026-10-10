@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Calc Pro">
-<meta name="description" content="Professional Scientific Calculator">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Professional Scientific Calculator">
 <title>Calc Pro — Scientific Calculator</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
@@ -124,7 +124,7 @@
   @keyframes splashFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @keyframes splashLoad { to { width: 100%; } }
 
-  /* ═══ APP ═══ */
+  /* ═══ APP — FULL SCREEN ═══ */
   .app {
     width: 100%;
     max-width: 480px;
@@ -249,14 +249,15 @@
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 10px;
     transition: .2s;
     font-family: inherit;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    min-height: 36px;
+    justify-content: center;
+    min-height: 38px;
+    min-width: 44px;
   }
   .back-btn:hover { background: var(--btn-hover); }
   .back-btn:active { transform: scale(.94); }
@@ -1440,6 +1441,7 @@
 
   document.getElementById("historyBtn").onclick = () => {
     renderHistory(); histPanel.classList.add("open"); playClick(); haptic(8);
+    try { history.pushState({ panel: "history" }, ""); } catch {}
   };
   document.getElementById("closeHistory").onclick = () => {
     histPanel.classList.remove("open"); playClick(); haptic(6);
@@ -1447,6 +1449,13 @@
   document.getElementById("clearHistory").onclick = () => {
     history = []; saveHistory(); renderHistory(); playClick("clear"); haptic(12);
   };
+
+  /* ═══ ANDROID BACK BUTTON ═══ */
+  window.addEventListener("popstate", () => {
+    if (histPanel.classList.contains("open")) {
+      histPanel.classList.remove("open");
+    }
+  });
 
   resEl.style.cursor = "pointer";
   resEl.title = "Tap to copy";
@@ -1751,18 +1760,6 @@
   document.getElementById("dateB").value = new Date(Date.now() - 7 * 86400000).toISOString().split("T")[0];
 
   setTimeout(plotGraph, 100);
-
-  /* ═══ ANDROID BACK BUTTON SUPPORT ═══ */
-  window.addEventListener("popstate", () => {
-    if (histPanel.classList.contains("open")) {
-      histPanel.classList.remove("open");
-    }
-  });
-
-  // Push state when history opens (for Android back button)
-  document.getElementById("historyBtn").addEventListener("click", () => {
-    history.pushState({ panel: "history" }, "");
-  }, true);
 })();
 </script>
 </body>
