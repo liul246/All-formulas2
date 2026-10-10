@@ -1,154 +1,21 @@
 {
-  "id": "com.smart.calculator.app",
-  "name": "Smart Calculator",
-  "short_name": "Calculator",
-  "description": "Fast, lightweight, and offline functional calculator application.",
+  "name": "Calc Pro — Scientific Calculator",
+  "short_name": "Calc Pro",
+  "description": "Professional scientific calculator with graph, converter and equation solver",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "tabbed",
-    "standalone",
-    "minimal-ui"
-  ],
-  "tab_strip": {
-    "home_tab": {
-      "scope": "./"
-    },
-    "new_tab_button": {
-      "url": "./index.html"
-    }
-  },
   "orientation": "portrait",
-  "background_color": "#0d1117",
-  "theme_color": "#0d1117",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
   "lang": "en",
-  "dir": "ltr",
-  "iarc_rating_id": "e84b078d-6a01-443e-a131-7eef277150a0",
-  "prefer_related_applications": false,
-  "related_applications": [
-    {
-      "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.smart.calculator.app",
-      "id": "com.smart.calculator.app"
-    }
-  ],
-  "protocol_handlers": [
-    {
-      "protocol": "web+calc",
-      "url": "./index.html?calc=%s"
-    }
-  ],
-  "file_handlers": [
-    {
-      "action": "./index.html",
-      "accept": {
-        "text/plain": [".txt"]
-      }
-    }
-  ],
-  "launch_handler": {
-    "client_mode": "focus-existing"
-  },
-  "scope_extensions": [
-    {
-      "type": "origin",
-      "origin": "https://akalewold15-cloud.github.io"
-    }
-  ],
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "widgets": [
-    {
-      "name": "Calculator Widget",
-      "short_name": "Calc",
-      "description": "Quick calculator widget",
-      "tag": "calc-widget",
-      "template": "widget-template",
-      "ms_ac_template": "./widget-template.json",
-      "data": "./widget-data.json",
-      "type": "text/html",
-      "output_security": "sandbox",
-      "auth": false,
-      "update_interval": 86400,
-      "screenshots": [
-        {
-          "src": "https://dummyimage.com/512x512/0d1117/ffffff.png",
-          "sizes": "512x512",
-          "type": "image/png",
-          "label": "Widget Screenshot"
-        }
-      ],
-      "icons": [
-        {
-          "src": "https://dummyimage.com/192x192/0d1117/ffffff.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
-    }
-  ],
-  "note_taking": {
-    "new_note_url": "./index.html"
-  },
-  "share_target": {
-    "action": "./index.html",
-    "method": "GET",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  },
-  "categories": [
-    "utilities",
-    "productivity"
-  ],
+  "categories": ["utilities", "productivity", "education"],
   "icons": [
     {
-      "src": "https://dummyimage.com/192x192/0d1117/ffffff.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%230a0a0f'/%3E%3Ctext x='256' y='340' font-size='260' text-anchor='middle'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
-    },
-    {
-      "src": "https://dummyimage.com/512x512/0d1117/ffffff.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "https://dummyimage.com/512x512/0d1117/ffffff.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Calculator Mobile View"
-    },
-    {
-      "src": "https://dummyimage.com/512x512/0d1117/ffffff.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Calculator Desktop View"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Calculator",
-      "short_name": "Calc",
-      "description": "Open Calculator",
-      "url": "./index.html",
-      "icons": [
-        {
-          "src": "https://dummyimage.com/192x192/0d1117/ffffff.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
     }
   ]
 }
