@@ -1,61 +1,33 @@
-const CACHE_NAME = 'smart-calculator-v1';
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-512.png'
-];
+/* Calc Pro — Service Worker */
+const CACHE = "calc-pro-v1";
+const ASSETS = ["./", "./index.html", "./manifest.json"];
 
-// Offline caching
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+self.addEventListener("install", (e) => {
+  e.waitUntil(
+    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())
   );
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+self.addEventListener("activate", (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
-// Full Offline Support
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
+self.addEventListener("fetch", (e) => {
+  if (e.request.method !== "GET") return;
+  e.respondWith(
+    caches.match(e.request).then((hit) => {
+      if (hit) return hit;
+      return fetch(e.request).then((res) => {
+        if (res && res.status === 200 && res.type === "basic") {
+          const clone = res.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match("./index.html"));
     })
   );
-});
-
-self.addEventListener('push', (event) => {
-  const options = {
-    body: event.data ? event.data.text() : 'Notification from Smart Calculator',
-    icon: './icon-512.png'
-  };
-  event.waitUntil(
-    self.registration.showNotification('Smart Calculator', options)
-  );
-});
-
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'sync-data') {
-    console.log('Background sync triggered');
-  }
-});
-
-self.addEventListener('periodicsync', (event) => {
-  if (event.tag === 'update-cache') {
-    console.log('Periodic sync triggered');
-  }
 });
