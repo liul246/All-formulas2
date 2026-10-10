@@ -8,11 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Calc Pro">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="Professional Scientific Calculator">
-<title>Calc Pro — Scientific Calculator</title>
+<title>Calc Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%230a0a0f'/><text x='256' y='340' font-size='260' text-anchor='middle'>🧮</text></svg>">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
@@ -57,32 +55,68 @@
     --shadow: rgba(0,0,0,.12);
   }
 
-  html { height: 100%; overscroll-behavior: none; }
+  /* ═══ TRULY FULL SCREEN — NO BODY PADDING ═══ */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+  }
   body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    background: radial-gradient(circle at 50% 0%, var(--bg1) 0%, var(--bg2) 60%);
-    background-attachment: fixed;
+    background: var(--card);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
     color: var(--text);
-    padding: 0;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+    display: block;
     transition: background .4s, color .3s;
-    overflow-x: hidden;
-    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* ═══ APP — FULL BLEED ON MOBILE ═══ */
+  .app {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--card);
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 12px;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 20px);
+    position: relative;
+    transition: background .4s;
+  }
+
+  /* Desktop / Tablet — nice card look */
+  @media (min-width: 600px) {
+    body {
+      display: grid;
+      place-items: center;
+      padding: 20px !important;
+      background: radial-gradient(circle at 50% 0%, var(--bg1) 0%, var(--bg2) 60%);
+      background-attachment: fixed;
+    }
+    .app {
+      width: 100% !important;
+      max-width: 480px !important;
+      min-height: auto;
+      border-radius: 32px !important;
+      padding: 16px !important;
+      box-shadow: 0 30px 80px var(--shadow) !important;
+      border: 1px solid var(--border) !important;
+      overflow: hidden;
+    }
   }
 
   /* ═══ SPLASH ═══ */
   .splash {
     position: fixed;
     inset: 0;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
     background: radial-gradient(circle at 50% 40%, #1a1a2e, #0a0a0f);
     display: flex;
     flex-direction: column;
@@ -99,70 +133,31 @@
     filter: drop-shadow(0 8px 24px rgba(255,159,10,.5));
   }
   .splash-name {
-    font-size: .95rem;
-    font-weight: 700;
-    letter-spacing: 5px;
-    color: #fff;
-    animation: splashFade .5s .25s backwards;
+    font-size: .95rem; font-weight: 700; letter-spacing: 5px;
+    color: #fff; animation: splashFade .5s .25s backwards;
   }
   .splash-bar {
-    width: 140px;
-    height: 3px;
-    background: rgba(255,255,255,.08);
-    border-radius: 99px;
-    overflow: hidden;
-    margin-top: 8px;
+    width: 140px; height: 3px; background: rgba(255,255,255,.08);
+    border-radius: 99px; overflow: hidden; margin-top: 8px;
   }
   .splash-fill {
-    height: 100%;
-    width: 0;
+    height: 100%; width: 0;
     background: linear-gradient(90deg, #0a84ff, #ff9f0a);
-    border-radius: 99px;
-    animation: splashLoad 1s .2s forwards ease-out;
+    border-radius: 99px; animation: splashLoad 1s .2s forwards ease-out;
   }
   @keyframes splashPop { 0% { transform: scale(.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
   @keyframes splashFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @keyframes splashLoad { to { width: 100%; } }
 
-  /* ═══ APP — FULL SCREEN ═══ */
-  .app {
-    width: 100%;
-    max-width: 480px;
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: var(--card);
-    border-radius: 0;
-    padding: 14px;
-    padding-top: calc(14px + env(safe-area-inset-top));
-    padding-bottom: calc(14px + env(safe-area-inset-bottom) + 20px);
-    border: none;
-    position: relative;
-    overflow: visible;
-    transition: background .4s, border-color .3s;
-  }
-
-  @media (min-width: 520px) {
-    body { padding: 20px; align-items: center; }
-    .app {
-      min-height: auto;
-      border-radius: 32px;
-      padding: 16px;
-      box-shadow: 0 30px 80px var(--shadow), inset 0 1px 0 rgba(255,255,255,.05);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-  }
-
   /* ═══ TABS ═══ */
   .tabs {
-    display: flex;
-    gap: 4px;
+    display: flex; gap: 4px;
     background: var(--btn);
     padding: 4px;
     border-radius: 14px;
     margin-bottom: 8px;
     position: sticky;
-    top: calc(env(safe-area-inset-top) + 6px);
+    top: calc(env(safe-area-inset-top, 0px) + 8px);
     z-index: 5;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -243,38 +238,26 @@
 
   /* ═══ BACK BUTTON ═══ */
   .back-btn {
-    background: var(--btn);
+    background: var(--accent-2);
+    color: #fff;
     border: none;
-    color: var(--accent-2);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     cursor: pointer;
-    padding: 6px 14px;
-    border-radius: 10px;
+    padding: 0;
+    border-radius: 12px;
     transition: .2s;
     font-family: inherit;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 38px;
-    min-width: 44px;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(10,132,255,.35);
   }
-  .back-btn:hover { background: var(--btn-hover); }
-  .back-btn:active { transform: scale(.94); }
-
-  .panel-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .panel-header h2 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    flex: 1;
-  }
+  .back-btn:hover { filter: brightness(1.1); }
+  .back-btn:active { transform: scale(.9); }
 
   /* ═══ DISPLAY ═══ */
   .display {
@@ -333,9 +316,7 @@
   .sci-toggle .fx { font-style: italic; font-weight: 700; }
 
   .sci-panel {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
+    max-height: 0; overflow: hidden; opacity: 0;
     transition: max-height .35s cubic-bezier(.32,.72,0,1), opacity .25s;
   }
   .sci-panel.open { max-height: 340px; opacity: 1; margin-bottom: 6px; }
@@ -376,10 +357,8 @@
 
   .key.op { background: var(--op); color: var(--accent); font-weight: 500; }
   .key.op:hover { background: var(--btn-hover); }
-
   .key.fn { background: var(--op); color: var(--accent-2); font-size: 1.15rem; }
   .key.fn:hover { background: var(--btn-hover); }
-
   .key.eq {
     background: linear-gradient(135deg, var(--accent), #ff6b00);
     color: #fff; font-weight: 600;
@@ -406,15 +385,12 @@
   body.light .ripple { background: rgba(0,0,0,.15); }
   @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
-  /* ═══ HISTORY — FULL SCREEN WITH BACK ═══ */
+  /* ═══ HISTORY — FULL SCREEN + STICKY HEADER ═══ */
   .history {
     position: fixed;
     inset: 0;
     background: var(--card);
     border-radius: 0;
-    padding: 16px;
-    padding-top: calc(16px + env(safe-area-inset-top));
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     transform: translateY(100%);
@@ -424,17 +400,51 @@
     z-index: 100;
   }
   .history.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-  .history-list { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  }
+  .panel-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+    margin-right: 42px;
+  }
+
+  .history-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
   .history-item {
-    padding: 12px 8px;
+    padding: 12px 10px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: .2s;
-    border-radius: 8px;
+    border-radius: 10px;
   }
-  .history-item:hover { background: var(--btn); padding-left: 12px; }
-  .history-item .h-exp { font-size: .8rem; color: var(--muted); word-break: break-all; font-family: "SF Mono", Menlo, monospace; }
-  .history-item .h-res { font-size: 1.25rem; font-weight: 400; margin-top: 4px; color: var(--accent-2); font-family: "SF Mono", Menlo, monospace; }
+  .history-item:active { background: var(--btn); }
+  .history-item .h-exp {
+    font-size: .8rem; color: var(--muted);
+    word-break: break-all;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .history-item .h-res {
+    font-size: 1.25rem; font-weight: 400; margin-top: 4px;
+    color: var(--accent-2);
+    font-family: "SF Mono", Menlo, monospace;
+  }
   .empty { color: var(--muted); font-size: .9rem; text-align: center; margin-top: 60px; }
 
   /* ═══ GRAPH ═══ */
@@ -734,7 +744,6 @@
     .key.sci { height: 36px; font-size: .78rem; }
     canvas#graphCanvas { height: 220px; }
   }
-
   @media (max-height: 680px) {
     .result { font-size: 1.9rem; }
     .display { min-height: 70px; padding: 8px 6px 6px; }
@@ -753,7 +762,7 @@
   <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
-<div class="app" id="app">
+<div class="app">
 
   <div class="tabs">
     <button class="active" data-tab="calc"><span class="ico">🧮</span>Calc</button>
@@ -790,17 +799,14 @@
         <button class="key sci" data-func="cos">cos</button>
         <button class="key sci" data-func="tan">tan</button>
         <button class="key sci" data-const="π">π</button>
-
         <button class="key sci" data-func="asin">sin<sup>−1</sup></button>
         <button class="key sci" data-func="acos">cos<sup>−1</sup></button>
         <button class="key sci" data-func="atan">tan<sup>−1</sup></button>
         <button class="key sci" data-const="e">e</button>
-
         <button class="key sci" data-func="log">log</button>
         <button class="key sci" data-func="ln">ln</button>
         <button class="key sci" data-func="√">√</button>
         <button class="key sci" data-action="sq">x²</button>
-
         <button class="key sci" data-action="pow">xʸ</button>
         <button class="key sci" data-action="inv">1/x</button>
         <button class="key sci" data-func="abs">|x|</button>
@@ -813,34 +819,30 @@
       <button class="key fn" data-action="paren">( )</button>
       <button class="key fn" data-action="percent">%</button>
       <button class="key op" data-op="÷">÷</button>
-
       <button class="key" data-num="7">7</button>
       <button class="key" data-num="8">8</button>
       <button class="key" data-num="9">9</button>
       <button class="key op" data-op="×">×</button>
-
       <button class="key" data-num="4">4</button>
       <button class="key" data-num="5">5</button>
       <button class="key" data-num="6">6</button>
       <button class="key op" data-op="−">−</button>
-
       <button class="key" data-num="1">1</button>
       <button class="key" data-num="2">2</button>
       <button class="key" data-num="3">3</button>
       <button class="key op" data-op="+">+</button>
-
       <button class="key fn" data-action="sign">+/−</button>
       <button class="key" data-num="0">0</button>
       <button class="key" data-num=".">.</button>
       <button class="key eq" data-action="equals">=</button>
     </div>
 
-    <!-- ═══ HISTORY PANEL WITH BACK BUTTON ═══ -->
+    <!-- ═══ HISTORY PANEL WITH STICKY BACK BUTTON ═══ -->
     <div class="history" id="historyPanel">
       <div class="panel-header">
         <button class="back-btn" id="closeHistory" title="Back">←</button>
         <h2>🕘 ታሪክ</h2>
-        <button class="icon-btn" id="clearHistory" title="Clear all">🗑</button>
+        <button class="icon-btn" id="clearHistory" title="Clear all" style="margin-left:auto">🗑</button>
       </div>
       <div class="history-list" id="historyList">
         <p class="empty">እስካሁን ምንም ስሌት የለም</p>
@@ -938,7 +940,7 @@
 
     <div class="solve-section">
       <h3>📈 Statistics</h3>
-      <textarea id="statsInput" class="stats-input" placeholder="Enter numbers separated by comma or space">10, 20, 30, 40, 50</textarea>
+      <textarea id="statsInput" class="stats-input" placeholder="Numbers separated by comma">10, 20, 30, 40, 50</textarea>
       <button class="solve-btn" data-solve="stats">Calculate</button>
       <div class="stats-grid">
         <div class="stat-box"><div class="lbl">Count</div><div class="val" id="statCount">—</div></div>
@@ -969,24 +971,12 @@
 (function () {
   "use strict";
 
-  /* ═══ SERVICE WORKER ═══ */
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js")
-        .then((r) => console.log("✅ SW:", r.scope))
-        .catch((e) => console.warn("⚠️ SW failed:", e));
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
     });
   }
 
-  /* ═══ INSTALL PROMPT ═══ */
-  let deferredPrompt = null;
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-  });
-  window.addEventListener("appinstalled", () => { deferredPrompt = null; });
-
-  /* ═══ SPLASH ═══ */
   window.addEventListener("load", () => {
     const splash = document.getElementById("splash");
     if (!splash) return;
@@ -994,7 +984,6 @@
     setTimeout(() => splash.remove(), 1500);
   });
 
-  /* ═══ SOUND + HAPTIC ═══ */
   const soundOn = { v: localStorage.getItem("calc_sound") !== "off" };
   let audioCtx = null;
 
@@ -1010,34 +999,26 @@
       else { o.frequency.value = 620; o.type = "sine"; }
       g.gain.setValueAtTime(0.06, audioCtx.currentTime);
       g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-      o.start();
-      o.stop(audioCtx.currentTime + 0.08);
+      o.start(); o.stop(audioCtx.currentTime + 0.08);
     } catch {}
   }
+  function haptic(ms) { if (navigator.vibrate) navigator.vibrate(ms || 8); }
 
-  function haptic(ms) {
-    if (navigator.vibrate) navigator.vibrate(ms || 8);
-  }
-
-  /* ═══ TABS ═══ */
   document.querySelectorAll(".tabs button").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
       document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
-      playClick("click"); haptic(6);
+      playClick(); haptic(6);
       window.scrollTo({ top: 0, behavior: "smooth" });
       if (btn.dataset.tab === "graph") setTimeout(plotGraph, 50);
     });
   });
 
-  /* ═══ THEME + SOUND ═══ */
   const themeBtn = document.getElementById("themeBtn");
   const soundBtn = document.getElementById("soundBtn");
-  const savedTheme = localStorage.getItem("calc_theme") || "dark";
-
-  if (savedTheme === "light") {
+  if ((localStorage.getItem("calc_theme") || "dark") === "light") {
     document.body.classList.add("light");
     themeBtn.textContent = "☀️";
   }
@@ -1049,7 +1030,6 @@
     playClick(); haptic(8);
     setTimeout(plotGraph, 50);
   });
-
   soundBtn.textContent = soundOn.v ? "🔊" : "🔇";
   soundBtn.addEventListener("click", () => {
     soundOn.v = !soundOn.v;
@@ -1059,7 +1039,6 @@
     haptic(8);
   });
 
-  /* ═══ CORE: Tokenizer / RPN / Eval ═══ */
   const FUNCS = ["asin","acos","atan","sin","cos","tan","log","ln","√","abs"];
 
   function tokenize(s) {
@@ -1080,10 +1059,7 @@
       if (c === "x" || c === "X") { tokens.push({ t: "var", v: "x" }); i++; continue; }
       let matched = false;
       for (const f of FUNCS) {
-        if (s.startsWith(f, i)) {
-          tokens.push({ t: "func", v: f });
-          i += f.length; matched = true; break;
-        }
+        if (s.startsWith(f, i)) { tokens.push({ t: "func", v: f }); i += f.length; matched = true; break; }
       }
       if (matched) continue;
       if ("+-−×÷*/^".includes(c)) {
@@ -1091,8 +1067,7 @@
         if (c === "-") op = "−";
         if (c === "*") op = "×";
         if (c === "/") op = "÷";
-        tokens.push({ t: "op", v: op });
-        i++; continue;
+        tokens.push({ t: "op", v: op }); i++; continue;
       }
       if (c === "(") { tokens.push({ t: "(" }); i++; continue; }
       if (c === ")") { tokens.push({ t: ")" }); i++; continue; }
@@ -1107,8 +1082,7 @@
   const rightAssoc = { "^": true, "u-": true };
 
   function toRPN(tokens) {
-    const out = [];
-    const ops = [];
+    const out = [], ops = [];
     let prev = null;
     for (const tk of tokens) {
       if (tk.t === "num" || tk.t === "var") out.push(tk);
@@ -1172,7 +1146,6 @@
     }
     throw new Error("Unknown func");
   }
-
   function applyOp(op, a, b) {
     switch (op) {
       case "+": return a + b;
@@ -1182,7 +1155,6 @@
       case "^": return Math.pow(a, b);
     }
   }
-
   function evalRPN(rpn, scope) {
     const st = [];
     for (const tk of rpn) {
@@ -1213,28 +1185,22 @@
     if (!isFinite(r) || isNaN(r)) throw new Error("Math error");
     return r;
   }
-
   function evaluate(exprStr, scope) {
-    const tokens = tokenize(exprStr);
-    const rpn = toRPN(tokens);
-    return evalRPN(rpn, scope);
+    return evalRPN(toRPN(tokenize(exprStr)), scope);
   }
-
   function formatNumber(n) {
     if (Number.isInteger(n) && Math.abs(n) < 1e15) return n.toString();
-    const s = parseFloat(n.toPrecision(12));
-    return s.toString();
+    return parseFloat(n.toPrecision(12)).toString();
   }
 
-  /* ═══ CALCULATOR UI ═══ */
-  const exprEl    = document.getElementById("expression");
-  const resEl     = document.getElementById("result");
-  const keysEl    = document.getElementById("keys");
-  const sciPanel  = document.getElementById("sciPanel");
+  const exprEl = document.getElementById("expression");
+  const resEl = document.getElementById("result");
+  const keysEl = document.getElementById("keys");
+  const sciPanel = document.getElementById("sciPanel");
   const sciToggle = document.getElementById("sciToggle");
   const histPanel = document.getElementById("historyPanel");
-  const histList  = document.getElementById("historyList");
-  const angleBtn  = document.getElementById("angleBtn");
+  const histList = document.getElementById("historyList");
+  const angleBtn = document.getElementById("angleBtn");
 
   let expr = "";
   let history = loadHistory();
@@ -1244,23 +1210,19 @@
       .replace(/\+/g, " + ").replace(/−/g, " − ")
       .replace(/\^/g, " ^ ").replace(/\s+/g, " ").trim();
   }
-
   function autoClose(s) {
-    const opens  = (s.match(/\(/g) || []).length;
-    const closes = (s.match(/\)/g) || []).length;
-    return s + ")".repeat(Math.max(0, opens - closes));
+    const o = (s.match(/\(/g) || []).length;
+    const c = (s.match(/\)/g) || []).length;
+    return s + ")".repeat(Math.max(0, o - c));
   }
-
   function updateDisplay() {
     exprEl.textContent = prettify(expr);
     if (!expr) { resEl.textContent = "0"; resEl.classList.remove("error"); return; }
     try {
-      const val = evaluate(autoClose(expr));
-      resEl.textContent = formatNumber(val);
+      resEl.textContent = formatNumber(evaluate(autoClose(expr)));
       resEl.classList.remove("error");
     } catch {}
   }
-
   function addNumber(n) {
     if (expr.length > 80) return;
     const last = expr.split(/[+\-−×÷()^!%]/).pop();
@@ -1288,10 +1250,10 @@
     if (!expr) resEl.textContent = "0";
   }
   function toggleParen() {
-    const opens  = (expr.match(/\(/g) || []).length;
-    const closes = (expr.match(/\)/g) || []).length;
+    const o = (expr.match(/\(/g) || []).length;
+    const c = (expr.match(/\)/g) || []).length;
     const last = expr.slice(-1);
-    if (opens > closes && /[0-9)%!πe]/.test(last)) expr += ")";
+    if (o > c && /[0-9)%!πe]/.test(last)) expr += ")";
     else if (!expr || "+−×÷^(".includes(last)) expr += "(";
     else if (/[0-9πe)%!]/.test(last)) expr += "×(";
     else expr += "(";
@@ -1325,7 +1287,6 @@
       setTimeout(clearAll, 1200);
     }
   }
-
   function loadHistory() {
     try { return JSON.parse(localStorage.getItem("calc_pro_history") || "[]"); }
     catch { return []; }
@@ -1361,16 +1322,15 @@
     const action = btn.dataset.action;
     if (action === "equals") playClick("equals");
     else if (action === "clear") playClick("clear");
-    else playClick("click");
+    else playClick();
     haptic(action === "equals" ? 15 : 8);
-
     const r = document.createElement("span");
     r.className = "ripple";
     const rect = btn.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height);
     r.style.width = r.style.height = size + "px";
     r.style.left = (ev.clientX - rect.left - size / 2) + "px";
-    r.style.top  = (ev.clientY - rect.top  - size / 2) + "px";
+    r.style.top = (ev.clientY - rect.top - size / 2) + "px";
     btn.appendChild(r);
     setTimeout(() => r.remove(), 500);
   }
@@ -1379,7 +1339,7 @@
     const btn = ev.target.closest("button.key"); if (!btn) return;
     makeRipple(btn, ev);
     if (btn.dataset.num !== undefined) return addNumber(btn.dataset.num);
-    if (btn.dataset.op)  return addOperator(btn.dataset.op);
+    if (btn.dataset.op) return addOperator(btn.dataset.op);
     switch (btn.dataset.action) {
       case "clear": return clearAll();
       case "paren": return toggleParen();
@@ -1392,13 +1352,13 @@
   sciPanel.addEventListener("click", (ev) => {
     const btn = ev.target.closest("button.key"); if (!btn) return;
     makeRipple(btn, ev);
-    if (btn.dataset.func)  return addFunction(btn.dataset.func);
+    if (btn.dataset.func) return addFunction(btn.dataset.func);
     if (btn.dataset.const) return addConst(btn.dataset.const);
     switch (btn.dataset.action) {
-      case "sq":   expr += "^2"; updateDisplay(); break;
-      case "pow":  expr += "^";  updateDisplay(); break;
-      case "inv":  expr += "1÷("; updateDisplay(); break;
-      case "fact": expr += "!";  updateDisplay(); break;
+      case "sq": expr += "^2"; updateDisplay(); break;
+      case "pow": expr += "^"; updateDisplay(); break;
+      case "inv": expr += "1÷("; updateDisplay(); break;
+      case "fact": expr += "!"; updateDisplay(); break;
     }
   });
 
@@ -1425,40 +1385,40 @@
     if (!document.getElementById("tab-calc").classList.contains("active")) return;
     if (document.activeElement && ["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)) return;
     const k = e.key;
-    if (/^[0-9.]$/.test(k))          { addNumber(k); playClick(); haptic(4); e.preventDefault(); }
-    else if (k === "+")              { addOperator("+"); playClick(); e.preventDefault(); }
-    else if (k === "-")              { addOperator("−"); playClick(); e.preventDefault(); }
-    else if (k === "*")              { addOperator("×"); playClick(); e.preventDefault(); }
-    else if (k === "/")              { addOperator("÷"); playClick(); e.preventDefault(); }
-    else if (k === "^")              { addOperator("^"); playClick(); e.preventDefault(); }
-    else if (k === "%")              { percent(); playClick(); e.preventDefault(); }
-    else if (k === "!")              { expr += "!"; updateDisplay(); playClick(); e.preventDefault(); }
+    if (/^[0-9.]$/.test(k)) { addNumber(k); playClick(); e.preventDefault(); }
+    else if (k === "+") { addOperator("+"); playClick(); e.preventDefault(); }
+    else if (k === "-") { addOperator("−"); playClick(); e.preventDefault(); }
+    else if (k === "*") { addOperator("×"); playClick(); e.preventDefault(); }
+    else if (k === "/") { addOperator("÷"); playClick(); e.preventDefault(); }
+    else if (k === "^") { addOperator("^"); playClick(); e.preventDefault(); }
+    else if (k === "%") { percent(); playClick(); e.preventDefault(); }
+    else if (k === "!") { expr += "!"; updateDisplay(); playClick(); e.preventDefault(); }
     else if (k === "(" || k === ")") { toggleParen(); playClick(); e.preventDefault(); }
     else if (k === "Enter" || k === "=") { doEquals(); playClick("equals"); haptic(15); e.preventDefault(); }
-    else if (k === "Backspace")      { backspace(); playClick(); e.preventDefault(); }
-    else if (k === "Escape")         { clearAll(); playClick("clear"); e.preventDefault(); }
+    else if (k === "Backspace") { backspace(); playClick(); e.preventDefault(); }
+    else if (k === "Escape") { clearAll(); playClick("clear"); e.preventDefault(); }
   });
 
   document.getElementById("historyBtn").onclick = () => {
-    renderHistory(); histPanel.classList.add("open"); playClick(); haptic(8);
+    renderHistory();
+    histPanel.classList.add("open");
+    playClick(); haptic(8);
     try { history.pushState({ panel: "history" }, ""); } catch {}
   };
   document.getElementById("closeHistory").onclick = () => {
-    histPanel.classList.remove("open"); playClick(); haptic(6);
+    histPanel.classList.remove("open");
+    playClick(); haptic(6);
   };
   document.getElementById("clearHistory").onclick = () => {
-    history = []; saveHistory(); renderHistory(); playClick("clear"); haptic(12);
+    history = []; saveHistory(); renderHistory();
+    playClick("clear"); haptic(12);
   };
 
-  /* ═══ ANDROID BACK BUTTON ═══ */
   window.addEventListener("popstate", () => {
-    if (histPanel.classList.contains("open")) {
-      histPanel.classList.remove("open");
-    }
+    if (histPanel.classList.contains("open")) histPanel.classList.remove("open");
   });
 
   resEl.style.cursor = "pointer";
-  resEl.title = "Tap to copy";
   resEl.onclick = () => {
     const txt = resEl.textContent;
     if (txt === "0" || txt === "Error") return;
@@ -1491,14 +1451,12 @@
     const xmax = parseFloat(document.getElementById("xmax").value) || 10;
     const ymin = parseFloat(document.getElementById("ymin").value) || -5;
     const ymax = parseFloat(document.getElementById("ymax").value) || 5;
-
     ctx.clearRect(0, 0, W, H);
     const textColor = getCSS("--muted") || "#8e8e93";
     const gridColor = document.body.classList.contains("light") ? "rgba(0,0,0,.06)" : "rgba(255,255,255,.06)";
     const axisColor = document.body.classList.contains("light") ? "rgba(0,0,0,.3)" : "rgba(255,255,255,.3)";
     const xToPx = x => ((x - xmin) / (xmax - xmin)) * W;
     const yToPx = y => H - ((y - ymin) / (ymax - ymin)) * H;
-
     ctx.strokeStyle = gridColor; ctx.lineWidth = 1;
     const stepX = niceStep((xmax - xmin) / 10);
     const stepY = niceStep((ymax - ymin) / 8);
@@ -1511,7 +1469,6 @@
     ctx.strokeStyle = axisColor; ctx.lineWidth = 1.5;
     if (ymin <= 0 && ymax >= 0) { const py = yToPx(0); ctx.beginPath(); ctx.moveTo(0, py); ctx.lineTo(W, py); ctx.stroke(); }
     if (xmin <= 0 && xmax >= 0) { const px = xToPx(0); ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, H); ctx.stroke(); }
-
     ctx.fillStyle = textColor;
     ctx.font = "10px system-ui, sans-serif";
     ctx.textAlign = "center";
@@ -1520,7 +1477,6 @@
       const px = xToPx(x);
       ctx.fillText(fmtShort(x), px, Math.min(H - 4, yToPx(0) + 12));
     }
-
     const fnStr = graphFnEl.value.trim();
     if (!fnStr) return;
     ctx.strokeStyle = getCSS("--accent") || "#ff9f0a";
@@ -1543,7 +1499,6 @@
     ctx.textAlign = "left";
     ctx.fillText("f(x) = " + fnStr, 8, 16);
   }
-
   function niceStep(raw) {
     const pow = Math.pow(10, Math.floor(Math.log10(raw)));
     const n = raw / pow;
@@ -1556,32 +1511,22 @@
     return Number.isInteger(n) ? n.toString() : n.toFixed(1);
   }
 
-  document.getElementById("plotBtn").addEventListener("click", () => {
-    plotGraph(); playClick("equals"); haptic(12);
-  });
+  document.getElementById("plotBtn").addEventListener("click", () => { plotGraph(); playClick("equals"); haptic(12); });
   graphFnEl.addEventListener("keydown", e => { if (e.key === "Enter") plotGraph(); });
-  ["xmin","xmax","ymin","ymax"].forEach(id => {
-    document.getElementById(id).addEventListener("change", plotGraph);
-  });
+  ["xmin","xmax","ymin","ymax"].forEach(id => document.getElementById(id).addEventListener("change", plotGraph));
   document.querySelectorAll("[data-graph]").forEach(btn => {
     btn.addEventListener("click", () => {
       graphFnEl.value = btn.dataset.graph;
       const fn = btn.dataset.graph;
       if (fn.includes("sin") || fn.includes("cos")) {
-        document.getElementById("xmin").value = -10;
-        document.getElementById("xmax").value = 10;
-        document.getElementById("ymin").value = -2;
-        document.getElementById("ymax").value = 2;
+        document.getElementById("xmin").value = -10; document.getElementById("xmax").value = 10;
+        document.getElementById("ymin").value = -2; document.getElementById("ymax").value = 2;
       } else if (fn === "1/x" || fn === "log(x)" || fn === "√(x)") {
-        document.getElementById("xmin").value = -1;
-        document.getElementById("xmax").value = 10;
-        document.getElementById("ymin").value = -5;
-        document.getElementById("ymax").value = 5;
+        document.getElementById("xmin").value = -1; document.getElementById("xmax").value = 10;
+        document.getElementById("ymin").value = -5; document.getElementById("ymax").value = 5;
       } else {
-        document.getElementById("xmin").value = -5;
-        document.getElementById("xmax").value = 5;
-        document.getElementById("ymin").value = -10;
-        document.getElementById("ymax").value = 10;
+        document.getElementById("xmin").value = -5; document.getElementById("xmax").value = 5;
+        document.getElementById("ymin").value = -10; document.getElementById("ymax").value = 10;
       }
       plotGraph(); playClick(); haptic(6);
     });
@@ -1601,15 +1546,13 @@
   let currentCat = "length";
 
   function populateUnits() {
-    const fromSel = document.getElementById("unitFrom");
-    const toSel = document.getElementById("unitTo");
+    const f = document.getElementById("unitFrom"), t = document.getElementById("unitTo");
     const units = Object.keys(UNIT_DATA[currentCat]);
-    fromSel.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join("");
-    toSel.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join("");
-    if (units.length > 1) toSel.selectedIndex = 1;
+    f.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join("");
+    t.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join("");
+    if (units.length > 1) t.selectedIndex = 1;
     convert();
   }
-
   function convert() {
     const from = document.getElementById("unitFrom").value;
     const to = document.getElementById("unitTo").value;
@@ -1624,7 +1567,6 @@
     }
     outEl.value = parseFloat(result.toPrecision(10));
   }
-
   function convertTemp(v, from, to) {
     let c;
     if (from === "°C") c = v;
@@ -1634,7 +1576,6 @@
     if (to === "°F") return c * 9/5 + 32;
     return c + 273.15;
   }
-
   document.getElementById("convCat").addEventListener("click", (e) => {
     const btn = e.target.closest("button"); if (!btn) return;
     document.querySelectorAll("#convCat button").forEach(b => b.classList.remove("active"));
@@ -1660,7 +1601,7 @@
     else if (/^0b/i.test(raw)) n = parseInt(raw, 2);
     else if (/^0o/i.test(raw)) n = parseInt(raw, 8);
     else n = parseFloat(raw);
-    if (!isFinite(n) || n < 0) { n = 0; }
+    if (!isFinite(n) || n < 0) n = 0;
     const intN = Math.floor(n);
     document.getElementById("baseDec").textContent = intN.toString(10);
     document.getElementById("baseBin").textContent = intN.toString(2);
@@ -1680,7 +1621,6 @@
       playClick("equals"); haptic(12);
     });
   });
-
   function solveLinear() {
     const a = parseFloat(document.getElementById("linA").value);
     const b = parseFloat(document.getElementById("linB").value);
@@ -1689,7 +1629,6 @@
     if (a === 0) { out.textContent = b === 0 ? "∞ Infinite solutions" : "∅ No solution"; return; }
     out.textContent = `x = ${parseFloat((-b / a).toPrecision(10))}`;
   }
-
   function solveQuad() {
     const a = parseFloat(document.getElementById("qA").value);
     const b = parseFloat(document.getElementById("qB").value);
@@ -1713,7 +1652,6 @@
       out.innerHTML = `x₁ = ${reS} + ${imS}i<br>x₂ = ${reS} − ${imS}i`;
     }
   }
-
   function solveStats() {
     const raw = document.getElementById("statsInput").value;
     const nums = raw.split(/[\s,;]+/).map(parseFloat).filter(n => !isNaN(n));
@@ -1738,7 +1676,6 @@
     document.getElementById("statRange").textContent = f(max - min);
     document.getElementById("statSd").textContent = f(Math.sqrt(variance));
   }
-
   function solveDate() {
     const a = document.getElementById("dateA").value;
     const b = document.getElementById("dateB").value;
@@ -1754,11 +1691,9 @@
   updateDisplay();
   populateUnits();
   updateBases();
-
   const today = new Date().toISOString().split("T")[0];
   document.getElementById("dateA").value = today;
   document.getElementById("dateB").value = new Date(Date.now() - 7 * 86400000).toISOString().split("T")[0];
-
   setTimeout(plotGraph, 100);
 })();
 </script>
