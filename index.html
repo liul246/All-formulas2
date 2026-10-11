@@ -8,8 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <title>Calc Pro</title>
-<link rel="icon" type="image/svg+xml" href="./icon.svg">
-<link rel="apple-touch-icon" href="./icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <link rel="manifest" href="./manifest.json">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -70,36 +71,30 @@
     user-select: none;
   }
 
-  /* ═══ SPLASH ═══ */
+  /* ═══ SPLASH — LOADING BAR ONLY ═══ */
   .splash {
     position: fixed; inset: 0;
     background: #0a0a0f;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 16px; z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
     transition: opacity .4s;
   }
   .splash.hide { opacity: 0; visibility: hidden; }
-  .splash-logo {
-    font-size: 4.5rem;
-    animation: pop .6s cubic-bezier(.34,1.56,.64,1);
-    filter: drop-shadow(0 8px 24px rgba(255,159,10,.5));
-  }
-  .splash-name {
-    font-size: .95rem; font-weight: 700; letter-spacing: 5px;
-    color: #fff; animation: fade .5s .25s backwards;
-  }
   .splash-bar {
-    width: 140px; height: 3px; background: rgba(255,255,255,.08);
-    border-radius: 99px; overflow: hidden; margin-top: 8px;
+    width: 200px;
+    height: 4px;
+    background: rgba(255,255,255,.08);
+    border-radius: 99px;
+    overflow: hidden;
   }
   .splash-fill {
     height: 100%; width: 0;
     background: linear-gradient(90deg, #0a84ff, #ff9f0a);
-    border-radius: 99px; animation: load 1s .2s forwards;
+    border-radius: 99px;
+    animation: load 1s .2s forwards;
   }
-  @keyframes pop { 0% { transform: scale(.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @keyframes load { to { width: 100%; } }
 
   /* ═══ APP — LOCKED ═══ */
@@ -145,7 +140,7 @@
   }
   .icon-btn:active { background: var(--btn); color: var(--text); transform: scale(.92); }
 
-  /* ═══ TABS — VERY TOP ═══ */
+  /* ═══ TABS — TOP ═══ */
   .tabs {
     display: flex; gap: 2px;
     background: var(--btn); padding: 2px;
@@ -760,8 +755,6 @@
 <body>
 
 <div class="splash" id="splash">
-  <div class="splash-logo">🧮</div>
-  <div class="splash-name">CALC PRO</div>
   <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
@@ -1050,7 +1043,7 @@
     const s = document.getElementById("splash");
     if (!s) return;
     setTimeout(() => s.classList.add("hide"), 1000);
-    setTimeout(() => s.remove(), 1500);
+    setTimeout(() => s.remove(), 1400);
   });
 
   const soundOn = { v: localStorage.getItem("calc_sound") !== "off" };
