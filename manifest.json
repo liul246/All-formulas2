@@ -1,52 +1,62 @@
 {
-  "id": "./",
+  "id": "/",
   "name": "Calculator Pro Max",
   "short_name": "Calc Pro",
   "description": "Advanced scientific calculator with graph, converter, solver, constants and matrix",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "tabbed",
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui",
-    "fullscreen"
-  ],
+  "display_override": ["tabbed", "standalone"],
   "orientation": "portrait-primary",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
   "lang": "en",
   "dir": "ltr",
-  "categories": ["utilities", "productivity", "education", "tools"],
+  "categories": ["utilities", "productivity", "education"],
   "iarc_rating_id": "e5c5e5a5-5e5e-5e5e-5e5e-5e5e5e5e5e5e",
   "prefer_related_applications": false,
-  "related_applications": [],
 
   "icons": [
-    { "src": "./icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "./icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230a84ff'/%3E%3Cstop offset='100%25' stop-color='%23ff9f0a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='110' fill='%230a0a0f'/%3E%3Ccircle cx='256' cy='256' r='215' fill='none' stroke='url(%23g)' stroke-width='9'/%3E%3Ctext x='256' y='350' font-size='260' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' width='192' height='192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230a84ff'/%3E%3Cstop offset='100%25' stop-color='%23ff9f0a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='42' fill='%230a0a0f'/%3E%3Ccircle cx='96' cy='96' r='80' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ctext x='96' y='132' font-size='100' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230a84ff'/%3E%3Cstop offset='100%25' stop-color='%23ff9f0a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='%230a0a0f'/%3E%3Ccircle cx='256' cy='256' r='165' fill='none' stroke='url(%23g)' stroke-width='7'/%3E%3Ctext x='256' y='330' font-size='200' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' width='192' height='192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230a84ff'/%3E%3Cstop offset='100%25' stop-color='%23ff9f0a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' fill='%230a0a0f'/%3E%3Ccircle cx='96' cy='96' r='62' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Ctext x='96' y='124' font-size='75' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
   ],
 
   "screenshots": [
     {
-      "src": "./icons/screenshot-mobile.png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 844' width='390' height='844'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231a1a2e'/%3E%3Cstop offset='100%25' stop-color='%230a0a0f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='390' height='844' fill='url(%23bg)'/%3E%3Ctext x='195' y='440' font-size='130' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3Ctext x='195' y='520' font-size='26' text-anchor='middle' fill='%23ffffff' font-weight='700' font-family='sans-serif'%3ECalc Pro Max%3C/text%3E%3Ctext x='195' y='555' font-size='15' text-anchor='middle' fill='%238e8e93' font-family='sans-serif'%3EScientific Calculator%3C/text%3E%3C/svg%3E",
       "sizes": "390x844",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "form_factor": "narrow",
-      "label": "Scientific calculator on mobile"
+      "label": "Mobile calculator"
     },
     {
-      "src": "./icons/screenshot-desktop.png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 800' width='1280' height='800'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231a1a2e'/%3E%3Cstop offset='100%25' stop-color='%230a0a0f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1280' height='800' fill='url(%23bg)'/%3E%3Ctext x='640' y='430' font-size='220' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3Ctext x='640' y='520' font-size='44' text-anchor='middle' fill='%23ffffff' font-weight='700' font-family='sans-serif'%3ECalc Pro Max%3C/text%3E%3Ctext x='640' y='565' font-size='20' text-anchor='middle' fill='%238e8e93' font-family='sans-serif'%3EAdvanced Scientific Calculator%3C/text%3E%3C/svg%3E",
       "sizes": "1280x800",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "form_factor": "wide",
-      "label": "Calculator on desktop"
+      "label": "Desktop calculator"
     }
   ],
 
@@ -56,40 +66,71 @@
       "short_name": "Calc",
       "description": "Open scientific calculator",
       "url": "./index.html?tab=calc",
-      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230a0a0f'/%3E%3Ctext x='48' y='70' font-size='58' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
     },
     {
       "name": "Graph Plotter",
       "short_name": "Graph",
       "description": "Plot functions",
       "url": "./index.html?tab=graph",
-      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230a0a0f'/%3E%3Ctext x='48' y='70' font-size='58' text-anchor='middle' font-family='serif'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
     },
     {
       "name": "Unit Converter",
-      "short_name": "Convert",
+      "short_name": "Units",
       "description": "Convert units",
       "url": "./index.html?tab=convert",
-      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230a0a0f'/%3E%3Ctext x='48' y='70' font-size='58' text-anchor='middle' font-family='serif'%3E%F0%9F%94%84%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
     },
     {
       "name": "Equation Solver",
       "short_name": "Solve",
       "description": "Solve equations",
       "url": "./index.html?tab=solve",
-      "icons": [{ "src": "./icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230a0a0f'/%3E%3Ctext x='48' y='70' font-size='58' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
     }
   ],
 
   "protocol_handlers": [
-    { "protocol": "web+calc", "url": "./index.html?expr=%s" }
+    {
+      "protocol": "web+calc",
+      "url": "./index.html?expr=%s"
+    }
   ],
 
   "share_target": {
     "action": "./index.html",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
-    "params": { "title": "title", "text": "text", "url": "url" }
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
   },
 
   "file_handlers": [
@@ -106,13 +147,14 @@
     "client_mode": ["navigate-existing", "auto"]
   },
 
-  "edge_side_panel": { "preferred_width": 400 },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
 
   "tabbed": {
     "home_tab": {
       "scope_patterns": [
-        { "pathname": "/index.html" },
-        { "pathname": "/index.html", "search": "?tab=calc" }
+        { "pathname": "/index.html" }
       ]
     },
     "new_tab_button": {
@@ -121,9 +163,72 @@
     }
   },
 
-  "note_taking": {
-    "new_note_url": "./index.html?tab=calc"
+  "tab_strip": {
+    "home_tab": {
+      "scope_patterns": [
+        { "pathname": "/index.html" }
+      ]
+    },
+    "new_tab_button": {
+      "url": "./index.html?tab=calc",
+      "label": "New Tab"
+    }
   },
 
-  "scope_extensions": []
+  "widgets": [
+    {
+      "name": "Quick Calculator",
+      "short_name": "Calc",
+      "description": "Fast access to basic calculator",
+      "tag": "quick-calc",
+      "template": "2x2",
+      "ms_ac_template": "./index.html?widget=quick",
+      "data": "./index.html?widget=quick",
+      "type": "application/xml",
+      "auth": false,
+      "update": 86400,
+      "screenshots": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' width='400' height='200'%3E%3Crect width='400' height='200' rx='20' fill='%230a0a0f'/%3E%3Ctext x='200' y='120' font-size='60' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+          "sizes": "400x200",
+          "type": "image/svg+xml",
+          "label": "Quick calc"
+        }
+      ],
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230a0a0f'/%3E%3Ctext x='48' y='70' font-size='58' text-anchor='middle' font-family='serif'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Recent Calculations",
+      "short_name": "History",
+      "description": "View recent calculations",
+      "tag": "history-widget",
+      "template": "4x2",
+      "ms_ac_template": "./index.html?widget=history",
+      "data": "./index.html?widget=history",
+      "type": "application/xml",
+      "auth": false,
+      "update": 3600,
+      "screenshots": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' width='400' height='200'%3E%3Crect width='400' height='200' rx='20' fill='%230a0a0f'/%3E%3Ctext x='200' y='120' font-size='60' text-anchor='middle' font-family='serif'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E",
+          "sizes": "400x200",
+          "type": "image/svg+xml",
+          "label": "History"
+        }
+      ],
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230a0a0f'/%3E%3Ctext x='48' y='70' font-size='58' text-anchor='middle' font-family='serif'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
 }
