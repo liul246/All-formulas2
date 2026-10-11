@@ -1,5 +1,5 @@
 /* Calc Pro Max — Service Worker v12 */
-const CACHE = "calc-promax-v12";
+const CACHE = "calc-promax-v15";
 const ASSETS = [
   "./",
   "./index.html",
