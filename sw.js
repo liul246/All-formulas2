@@ -1,4 +1,4 @@
-const CACHE = "calc-promax-v3";
+const CACHE = "calc-promax-v8";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 
 /* ═══ INSTALL ═══ */
