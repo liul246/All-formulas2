@@ -7,10 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Calc Pro">
+<meta name="mobile-web-app-capable" content="yes">
 <title>Calculator Pro Max</title>
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<link rel="apple-touch-icon" href="./icon.svg">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%230a0a0f'/><text x='256' y='340' font-size='260' text-anchor='middle'>🧮</text></svg>">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
@@ -47,23 +48,23 @@
     --op: #e8ebf2;
     --green: #34c759;
     --red: #ff3b30;
-    --purple: #af52de;
     --border: rgba(0,0,0,.08);
     --input-bg: #ffffff;
   }
 
+  /* ═══ FULL SCREEN — NO SCROLL ═══ */
   html, body {
     margin: 0 !important;
     padding: 0 !important;
     width: 100%;
-    min-height: 100%;
-    background: var(--bg);
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg) !important;
     overscroll-behavior: none;
   }
   body {
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-    overflow-x: hidden;
     transition: background .3s, color .3s;
   }
 
@@ -99,22 +100,27 @@
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @keyframes load { to { width: 100%; } }
 
-  /* ═══ APP ═══ */
+  /* ═══ APP — FIXED FULL SCREEN ═══ */
   .app {
     width: 100%;
-    min-height: 100vh;
+    max-width: 100%;
+    height: 100dvh;
     min-height: 100dvh;
+    max-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     background: var(--bg);
-    padding: 12px;
-    padding-top: calc(12px + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 20px);
+    padding: 10px;
+    padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   }
 
   /* ═══ HEADER ═══ */
   .app-header {
     display: flex; align-items: center; gap: 10px;
-    padding: 6px 0 10px;
-    margin-bottom: 6px;
+    padding: 4px 0 8px;
+    flex-shrink: 0;
   }
   .back-btn {
     background: var(--accent-2); color: #fff;
@@ -134,8 +140,7 @@
     font-size: 1.05rem; cursor: pointer; padding: 5px 8px;
     border-radius: 8px; font-family: inherit;
     display: inline-flex; align-items: center; justify-content: center;
-    min-width: 34px; min-height: 34px;
-    transition: .15s;
+    min-width: 34px; min-height: 34px; transition: .15s;
   }
   .icon-btn:active { background: var(--btn); color: var(--text); transform: scale(.92); }
 
@@ -143,62 +148,90 @@
   .tabs {
     display: flex; gap: 3px;
     background: var(--btn); padding: 4px;
-    border-radius: 14px; margin-bottom: 10px;
+    border-radius: 14px; margin-bottom: 8px;
     overflow-x: auto; scrollbar-width: none;
-    position: sticky;
-    top: calc(env(safe-area-inset-top, 0px) + 6px);
-    z-index: 5;
+    flex-shrink: 0;
   }
   .tabs::-webkit-scrollbar { display: none; }
   .tabs button {
-    flex: 1; min-width: 70px;
-    padding: 8px 4px; border: none;
+    flex: 1; min-width: 62px;
+    padding: 7px 3px; border: none;
     background: transparent; color: var(--muted);
-    font-size: .7rem; font-weight: 600;
+    font-size: .66rem; font-weight: 600;
     border-radius: 10px; cursor: pointer;
     font-family: inherit; display: flex;
     flex-direction: column; align-items: center; gap: 2px;
     transition: .2s; white-space: nowrap;
   }
-  .tabs button .ico { font-size: .95rem; }
+  .tabs button .ico { font-size: .9rem; }
   body:not(.light) .tabs button.active { background: var(--btn-hover); color: var(--text); }
   body.light .tabs button.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
 
+  /* ═══ TAB PANELS ═══ */
   .tab-panel { display: none; }
-  .tab-panel.active { display: block; animation: slideUp .25s; padding-bottom: 30px; }
+  .tab-panel.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    animation: slideUp .25s;
+  }
   @keyframes slideUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  /* ═══ TOP BAR ═══ */
+  /* Non-calc tabs — scroll inside */
+  #tab-graph.active,
+  #tab-convert.active,
+  #tab-solve.active,
+  #tab-constants.active,
+  #tab-matrix.active {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
+  }
+
+  /* ═══ CALC TAB — FITS WITHOUT SCROLL ═══ */
+  #tab-calc.active {
+    overflow: hidden;
+    gap: 5px;
+  }
+
+  #tab-calc .topbar,
+  #tab-calc .display,
+  #tab-calc .mem-row,
+  #tab-calc .sci-toggle {
+    flex-shrink: 0;
+  }
+
+  /* TOP BAR */
   .topbar {
     display: flex; justify-content: space-between;
-    align-items: center; margin-bottom: 6px;
-    padding: 0 4px; gap: 4px;
+    align-items: center; padding: 0 4px; gap: 4px;
   }
-  .brand { font-size: .68rem; letter-spacing: 2.5px; color: var(--muted); font-weight: 600; }
+  .brand { font-size: .65rem; letter-spacing: 2.5px; color: var(--muted); font-weight: 600; }
   .top-actions { display: flex; gap: 4px; align-items: center; }
 
   .mode-btn {
     background: var(--btn);
     color: var(--accent-2);
     border: none;
-    font-size: .68rem; font-weight: 700;
+    font-size: .65rem; font-weight: 700;
     padding: 5px 10px; border-radius: 8px;
     cursor: pointer; letter-spacing: 1px;
-    transition: .2s; font-family: inherit;
+    font-family: inherit; transition: .2s;
   }
   .mode-btn.rad { color: var(--green); }
 
-  /* ═══ DISPLAY ═══ */
+  /* DISPLAY */
   .display {
-    padding: 18px 8px 10px;
+    padding: 10px 8px 6px;
     text-align: right;
-    min-height: 110px;
+    min-height: 78px;
     display: flex; flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
   }
   .mem-indicator {
-    font-size: .65rem;
+    font-size: .62rem;
     color: var(--accent);
     font-weight: 700;
     letter-spacing: 1px;
@@ -207,27 +240,26 @@
     padding-left: 4px;
   }
   .expression {
-    font-size: .9rem; color: var(--muted);
-    min-height: 20px; word-break: break-all;
+    font-size: .82rem; color: var(--muted);
+    min-height: 18px; word-break: break-all;
     font-variant-numeric: tabular-nums;
-    line-height: 1.4;
+    line-height: 1.3;
   }
   .result {
-    font-size: 2.6rem; font-weight: 300;
+    font-size: 2.1rem; font-weight: 300;
     letter-spacing: -1px; line-height: 1.1;
     word-break: break-all;
     font-variant-numeric: tabular-nums;
-    margin-top: 4px; transition: .15s;
+    margin-top: 2px; transition: .15s;
   }
   .result.pop { transform: scale(1.06); color: var(--accent); }
-  .result.error { color: var(--danger); font-size: 1.7rem; }
+  .result.error { color: var(--danger); font-size: 1.5rem; }
 
-  /* ═══ MEMORY ROW ═══ */
+  /* MEMORY ROW */
   .mem-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 4px;
-    margin-bottom: 6px;
     padding: 0 4px;
   }
   .mem-row button {
@@ -235,7 +267,7 @@
     border: none;
     background: var(--btn);
     color: var(--accent);
-    font-size: .72rem;
+    font-size: .7rem;
     font-weight: 700;
     border-radius: 8px;
     cursor: pointer;
@@ -245,60 +277,82 @@
   .mem-row button:active { transform: scale(.92); background: var(--btn-hover); }
   .mem-row button.active { color: var(--green); }
 
-  /* ═══ SCI TOGGLE ═══ */
+  /* SCI TOGGLE */
   .sci-toggle {
-    width: 100%; padding: 8px; margin: 2px 0 6px;
+    width: 100%; padding: 6px; margin: 0;
     background: transparent;
     border: 1px dashed rgba(90,200,250,.35);
-    border-radius: 12px;
+    border-radius: 10px;
     color: var(--sci-text);
-    font-size: .74rem; font-weight: 600;
+    font-size: .7rem; font-weight: 600;
     letter-spacing: 1px; cursor: pointer;
     font-family: inherit;
     display: flex; justify-content: center;
     align-items: center; gap: 6px;
     transition: .25s;
   }
-  .sci-toggle .arrow { transition: transform .3s; font-size: .65rem; }
+  .sci-toggle .arrow { transition: transform .3s; font-size: .6rem; }
   .sci-toggle.open .arrow { transform: rotate(180deg); }
   .sci-toggle .fx { font-style: italic; font-weight: 700; }
 
   .sci-panel {
     max-height: 0; overflow: hidden;
-    transition: max-height .35s, opacity .25s;
-    opacity: 0;
+    transition: max-height .35s;
   }
-  .sci-panel.open { max-height: 400px; opacity: 1; margin-bottom: 6px; }
+  .sci-panel.open {
+    max-height: 160px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 4px;
+  }
   .sci-keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 5px;
     padding-bottom: 4px;
   }
 
-  /* ═══ KEYS ═══ */
-  .keys {
+  /* KEYS — fills remaining space */
+  #tab-calc .keys {
+    flex: 1;
+    min-height: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-top: 4px;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 2px;
   }
   button.key {
-    aspect-ratio: 1 / 1;
-    border: none; border-radius: 50%;
-    background: var(--btn); color: var(--text);
-    font-size: 1.4rem; font-weight: 400;
-    cursor: pointer; font-family: inherit;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--btn);
+    color: var(--text);
+    font-size: clamp(.95rem, 4.5vw, 1.4rem);
+    font-weight: 400;
+    cursor: pointer;
+    font-family: inherit;
     display: grid; place-items: center;
-    user-select: none; position: relative;
-    overflow: hidden; transition: .1s;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    transition: .1s;
   }
   button.key:active { transform: scale(.92); background: var(--btn-hover); }
   .key.op { background: var(--op); color: var(--accent); font-weight: 500; }
-  .key.fn { background: var(--op); color: var(--accent-2); font-size: 1.1rem; }
+  .key.fn { background: var(--op); color: var(--accent-2); font-size: 1.05rem; }
   .key.eq { background: linear-gradient(135deg, var(--accent), #ff6b00); color: #fff; font-weight: 600; }
-  .key.sci { height: 42px; aspect-ratio: auto; border-radius: 12px; background: var(--sci); color: var(--sci-text); font-size: .82rem; font-weight: 600; }
-  .key.sci sup { font-size: .58rem; vertical-align: super; }
+  .key.sci {
+    height: 34px;
+    border-radius: 10px;
+    background: var(--sci);
+    color: var(--sci-text);
+    font-size: .76rem;
+    font-weight: 600;
+  }
+  .key.sci sup { font-size: .55rem; vertical-align: super; }
 
   .ripple {
     position: absolute; border-radius: 50%;
@@ -309,7 +363,7 @@
   body.light .ripple { background: rgba(0,0,0,.15); }
   @keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
-  /* ═══ HISTORY OVERLAY ═══ */
+  /* ═══ OVERLAY (History, etc) ═══ */
   .overlay {
     position: fixed; inset: 0;
     background: var(--bg);
@@ -343,12 +397,12 @@
   }
   .history-item:active { background: var(--btn); }
   .history-item .h-exp {
-    font-size: .8rem; color: var(--muted);
+    font-size: .78rem; color: var(--muted);
     word-break: break-all;
     font-family: "SF Mono", Menlo, monospace;
   }
   .history-item .h-res {
-    font-size: 1.2rem; margin-top: 4px;
+    font-size: 1.15rem; margin-top: 4px;
     color: var(--accent-2);
     font-family: "SF Mono", Menlo, monospace;
   }
@@ -412,7 +466,7 @@
     border: 1px solid var(--border);
   }
   .card h3 {
-    font-size: .74rem;
+    font-size: .72rem;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1.2px;
@@ -432,7 +486,7 @@
     padding: 6px 12px; border: none;
     border-radius: 8px;
     background: var(--btn); color: var(--muted);
-    font-size: .76rem; font-family: inherit;
+    font-size: .74rem; font-family: inherit;
     font-weight: 600; cursor: pointer;
     white-space: nowrap; transition: .2s;
   }
@@ -473,13 +527,13 @@
     border: 1px solid var(--border);
   }
   .base-row .lbl {
-    font-size: .7rem; color: var(--muted);
+    font-size: .68rem; color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1px; font-weight: 700;
     font-family: -apple-system, sans-serif;
   }
   .base-row .val {
-    font-size: .92rem;
+    font-size: .9rem;
     color: var(--accent-2);
     word-break: break-all;
     text-align: right;
@@ -541,13 +595,13 @@
     border: 1px solid var(--border);
   }
   .stat-box .lbl {
-    font-size: .62rem; color: var(--muted);
+    font-size: .6rem; color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1px; font-weight: 700;
     margin-bottom: 3px;
   }
   .stat-box .val {
-    font-size: .95rem; color: var(--accent-2);
+    font-size: .92rem; color: var(--accent-2);
     font-family: "SF Mono", Menlo, monospace;
     word-break: break-all;
   }
@@ -576,29 +630,28 @@
     min-width: 0;
   }
 
-  /* ═══ CONSTANTS LIST ═══ */
+  /* ═══ CONSTANTS ═══ */
   .const-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 10px;
     border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: .15s;
+    cursor: pointer; transition: .15s;
     border-radius: 8px;
   }
   .const-item:active { background: var(--btn); }
   .const-item .c-info { flex: 1; min-width: 0; }
   .const-item .c-name {
-    font-size: .88rem; font-weight: 600;
+    font-size: .86rem; font-weight: 600;
     color: var(--text); margin-bottom: 2px;
   }
   .const-item .c-sym {
-    font-size: .72rem; color: var(--muted);
+    font-size: .7rem; color: var(--muted);
     font-family: "SF Mono", Menlo, monospace;
   }
   .const-item .c-val {
-    font-size: .85rem;
+    font-size: .82rem;
     color: var(--accent-2);
     font-family: "SF Mono", Menlo, monospace;
     text-align: right;
@@ -640,19 +693,21 @@
   }
 
   /* ═══ SMALL SCREEN ═══ */
-  @media (max-height: 780px) {
-    .result { font-size: 2.2rem; }
-    .display { min-height: 88px; padding: 12px 8px 8px; }
-    button.key { font-size: 1.2rem; }
-    .key.sci { height: 36px; font-size: .78rem; }
-    canvas#graphCanvas { height: 220px; }
+  @media (max-height: 700px) {
+    .display { min-height: 62px; padding: 6px 6px 4px; }
+    .result { font-size: 1.85rem; }
+    #tab-calc .keys { gap: 5px; }
+    .key.sci { height: 30px; font-size: .7rem; }
+    .mem-row button { padding: 5px 2px; font-size: .66rem; }
   }
-  @media (max-height: 680px) {
-    .result { font-size: 1.9rem; }
-    .display { min-height: 70px; padding: 8px 6px 6px; }
-    button.key { font-size: 1.05rem; }
-    .keys { gap: 6px; }
-    .key.sci { height: 32px; font-size: .72rem; }
+  @media (max-height: 600px) {
+    .display { min-height: 52px; }
+    .result { font-size: 1.55rem; }
+    .expression { font-size: .72rem; }
+    #tab-calc .keys { gap: 4px; }
+    .app-header { padding: 2px 0 4px; }
+    .tabs { margin-bottom: 4px; }
+    .tabs button { padding: 5px 2px; font-size: .6rem; }
   }
 </style>
 </head>
@@ -666,7 +721,6 @@
 
 <div class="app">
 
-  <!-- HEADER -->
   <div class="app-header">
     <button class="back-btn" id="globalBack">←</button>
     <span class="title">CALC PRO MAX</span>
@@ -674,7 +728,6 @@
     <button class="icon-btn" id="themeBtn">🌙</button>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
     <button class="active" data-tab="calc"><span class="ico">🧮</span>Calc</button>
     <button data-tab="graph"><span class="ico">📈</span>Graph</button>
@@ -684,7 +737,7 @@
     <button data-tab="matrix"><span class="ico">🔢</span>Matrix</button>
   </div>
 
-  <!-- ═══ CALC TAB ═══ -->
+  <!-- CALC TAB -->
   <div class="tab-panel active" id="tab-calc">
     <div class="topbar">
       <span class="brand">SCIENTIFIC</span>
@@ -773,7 +826,7 @@
     </div>
   </div>
 
-  <!-- ═══ GRAPH TAB ═══ -->
+  <!-- GRAPH TAB -->
   <div class="tab-panel" id="tab-graph">
     <div class="graph-wrap">
       <input class="input-full" id="graphFn" value="sin(x)" placeholder="f(x) = ..." spellcheck="false">
@@ -807,7 +860,7 @@
     </div>
   </div>
 
-  <!-- ═══ CONVERT TAB ═══ -->
+  <!-- CONVERT TAB -->
   <div class="tab-panel" id="tab-convert">
     <div class="card">
       <h3>📏 Unit Converter</h3>
@@ -843,7 +896,7 @@
     </div>
   </div>
 
-  <!-- ═══ SOLVE TAB ═══ -->
+  <!-- SOLVE TAB -->
   <div class="tab-panel" id="tab-solve">
     <div class="card">
       <h3>📐 Linear (ax + b = 0)</h3>
@@ -897,10 +950,10 @@
     </div>
   </div>
 
-  <!-- ═══ CONSTANTS TAB ═══ -->
+  <!-- CONSTANTS TAB -->
   <div class="tab-panel" id="tab-constants">
     <div class="card">
-      <h3>⚛️ Physics Constants</h3>
+      <h3>⚛️ Constants Library</h3>
       <div class="chip-row" id="constCat">
         <button class="active" data-ccat="physics">Physics</button>
         <button data-ccat="math">Math</button>
@@ -910,7 +963,7 @@
     </div>
   </div>
 
-  <!-- ═══ MATRIX TAB ═══ -->
+  <!-- MATRIX TAB -->
   <div class="tab-panel" id="tab-matrix">
     <div class="card">
       <h3>🔢 Matrix Calculator (2×2)</h3>
@@ -942,12 +995,14 @@
 (function () {
   "use strict";
 
-  /* ═══ SW ═══ */
+  /* SERVICE WORKER */
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     });
   }
+
+  /* SPLASH */
   window.addEventListener("load", () => {
     const s = document.getElementById("splash");
     if (!s) return;
@@ -955,7 +1010,7 @@
     setTimeout(() => s.remove(), 1500);
   });
 
-  /* ═══ SOUND + HAPTIC ═══ */
+  /* SOUND + HAPTIC */
   const soundOn = { v: localStorage.getItem("calc_sound") !== "off" };
   let audioCtx = null;
   function playClick(type) {
@@ -975,7 +1030,7 @@
   }
   function haptic(ms) { if (navigator.vibrate) navigator.vibrate(ms || 8); }
 
-  /* ═══ TABS ═══ */
+  /* TABS */
   function switchTab(name) {
     document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
     document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
@@ -983,7 +1038,6 @@
     if (btn) btn.classList.add("active");
     const panel = document.getElementById("tab-" + name);
     if (panel) panel.classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
     if (name === "graph") setTimeout(plotGraph, 50);
   }
   document.querySelectorAll(".tabs button").forEach(btn => {
@@ -993,7 +1047,7 @@
     });
   });
 
-  /* ═══ GLOBAL BACK ═══ */
+  /* GLOBAL BACK */
   const histPanel = document.getElementById("historyPanel");
   document.getElementById("globalBack").addEventListener("click", () => {
     playClick(); haptic(8);
@@ -1003,7 +1057,7 @@
     if (window.history.length > 1) window.history.back();
   });
 
-  /* ═══ THEME + SOUND ═══ */
+  /* THEME + SOUND */
   const themeBtn = document.getElementById("themeBtn");
   const soundBtn = document.getElementById("soundBtn");
   if ((localStorage.getItem("calc_theme") || "dark") === "light") {
@@ -1027,7 +1081,7 @@
     haptic(8);
   });
 
-  /* ═══ MATH ENGINE ═══ */
+  /* MATH ENGINE */
   const FUNCS = ["asin","acos","atan","sinh","cosh","tanh","sin","cos","tan","log","ln","√","abs"];
   function tokenize(s) {
     const t = []; let i = 0;
@@ -1170,7 +1224,7 @@
     return parseFloat(n.toPrecision(12)).toString();
   }
 
-  /* ═══ CALC ═══ */
+  /* CALC */
   const exprEl = document.getElementById("expression");
   const resEl = document.getElementById("result");
   const keysEl = document.getElementById("keys");
@@ -1188,7 +1242,6 @@
   function updateMemInd() {
     memInd.textContent = hasMemory ? `M = ${fmt(memory)}` : "";
   }
-
   function prettify(s) {
     return s.replace(/×/g, " × ").replace(/÷/g, " ÷ ")
       .replace(/\+/g, " + ").replace(/−/g, " − ")
@@ -1199,7 +1252,7 @@
     const c = (s.match(/\)/g) || []).length;
     return s + ")".repeat(Math.max(0, o - c));
   }
-  function update() {
+  function updateDisplay() {
     exprEl.textContent = prettify(expr);
     if (!expr) { resEl.textContent = "0"; resEl.classList.remove("error"); return; }
     try {
@@ -1212,25 +1265,25 @@
     const last = expr.split(/[+\-−×÷()^!%]/).pop();
     if (n === "." && last.includes(".")) return;
     if (last === "" && n === ".") n = "0.";
-    expr += n; update();
+    expr += n; updateDisplay();
   }
   function addOp(op) {
-    if (!expr) { if (op === "−") { expr = "−"; update(); } return; }
+    if (!expr) { if (op === "−") { expr = "−"; updateDisplay(); } return; }
     const last = expr.slice(-1);
     if ("+−×÷^".includes(last)) expr = expr.slice(0, -1) + op;
     else if (last === "(") { if (op === "−") expr += op; }
     else expr += op;
-    update();
+    updateDisplay();
   }
-  function addF(f) { expr += f + "("; update(); }
-  function addC(c) { expr += c; update(); }
+  function addF(f) { expr += f + "("; updateDisplay(); }
+  function addC(c) { expr += c; updateDisplay(); }
   function clearAll() { expr = ""; resEl.textContent = "0"; exprEl.textContent = ""; resEl.classList.remove("error"); }
   function bksp() {
     if (!expr) return;
     for (const f of FUNCS) {
-      if (expr.endsWith(f + "(")) { expr = expr.slice(0, -f.length - 1); update(); return; }
+      if (expr.endsWith(f + "(")) { expr = expr.slice(0, -f.length - 1); updateDisplay(); return; }
     }
-    expr = expr.slice(0, -1); update();
+    expr = expr.slice(0, -1); updateDisplay();
     if (!expr) resEl.textContent = "0";
   }
   function toggleP() {
@@ -1241,12 +1294,12 @@
     else if (!expr || "+−×÷^(".includes(last)) expr += "(";
     else if (/[0-9πe)%!]/.test(last)) expr += "×(";
     else expr += "(";
-    update();
+    updateDisplay();
   }
   function pct() {
     if (!expr) return;
     const last = expr.slice(-1);
-    if (/[0-9)πe%!]/.test(last)) { expr += "%"; update(); }
+    if (/[0-9)πe%!]/.test(last)) { expr += "%"; updateDisplay(); }
   }
   function sgn() {
     if (!expr) return;
@@ -1254,7 +1307,7 @@
     if (!m) return;
     const i = expr.length - m[0].length;
     expr = expr.slice(0, i) + "(−" + m[0] + ")";
-    update();
+    updateDisplay();
   }
   function eq() {
     if (!expr) return;
@@ -1333,11 +1386,11 @@
     if (b.dataset.func) return addF(b.dataset.func);
     if (b.dataset.const) return addC(b.dataset.const);
     switch (b.dataset.action) {
-      case "sq": expr += "^2"; update(); break;
-      case "pow": expr += "^"; update(); break;
-      case "inv": expr += "1÷("; update(); break;
-      case "fact": expr += "!"; update(); break;
-      case "cbrt": expr += "cbrt("; update(); break;
+      case "sq": expr += "^2"; updateDisplay(); break;
+      case "pow": expr += "^"; updateDisplay(); break;
+      case "inv": expr += "1÷("; updateDisplay(); break;
+      case "fact": expr += "!"; updateDisplay(); break;
+      case "cbrt": expr += "cbrt("; updateDisplay(); break;
     }
   });
   sciToggle.addEventListener("click", () => {
@@ -1350,7 +1403,7 @@
     angleMode = angleMode === "DEG" ? "RAD" : "DEG";
     angleBtn.textContent = angleMode;
     angleBtn.classList.toggle("rad", angleMode === "RAD");
-    playClick(); haptic(8); update();
+    playClick(); haptic(8); updateDisplay();
   });
   document.getElementById("backspaceBtn").addEventListener("click", () => { bksp(); playClick(); haptic(6); });
   document.getElementById("historyBtn").addEventListener("click", () => {
@@ -1364,14 +1417,14 @@
     hist = []; saveH(); renderH(); playClick("clear"); haptic(12);
   });
 
-  /* ═══ MEMORY ═══ */
+  /* MEMORY */
   document.querySelectorAll("[data-mem]").forEach(b => {
     b.addEventListener("click", () => {
       const op = b.dataset.mem;
       playClick(); haptic(8);
       try {
         if (op === "MC") { memory = 0; hasMemory = false; }
-        else if (op === "MR") { if (hasMemory) { expr += fmt(memory); update(); } }
+        else if (op === "MR") { if (hasMemory) { expr += fmt(memory); updateDisplay(); } }
         else if (op === "M+") {
           const val = expr ? evaluate(autoClose(expr)) : 0;
           memory += val; hasMemory = true;
@@ -1420,7 +1473,7 @@
     });
   };
 
-  /* ═══ GRAPH ═══ */
+  /* GRAPH */
   const canvas = document.getElementById("graphCanvas");
   const ctx = canvas.getContext("2d");
   const graphFnEl = document.getElementById("graphFn");
@@ -1522,7 +1575,7 @@
     if (document.getElementById("tab-graph").classList.contains("active")) plotGraph();
   });
 
-  /* ═══ UNITS ═══ */
+  /* UNITS */
   const UNITS = {
     length: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254, nmi: 1852 },
     mass: { kg: 1, g: 0.001, mg: 1e-6, lb: 0.45359237, oz: 0.028349523125, t: 1000, st: 6.35029318 },
@@ -1578,7 +1631,7 @@
     doConv(); playClick(); haptic(8);
   });
 
-  /* ═══ BASE ═══ */
+  /* BASE */
   const bIn = document.getElementById("baseInput");
   function updateB() {
     const raw = bIn.value.trim();
@@ -1596,7 +1649,7 @@
   }
   bIn.addEventListener("input", updateB);
 
-  /* ═══ SOLVER ═══ */
+  /* SOLVER */
   document.querySelectorAll("[data-solve]").forEach(b => {
     b.addEventListener("click", () => {
       const t = b.dataset.solve;
@@ -1671,7 +1724,7 @@
     o.innerHTML = `${days} days<br>≈ ${(days / 365.25).toFixed(2)} years`;
   }
 
-  /* ═══ CONSTANTS ═══ */
+  /* CONSTANTS */
   const CONSTANTS = {
     physics: [
       { n: "Speed of light", s: "c", v: 299792458, u: "m/s" },
@@ -1730,7 +1783,7 @@
     const c = CONSTANTS[curCCat][+item.dataset.ci];
     switchTab("calc");
     expr += c.v.toString();
-    update();
+    updateDisplay();
     playClick(); haptic(10);
   });
   document.getElementById("constCat").addEventListener("click", (e) => {
@@ -1742,7 +1795,7 @@
     playClick(); haptic(6);
   });
 
-  /* ═══ MATRIX ═══ */
+  /* MATRIX */
   let matOp = "+";
   document.querySelectorAll("[data-matop]").forEach(b => {
     b.addEventListener("click", () => {
@@ -1771,16 +1824,15 @@
       const c3 = A[2]*B[1] + A[3]*B[3];
       html = `⎡ ${c0}  ${c1} ⎤<br>⎣ ${c2}  ${c3} ⎦`;
     } else if (matOp === "det") {
-      const d = A[0]*A[3] - A[1]*A[2];
-      html = `det(A) = ${d}`;
+      html = `det(A) = ${A[0]*A[3] - A[1]*A[2]}`;
     }
     o.innerHTML = html;
     playClick("equals"); haptic(12);
   });
 
-  /* ═══ INIT ═══ */
+  /* INIT */
   renderH();
-  update();
+  updateDisplay();
   updateMemInd();
   fillUnits();
   updateB();
