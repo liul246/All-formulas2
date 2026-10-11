@@ -3,8 +3,8 @@
   "name": "Smart Calculator",
   "short_name": "Smart Calc",
   "description": "Advanced scientific calculator with graph, converter, solver, constants and matrix",
-  "start_url": "./All-formulas2/index.html",
-  "scope": "./All-formulas2/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "tabbed", "standalone", "minimal-ui"],
   "orientation": "portrait-primary",
@@ -28,37 +28,37 @@
     },
     {
       "platform": "webapp",
-      "url": "./All-formulas2/manifest.json"
+      "url": "./manifest.json"
     }
   ],
 
   "icons": [
     {
-      "src": "./All-formulas2/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./All-formulas2/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./All-formulas2/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "./All-formulas2/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "./All-formulas2/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "monochrome"
@@ -67,7 +67,7 @@
 
   "screenshots": [
     {
-      "src": "./All-formulas2/screenshot-mobile.png",
+      "src": "./screenshot-mobile.png",
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
@@ -80,52 +80,36 @@
       "name": "Scientific Calculator",
       "short_name": "Calc",
       "description": "Open scientific calculator",
-      "url": "./All-formulas2/index.html?tab=calc",
+      "url": "./index.html?tab=calc",
       "icons": [
-        {
-          "src": "./All-formulas2/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
+        { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }
       ]
     },
     {
       "name": "Graph Plotter",
       "short_name": "Graph",
       "description": "Plot mathematical functions",
-      "url": "./All-formulas2/index.html?tab=graph",
+      "url": "./index.html?tab=graph",
       "icons": [
-        {
-          "src": "./All-formulas2/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
+        { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }
       ]
     },
     {
       "name": "Unit Converter",
       "short_name": "Units",
       "description": "Convert between units",
-      "url": "./All-formulas2/index.html?tab=convert",
+      "url": "./index.html?tab=convert",
       "icons": [
-        {
-          "src": "./All-formulas2/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
+        { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }
       ]
     },
     {
       "name": "Equation Solver",
       "short_name": "Solve",
       "description": "Solve equations",
-      "url": "./All-formulas2/index.html?tab=solve",
+      "url": "./index.html?tab=solve",
       "icons": [
-        {
-          "src": "./All-formulas2/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
+        { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }
       ]
     }
   ],
@@ -133,12 +117,12 @@
   "protocol_handlers": [
     {
       "protocol": "web+calc",
-      "url": "./All-formulas2/index.html?expr=%s"
+      "url": "./index.html?expr=%s"
     }
   ],
 
   "share_target": {
-    "action": "./All-formulas2/index.html",
+    "action": "./index.html",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {
@@ -150,7 +134,7 @@
 
   "file_handlers": [
     {
-      "action": "./All-formulas2/index.html",
+      "action": "./index.html",
       "accept": {
         "text/plain": [".txt"],
         "text/csv": [".csv"],
@@ -174,13 +158,13 @@
       ]
     },
     "new_tab_button": {
-      "url": "./All-formulas2/index.html?tab=calc",
+      "url": "./index.html?tab=calc",
       "label": "New Tab"
     }
   },
 
   "note_taking": {
-    "new_note_url": "./All-formulas2/index.html?tab=calc&mode=note"
+    "new_note_url": "./index.html?tab=calc&mode=note"
   },
 
   "scope_extensions": [
@@ -197,17 +181,13 @@
       "description": "Fast access to basic calculator",
       "tag": "quick-calc",
       "template": "2x2",
-      "ms_ac_template": "./All-formulas2/index.html?widget=quick",
-      "data": "./All-formulas2/index.html?widget=quick",
+      "ms_ac_template": "./index.html?widget=quick",
+      "data": "./index.html?widget=quick",
       "type": "application/xml",
       "auth": false,
       "update": 86400,
       "icons": [
-        {
-          "src": "./All-formulas2/icon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
+        { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }
       ]
     }
   ]
