@@ -71,31 +71,174 @@
     user-select: none;
   }
 
-  /* ═══ SPLASH — LOADING BAR ONLY ═══ */
+  /* ═══════════════════════════════════════════
+     PROFESSIONAL SPLASH SCREEN
+     ═══════════════════════════════════════════ */
   .splash {
-    position: fixed; inset: 0;
-    background: #0a0a0f;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, #1a1a2e 0%, #0a0a0f 70%);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    transition: opacity .4s;
+    transition: opacity .5s ease, visibility .5s ease;
+    overflow: hidden;
   }
   .splash.hide { opacity: 0; visibility: hidden; }
+
+  /* Glow background circle */
+  .splash::before {
+    content: "";
+    position: absolute;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(10,132,255,.35) 0%, transparent 70%);
+    animation: pulse 2s ease-in-out infinite;
+    filter: blur(30px);
+  }
+  .splash::after {
+    content: "";
+    position: absolute;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,159,10,.25) 0%, transparent 70%);
+    animation: pulse 2s ease-in-out infinite .5s;
+    filter: blur(30px);
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: .8; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  /* Logo ring */
+  .splash-logo {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .splash-logo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #0a84ff;
+    border-right-color: #ff9f0a;
+    animation: spin 1.2s cubic-bezier(.6,.2,.4,.8) infinite;
+  }
+  .splash-logo::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-bottom-color: #5ac8fa;
+    border-left-color: #30d158;
+    animation: spin 1.6s cubic-bezier(.6,.2,.4,.8) infinite reverse;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .splash-icon {
+    font-size: 3rem;
+    animation: breathe 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(10,132,255,.6));
+    z-index: 3;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  /* App name */
+  .splash-name {
+    margin-top: 28px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: #fff;
+    z-index: 2;
+    background: linear-gradient(90deg, #0a84ff, #5ac8fa, #ff9f0a);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Subtitle */
+  .splash-sub {
+    margin-top: 6px;
+    font-size: .65rem;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.4);
+    font-weight: 500;
+    z-index: 2;
+    animation: fadeIn 1s .4s backwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Loading bar */
   .splash-bar {
-    width: 200px;
-    height: 4px;
+    margin-top: 40px;
+    width: 180px;
+    height: 3px;
     background: rgba(255,255,255,.08);
     border-radius: 99px;
     overflow: hidden;
+    z-index: 2;
+    position: relative;
   }
   .splash-fill {
-    height: 100%; width: 0;
-    background: linear-gradient(90deg, #0a84ff, #ff9f0a);
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #0a84ff, #5ac8fa, #ff9f0a);
     border-radius: 99px;
-    animation: load 1s .2s forwards;
+    animation: load 1.2s cubic-bezier(.6,.2,.4,.8) forwards .2s;
+    box-shadow: 0 0 12px rgba(10,132,255,.6);
   }
-  @keyframes load { to { width: 100%; } }
+  @keyframes load {
+    0% { width: 0; }
+    60% { width: 75%; }
+    100% { width: 100%; }
+  }
+
+  /* Dots */
+  .splash-dots {
+    margin-top: 14px;
+    display: flex;
+    gap: 6px;
+    z-index: 2;
+  }
+  .splash-dots span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.3);
+    animation: dotPulse 1.2s ease-in-out infinite;
+  }
+  .splash-dots span:nth-child(1) { animation-delay: 0s; }
+  .splash-dots span:nth-child(2) { animation-delay: .15s; }
+  .splash-dots span:nth-child(3) { animation-delay: .3s; }
+  @keyframes dotPulse {
+    0%, 100% { background: rgba(255,255,255,.3); transform: scale(1); }
+    50% { background: #5ac8fa; transform: scale(1.5); }
+  }
 
   /* ═══ APP — LOCKED ═══ */
   .app {
@@ -113,7 +256,7 @@
     padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
   }
 
-  /* ═══ HEADER — MINIMAL ═══ */
+  /* ═══ HEADER ═══ */
   .app-header {
     display: flex; align-items: center; gap: 6px;
     padding: 0;
@@ -140,7 +283,7 @@
   }
   .icon-btn:active { background: var(--btn); color: var(--text); transform: scale(.92); }
 
-  /* ═══ TABS — TOP ═══ */
+  /* ═══ TABS ═══ */
   .tabs {
     display: flex; gap: 2px;
     background: var(--btn); padding: 2px;
@@ -311,7 +454,7 @@
     padding: 1px 0;
   }
 
-  /* ═══ KEYS — EQUAL CIRCLES ═══ */
+  /* ═══ KEYS ═══ */
   #tab-calc .keys {
     flex: 1 1 auto;
     min-height: 0;
@@ -754,8 +897,19 @@
 </head>
 <body>
 
+<!-- ═══ PROFESSIONAL SPLASH ═══ -->
 <div class="splash" id="splash">
+  <div class="splash-logo">
+    <div class="splash-icon">🧮</div>
+  </div>
+  <div class="splash-name">CALC PRO</div>
+  <div class="splash-sub">SCIENTIFIC CALCULATOR</div>
   <div class="splash-bar"><div class="splash-fill"></div></div>
+  <div class="splash-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
 
 <div class="app">
@@ -1042,8 +1196,8 @@
   window.addEventListener("load", () => {
     const s = document.getElementById("splash");
     if (!s) return;
-    setTimeout(() => s.classList.add("hide"), 1000);
-    setTimeout(() => s.remove(), 1400);
+    setTimeout(() => s.classList.add("hide"), 1400);
+    setTimeout(() => s.remove(), 1900);
   });
 
   const soundOn = { v: localStorage.getItem("calc_sound") !== "off" };
