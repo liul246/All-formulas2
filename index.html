@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Calculator Pro Max</title>
+<title>Calc Pro</title>
 <link rel="icon" type="image/svg+xml" href="./icon.svg">
 <link rel="apple-touch-icon" href="./icon.svg">
 <link rel="manifest" href="./manifest.json">
@@ -50,7 +50,7 @@
     --input-bg: #ffffff;
   }
 
-  /* ═══ FULL SCREEN — NO SCROLL ANYWHERE ═══ */
+  /* ═══ FULL SCREEN — LOCKED ═══ */
   html, body {
     margin: 0 !important;
     padding: 0 !important;
@@ -102,82 +102,77 @@
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @keyframes load { to { width: 100%; } }
 
-  /* ═══ APP — LOCKED FULL SCREEN ═══ */
+  /* ═══ APP — LOCKED ═══ */
   .app {
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     background: var(--bg);
-    padding: 6px;
-    padding-top: calc(4px + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+    padding: 4px;
+    padding-top: calc(2px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
   }
 
-  /* ═══ HEADER — VERY TOP ═══ */
+  /* ═══ HEADER — MINIMAL ═══ */
   .app-header {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 6px;
     padding: 0;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     flex-shrink: 0;
-    height: 38px;
+    height: 34px;
   }
   .back-btn {
     background: var(--accent-2); color: #fff;
-    border: none; font-size: 1.2rem; font-weight: 700;
-    cursor: pointer; padding: 0; border-radius: 10px;
+    border: none; font-size: 1.15rem; font-weight: 700;
+    cursor: pointer; padding: 0; border-radius: 9px;
     display: inline-flex; align-items: center; justify-content: center;
-    width: 34px; height: 34px; flex-shrink: 0; line-height: 1;
+    width: 30px; height: 30px; flex-shrink: 0; line-height: 1;
     transition: .2s;
   }
   .back-btn:active { transform: scale(.9); }
-  .app-header .title {
-    font-size: .85rem; font-weight: 700; letter-spacing: 2px;
-    color: var(--text); flex: 1;
-  }
+  .app-header .spacer { flex: 1; }
   .icon-btn {
     background: none; border: none; color: var(--muted);
-    font-size: .95rem; cursor: pointer; padding: 4px 6px;
-    border-radius: 7px; font-family: inherit;
+    font-size: .95rem; cursor: pointer; padding: 3px 5px;
+    border-radius: 6px; font-family: inherit;
     display: inline-flex; align-items: center; justify-content: center;
-    min-width: 30px; min-height: 30px; transition: .15s;
+    min-width: 28px; min-height: 28px; transition: .15s;
   }
   .icon-btn:active { background: var(--btn); color: var(--text); transform: scale(.92); }
 
-  /* ═══ TABS — SLIM AT TOP ═══ */
+  /* ═══ TABS — VERY TOP ═══ */
   .tabs {
     display: flex; gap: 2px;
     background: var(--btn); padding: 2px;
     border-radius: 10px;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     overflow-x: auto; scrollbar-width: none;
     flex-shrink: 0;
-    height: 46px;
+    height: 42px;
     align-items: stretch;
   }
   .tabs::-webkit-scrollbar { display: none; }
   .tabs button {
-    flex: 1; min-width: 52px;
-    padding: 3px 2px; border: none;
+    flex: 1; min-width: 48px;
+    padding: 2px 1px; border: none;
     background: transparent; color: var(--muted);
-    font-size: .58rem; font-weight: 600;
+    font-size: .55rem; font-weight: 600;
     border-radius: 8px; cursor: pointer;
     font-family: inherit; display: flex;
     flex-direction: column; align-items: center; justify-content: center; gap: 1px;
     transition: .2s; white-space: nowrap;
     line-height: 1;
   }
-  .tabs button .ico { font-size: .8rem; line-height: 1; }
+  .tabs button .ico { font-size: .78rem; line-height: 1; }
   body:not(.light) .tabs button.active { background: var(--btn-hover); color: var(--text); }
   body.light .tabs button.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
 
-  /* ═══ TAB PANELS — FILL REST ═══ */
+  /* ═══ TAB PANELS ═══ */
   .tab-panel { display: none; }
   .tab-panel.active {
     display: flex;
@@ -189,7 +184,6 @@
   }
   @keyframes slideUp { from { opacity: 0; } to { opacity: 1; } }
 
-  /* Other tabs scroll internally */
   #tab-graph.active,
   #tab-convert.active,
   #tab-solve.active,
@@ -200,8 +194,8 @@
     padding-bottom: 10px;
   }
 
-  /* ═══ CALC — FITS PERFECTLY ═══ */
-  #tab-calc.active { gap: 3px; }
+  /* ═══ CALC ═══ */
+  #tab-calc.active { gap: 2px; }
 
   #tab-calc .topbar,
   #tab-calc .display,
@@ -213,68 +207,68 @@
   .topbar {
     display: flex; justify-content: space-between;
     align-items: center; padding: 0 2px; gap: 4px;
-    height: 26px;
+    height: 24px;
   }
-  .brand { font-size: .58rem; letter-spacing: 2px; color: var(--muted); font-weight: 600; }
+  .brand { font-size: .56rem; letter-spacing: 2px; color: var(--muted); font-weight: 600; }
   .top-actions { display: flex; gap: 3px; align-items: center; }
 
   .mode-btn {
     background: var(--btn);
     color: var(--accent-2);
     border: none;
-    font-size: .58rem; font-weight: 700;
-    padding: 4px 8px; border-radius: 7px;
+    font-size: .56rem; font-weight: 700;
+    padding: 3px 7px; border-radius: 6px;
     cursor: pointer; letter-spacing: 1px;
     font-family: inherit; transition: .2s;
   }
   .mode-btn.rad { color: var(--green); }
 
   .display {
-    padding: 4px 6px 2px;
+    padding: 3px 5px 2px;
     text-align: right;
-    min-height: 52px;
+    min-height: 48px;
     display: flex; flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
   }
   .mem-indicator {
-    font-size: .55rem;
+    font-size: .52rem;
     color: var(--accent);
     font-weight: 700;
     letter-spacing: 1px;
-    height: 10px;
+    height: 9px;
     text-align: left;
     padding-left: 4px;
   }
   .expression {
-    font-size: .7rem; color: var(--muted);
-    min-height: 13px; word-break: break-all;
+    font-size: .66rem; color: var(--muted);
+    min-height: 12px; word-break: break-all;
     font-variant-numeric: tabular-nums;
     line-height: 1.2;
   }
   .result {
-    font-size: 1.85rem; font-weight: 300;
+    font-size: 1.75rem; font-weight: 300;
     letter-spacing: -1px; line-height: 1.05;
     word-break: break-all;
     font-variant-numeric: tabular-nums;
     margin-top: 1px; transition: .15s;
   }
   .result.pop { transform: scale(1.06); color: var(--accent); }
-  .result.error { color: var(--danger); font-size: 1.3rem; }
+  .result.error { color: var(--danger); font-size: 1.2rem; }
 
   .mem-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 3px;
     padding: 0 2px;
-    height: 26px;
+    height: 24px;
   }
   .mem-row button {
     padding: 3px 2px;
     border: none;
     background: var(--btn);
     color: var(--accent);
-    font-size: .6rem;
+    font-size: .56rem;
     font-weight: 700;
     border-radius: 6px;
     cursor: pointer;
@@ -286,20 +280,20 @@
   .mem-row button.active { color: var(--green); }
 
   .sci-toggle {
-    width: 100%; padding: 4px; margin: 0;
+    width: 100%; padding: 3px; margin: 0;
     background: transparent;
     border: 1px dashed rgba(90,200,250,.35);
-    border-radius: 8px;
+    border-radius: 7px;
     color: var(--sci-text);
-    font-size: .6rem; font-weight: 600;
+    font-size: .56rem; font-weight: 600;
     letter-spacing: 1px; cursor: pointer;
     font-family: inherit;
     display: flex; justify-content: center;
     align-items: center; gap: 5px;
     transition: .25s;
-    height: 24px;
+    height: 22px;
   }
-  .sci-toggle .arrow { transition: transform .3s; font-size: .52rem; }
+  .sci-toggle .arrow { transition: transform .3s; font-size: .48rem; }
   .sci-toggle.open .arrow { transform: rotate(180deg); }
   .sci-toggle .fx { font-style: italic; font-weight: 700; }
 
@@ -310,26 +304,26 @@
     flex-shrink: 0;
   }
   .sci-panel.open {
-    max-height: 118px;
+    max-height: 108px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
   .sci-keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
-    padding: 2px 0;
+    gap: 3px;
+    padding: 1px 0;
   }
 
-  /* ═══ KEYS — FILLS REMAINING, EQUAL CIRCLES ═══ */
+  /* ═══ KEYS — EQUAL CIRCLES ═══ */
   #tab-calc .keys {
     flex: 1 1 auto;
     min-height: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 5px;
+    gap: 4px;
     margin-top: 2px;
     width: 100%;
     padding: 0 2px;
@@ -347,7 +341,7 @@
     border-radius: 50%;
     background: var(--btn);
     color: var(--text);
-    font-size: clamp(.9rem, 4vw, 1.3rem);
+    font-size: clamp(.85rem, 3.8vw, 1.25rem);
     font-weight: 400;
     cursor: pointer;
     font-family: inherit;
@@ -369,26 +363,26 @@
   }
 
   .key.op { background: var(--op); color: var(--accent); font-weight: 500; }
-  .key.fn { background: var(--op); color: var(--accent-2); font-size: .95rem; }
+  .key.fn { background: var(--op); color: var(--accent-2); font-size: .92rem; }
   .key.eq {
     background: linear-gradient(135deg, var(--accent), #ff6b00);
     color: #fff; font-weight: 600;
   }
 
   .key.sci {
-    height: 26px;
+    height: 24px;
     aspect-ratio: auto;
-    border-radius: 7px;
+    border-radius: 6px;
     background: var(--sci);
     color: var(--sci-text);
-    font-size: .62rem;
+    font-size: .58rem;
     font-weight: 600;
     width: 100%;
     max-width: none;
     max-height: none;
     place-self: stretch;
   }
-  .key.sci sup { font-size: .45rem; vertical-align: super; }
+  .key.sci sup { font-size: .42rem; vertical-align: super; }
 
   .ripple {
     position: absolute; border-radius: 50%;
@@ -469,7 +463,7 @@
     min-width: 0;
   }
   canvas#graphCanvas {
-    width: 100%; height: 240px;
+    width: 100%; height: 230px;
     background: var(--input-bg);
     border-radius: 13px;
     border: 1px solid var(--border);
@@ -729,39 +723,37 @@
   }
 
   /* ═══ RESPONSIVE ═══ */
-  @media (max-height: 720px) {
-    .display { min-height: 46px; padding: 3px 5px 2px; }
-    .result { font-size: 1.65rem; }
-    #tab-calc .keys { gap: 4px; }
-    .key.sci { height: 24px; font-size: .58rem; }
-    .mem-row { height: 24px; }
-    .mem-row button { font-size: .56rem; }
-    .tabs { height: 42px; }
-    .tabs button { font-size: .54rem; }
-    .tabs button .ico { font-size: .75rem; }
-    .app-header { height: 34px; }
-    .back-btn { width: 30px; height: 30px; font-size: 1.1rem; }
-    .app-header .title { font-size: .78rem; }
-    .sci-toggle { height: 22px; font-size: .56rem; }
+  @media (max-height: 700px) {
+    .display { min-height: 42px; padding: 2px 4px 1px; }
+    .result { font-size: 1.55rem; }
+    #tab-calc .keys { gap: 3px; }
+    .key.sci { height: 22px; font-size: .54rem; }
+    .mem-row { height: 22px; }
+    .mem-row button { font-size: .52rem; }
+    .tabs { height: 38px; }
+    .tabs button { font-size: .5rem; }
+    .tabs button .ico { font-size: .72rem; }
+    .app-header { height: 30px; }
+    .back-btn { width: 28px; height: 28px; font-size: 1.05rem; }
+    .sci-toggle { height: 20px; font-size: .52rem; }
   }
   @media (max-height: 600px) {
-    .display { min-height: 40px; padding: 2px 4px 1px; }
-    .result { font-size: 1.45rem; }
-    .expression { font-size: .62rem; min-height: 11px; }
-    #tab-calc .keys { gap: 3px; margin-top: 1px; }
-    .mem-row { height: 22px; }
-    .mem-row button { font-size: .52rem; padding: 2px; }
-    .tabs { height: 38px; margin-bottom: 3px; }
-    .tabs button { padding: 2px; font-size: .5rem; }
-    .tabs button .ico { font-size: .7rem; }
-    .app-header { height: 30px; margin-bottom: 2px; }
-    .back-btn { width: 28px; height: 28px; font-size: 1rem; }
-    .app-header .title { font-size: .72rem; letter-spacing: 1.5px; }
-    .topbar { height: 22px; }
-    .sci-toggle { height: 20px; padding: 3px; font-size: .52rem; }
-    .sci-panel.open { max-height: 100px; }
-    .key.sci { height: 22px; font-size: .54rem; }
-    .app { padding: 4px; }
+    .display { min-height: 36px; padding: 2px 3px 1px; }
+    .result { font-size: 1.35rem; }
+    .expression { font-size: .58rem; min-height: 10px; }
+    #tab-calc .keys { gap: 2px; margin-top: 1px; }
+    .mem-row { height: 20px; }
+    .mem-row button { font-size: .48rem; padding: 2px; }
+    .tabs { height: 34px; margin-bottom: 2px; }
+    .tabs button { padding: 1px; font-size: .46rem; }
+    .tabs button .ico { font-size: .66rem; }
+    .app-header { height: 26px; margin-bottom: 1px; }
+    .back-btn { width: 26px; height: 26px; font-size: 1rem; }
+    .topbar { height: 20px; }
+    .sci-toggle { height: 18px; padding: 2px; font-size: .48rem; }
+    .sci-panel.open { max-height: 90px; }
+    .key.sci { height: 20px; font-size: .5rem; }
+    .app { padding: 3px; }
   }
 </style>
 </head>
@@ -769,7 +761,7 @@
 
 <div class="splash" id="splash">
   <div class="splash-logo">🧮</div>
-  <div class="splash-name">CALC PRO MAX</div>
+  <div class="splash-name">CALC PRO</div>
   <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
@@ -777,7 +769,7 @@
 
   <div class="app-header">
     <button class="back-btn" id="globalBack">←</button>
-    <span class="title">CALC PRO MAX</span>
+    <span class="spacer"></span>
     <button class="icon-btn" id="soundBtn">🔊</button>
     <button class="icon-btn" id="themeBtn">🌙</button>
   </div>
