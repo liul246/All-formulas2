@@ -6,15 +6,31 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["tabbed", "standalone"],
+  "display_override": ["tabbed", "standalone", "minimal-ui"],
   "orientation": "portrait-primary",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
   "lang": "en",
   "dir": "ltr",
-  "categories": ["utilities", "productivity", "education"],
+  "categories": ["utilities", "productivity", "education", "tools"],
   "iarc_rating_id": "e5c5e5a5-5e5e-5e5e-5e5e-5e5e5e5e5e5e",
   "prefer_related_applications": false,
+
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.formulashawili.calcpro",
+      "id": "com.formulashawili.calcpro"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/calc-pro-max/id0000000000"
+    },
+    {
+      "platform": "webapp",
+      "url": "./manifest.json"
+    }
+  ],
 
   "icons": [
     {
@@ -119,6 +135,10 @@
     {
       "protocol": "web+calc",
       "url": "./index.html?expr=%s"
+    },
+    {
+      "protocol": "web+math",
+      "url": "./index.html?solve=%s"
     }
   ],
 
@@ -138,7 +158,8 @@
       "action": "./index.html",
       "accept": {
         "text/plain": [".txt"],
-        "text/csv": [".csv"]
+        "text/csv": [".csv"],
+        "application/json": [".json"]
       }
     }
   ],
@@ -174,6 +195,21 @@
       "label": "New Tab"
     }
   },
+
+  "note_taking": {
+    "new_note_url": "./index.html?tab=calc&mode=note"
+  },
+
+  "scope_extensions": [
+    {
+      "type": "origin",
+      "origin": "https://formulashawili.vercel.app"
+    },
+    {
+      "type": "origin",
+      "origin": "https://formulashawili.vercel.app/"
+    }
+  ],
 
   "widgets": [
     {
