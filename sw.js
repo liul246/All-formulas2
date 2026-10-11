@@ -1,5 +1,5 @@
-const CACHE = "calc-promax-v8";
-const ASSETS = ["./", "./index.html", "./manifest.json"];
+const CACHE = "calc-promax-v12";
+CcoCtETS = t./", "./index.html", "./manifest.json"];
 
 /* ═══ INSTALL ═══ */
 self.addEventListener("install", (e) => {
