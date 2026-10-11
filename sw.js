@@ -1,17 +1,26 @@
+/* Calc Pro Max — Service Worker v12 */
 const CACHE = "calc-promax-v12";
-CcoCtETS = t./", "./index.html", "./manifest.json"];
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./icon-192.png",
+  "./icon-512.png"
+];
 
 /* ═══ INSTALL ═══ */
 self.addEventListener("install", (e) => {
-  console.log("📦 Installing SW");
+  console.log("📦 Installing SW v12");
   e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      .then((c) => c.addAll(ASSETS).catch((err) => console.warn("Asset missing:", err)))
+      .then(() => self.skipWaiting())
   );
 });
 
 /* ═══ ACTIVATE ═══ */
 self.addEventListener("activate", (e) => {
-  console.log("✅ SW activated");
+  console.log("✅ SW v12 activated");
   e.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
@@ -22,6 +31,24 @@ self.addEventListener("activate", (e) => {
 /* ═══ FETCH — Cache-first ═══ */
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
+
+  // Icons — cache aggressively
+  const url = new URL(e.request.url);
+  if (url.pathname.match(/\.(png|jpg|svg|webp|ico)$/i)) {
+    e.respondWith(
+      caches.match(e.request).then((hit) => {
+        if (hit) return hit;
+        return fetch(e.request).then((res) => {
+          const clone = res.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, clone));
+          return res;
+        });
+      })
+    );
+    return;
+  }
+
+  // Default — cache-first
   e.respondWith(
     caches.match(e.request).then((hit) => {
       if (hit) return hit;
@@ -39,56 +66,39 @@ self.addEventListener("fetch", (e) => {
 /* ═══ BACKGROUND SYNC ═══ */
 self.addEventListener("sync", (e) => {
   console.log("🔄 Background sync:", e.tag);
-  if (e.tag === "sync-history" || e.tag === "sync-tasks") {
-    e.waitUntil(
-      new Promise((resolve) => {
-        console.log("✅ Sync completed for:", e.tag);
-        resolve();
-      })
-    );
-  }
+  if (e.tag === "sync-history") e.waitUntil(Promise.resolve("history synced"));
+  if (e.tag === "sync-settings") e.waitUntil(Promise.resolve("settings synced"));
 });
 
-/* ═══ PERIODIC BACKGROUND SYNC ═══ */
+/* ═══ PERIODIC SYNC ═══ */
 self.addEventListener("periodicsync", (e) => {
   console.log("⏰ Periodic sync:", e.tag);
   if (e.tag === "update-cache") {
     e.waitUntil(
       caches.open(CACHE).then((cache) =>
         Promise.all(
-          ASSETS.map((url) =>
-            fetch(url).then((res) => cache.put(url, res)).catch(() => {})
-          )
-        ).then(() => console.log("✅ Cache refreshed"))
+          ASSETS.map((u) => fetch(u).then((r) => cache.put(u, r)).catch(() => {}))
+        )
       )
-    );
-  }
-  if (e.tag === "check-updates") {
-    e.waitUntil(
-      fetch("./manifest.json")
-        .then((r) => r.json())
-        .then((m) => console.log("📋 Manifest check:", m.version || "ok"))
-        .catch(() => {})
     );
   }
 });
 
 /* ═══ PUSH NOTIFICATIONS ═══ */
 self.addEventListener("push", (e) => {
-  let data = { title: "Calc Pro Max", body: "New update!" };
+  let data = { title: "Calc Pro Max", body: "New update available!" };
   try {
     if (e.data) data = e.data.json();
   } catch {
     if (e.data) data.body = e.data.text();
   }
   e.waitUntil(
-    self.registration.showNotification(data.title || "Calc Pro Max", {
-      body: data.body || "Check your calculator",
-      icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧮</text></svg>",
-      badge: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧮</text></svg>",
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: "./icon-192.png",
+      badge: "./icon-192.png",
       vibrate: [200, 100, 200],
       tag: "calc-notif",
-      renotify: true,
       data: { url: "./index.html", dateOfArrival: Date.now() }
     })
   );
@@ -107,19 +117,14 @@ self.addEventListener("notificationclick", (e) => {
   );
 });
 
-/* ═══ NOTIFICATION CLOSE ═══ */
-self.addEventListener("notificationclose", (e) => {
-  console.log("🔕 Notification dismissed");
-});
-
-/* ═══ MESSAGE — from page to SW ═══ */
+/* ═══ MESSAGE ═══ */
 self.addEventListener("message", (e) => {
   console.log("💬 Message:", e.data);
   if (e.data === "skipWaiting") self.skipWaiting();
   if (e.data && e.data.type === "SHOW_NOTIF") {
     self.registration.showNotification(e.data.title || "Calc Pro", {
       body: e.data.body || "",
-      icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>🧮</text></svg>"
+      icon: "./icon-192.png"
     });
   }
 });
