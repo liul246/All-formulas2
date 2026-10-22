@@ -1,5 +1,5 @@
 /* Smart Calculator — Service Worker v1 */
-const CACHE = "smartcalculator-v22";
+const CACHE = "smartcalculator-v29";
 const ASSETS = [
   "./",
   "./All-formulas2/index.html",
