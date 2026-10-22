@@ -60,8 +60,6 @@
     { id: 3, username: 'bob',   password: 'bobpw'    }
   ];
 
-  /* --- tiny SQL engine (only handles WHERE ... with =, !=, AND, OR) --- */
-
   function splitTop(str, kw) {
     var parts = [], up = str.toUpperCase(), k = kw.toUpperCase();
     var cur = '', q = false, i = 0;
@@ -124,8 +122,7 @@
     return out;
   }
 
-  /* --- vulnerable auth (string concat, no sanitization) --- */
-
+  /* Vulnerable: string concatenation, no sanitization */
   function login(u, p) {
     var sql = "SELECT * FROM users WHERE username = '" + u + "' AND password = '" + p + "'";
     return runSQL(sql);
@@ -146,11 +143,10 @@
     msg.className = 'ok';
     msg.textContent = 'Welcome, ' + rows[0].username + '! Redirecting...';
 
-    // login successful -> go to the app
     try { sessionStorage.setItem('user', rows[0].username); } catch (e) {}
 
     setTimeout(function () {
-      window.location.href = 'app.html';   // <-- የአፕህ ፋይል ስም
+      window.location.href = 'app.html';
     }, 700);
   }
 
