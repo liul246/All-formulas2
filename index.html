@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hacking Weakness Finder</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="shell">
+<header><div class="logo">HW</div><div><p class="eyebrow">WEB APP ANALYSIS</p><h1>Hacking Weakness Finder</h1><p class="muted">Check common website configuration weaknesses.</p></div></header>
+<section class="panel"><form id="scan-form"><label for="target">Website URL</label><div class="urlrow"><input id="target" type="url" placeholder="https://example.com" required><button id="scan-button">Start Scan</button></div><p class="muted small">Use a site you own or are authorized to test. This version runs non-destructive checks.</p></form><p id="status" aria-live="polite">Ready to scan.</p></section>
+<section id="summary" class="stats hidden"><div>Findings<strong id="all">0</strong></div><div>High<strong id="high">0</strong></div><div>Medium<strong id="medium">0</strong></div><div>Low / Info<strong id="low">0</strong></div></section>
+<section id="results" class="panel hidden"><div class="resulthead"><h2>Scan results</h2><button id="export" class="secondary" type="button">Export JSON</button></div><p id="meta" class="muted small"></p><div id="list"></div></section>
+<footer>Starter v1 · Findings are indicators, not proof of exploitability.</footer></main><script src="app.js"></script></body></html>
