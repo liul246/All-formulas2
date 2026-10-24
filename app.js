@@ -1,5 +1,5 @@
 // This endpoint must be the URL of YOUR deployed FastAPI backend.
-const API_BASE = "https://YOUR-BACKEND-HOST";
+const API_BASE = "https://all-formulas-api.liul.blitz.cloud";
 const SCANNER_TOKEN = "SET_A_USER_TOKEN_HERE"; // MVP only: don't use a shared secret in a public frontend.
 
 const $ = s => document.querySelector(s);
